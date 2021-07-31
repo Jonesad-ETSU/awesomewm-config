@@ -1,0 +1,16 @@
+#!/bin/bash
+ 
+#export USB="/run/media/$(whoami)"
+#export WM=openbox
+#export FILE_MANAGER="$TERMINAL -e ranger"
+#export PATH="$HOME/.cargo/bin:$HOME/.src/Discord:$SCRIPTS_FOLDER:$SCRIPTS_FOLDER/lemon:$SCRIPTS_FOLDER/dmenu:$HOME/.local/bin:$PATH"
+#
+#[ -f $HOME/.config/.Xresources ] && xrdb -merge $HOME/.config/.Xresources
+#[ -f /etc/X11/xinit/.Xmodmap ] && xmodmap /etc/X11/xinit/.Xmodmap
+
+wmname LG3D &
+nitrogen --restore &
+light-locker --lock-on-suspend --lock-on-lid &
+mpd &
+pactl set-sink-volume @DEFAULT_SINK@ 50% &
+udiskie &
