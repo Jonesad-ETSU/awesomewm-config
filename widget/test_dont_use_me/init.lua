@@ -56,7 +56,7 @@ local new_shape = function (cr, width, height)
 end
 
 local test_wibox = wibox {
-	visible = true,
+	visible = false,
 	ontop = true,
 	splash = false,
 	width = 200,

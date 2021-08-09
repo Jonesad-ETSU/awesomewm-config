@@ -346,6 +346,16 @@ theme.wallpaper = function(s)
     return theme_assets.wallpaper(wallpaper_bg, wallpaper_fg, wallpaper_alt_fg, s)
 end
 
+--MY DEFINED THEME VARIABLES
+panel_item = {}
+    panel_item.bg = "#0000ff"
+    panel_item.roundness_value = 20
+    panel_item.shape = function(cr, width, height)
+        gears.shape.rounded_rect(cr, width, height, panel_item.roundnes_value)
+    end
+    panel_item.margins = dpi(10)
+
+
 return theme
 
 -- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80:foldmethod=marker

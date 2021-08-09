@@ -1,25 +1,13 @@
--- If LuaRocks is installed, make sure that packages installed through it are
--- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
--- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
--- Widget and layout library
 local wibox = require("wibox")
--- Theme handling library
 local beautiful = require("beautiful")
--- Notification library
 local naughty = require("naughty")
---local power_widget = require('widget.power')
---local top_panel_test = require ('layout')
---local volume_popup = require('widget.volume_popup')
-awesome.emit_signal('widget::volpop')
---awesome.emit_signal('test_widget::toggle')
---local wibox_test = require ('widget.test_dont_use_me')
---require('widget.test_imagebox')
---require('widget.info_panel')
+local top_panel = require ('layout')
+--local scratch = require('widget.terminal-scratch')
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -47,6 +35,7 @@ end
 
 -- Initialize theme
 beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/gtk/theme.lua" )
+beautiful.font = "monospace 12"
 
 -- Bling relies on beautiful's properties, thus must be set after.
 local bling = require ('bling')
@@ -83,25 +72,9 @@ require ('config.menu')
 mytextclock = wibox.widget.textclock()
 
 bat_widget = wibox.widget {
-    {
-        --id = 'bat_textbox',
-        widget = awful.widget.watch("bash -c \"upower -i $(upower -e | grep BAT) | awk '/percentage/ {print $2}'\"", 60)
-    },
+    widget = awful.widget.watch("bash -c \"upower -i $(upower -e | grep BAT) | awk '/percentage/ {print $2}'\"", 60),
     layout = wibox.layout.fixed.horizontal
 }
-
---[[
-awful.spawn.easy_async_with_shell(
-    "upower -i $(upower -e | grep BAT) | awk '/percentage/ {print $2}'",
-    function(stdout) 
-        if stdout == nil or stdout == '' then
-            bat_widget.bat_textbox:set_text('No Battery!')
-            return
-        end
-        bat_widget.bat_textbox:set_text(stdout:sub(1,-2))
-    end
-)]]--
-
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -235,7 +208,7 @@ awful.screen.connect_for_each_screen(function(s)
 			top = 3,
 			widget = wibox.container.margin,
 		},
-		nil,
+        nil,
 		create_callback = function (self, c, index, objects) 
 			self:get_children_by_id('clienticon')[1].client = c
 		end,
@@ -261,7 +234,9 @@ awful.screen.connect_for_each_screen(function(s)
 	-- Middle widgets
 	{
         layout = wibox.layout.align.vertical,
+        nil,
         s.mytasklist, 
+        nil
 	},
 	{ -- Right widgets
             layout = wibox.layout.fixed.vertical,
