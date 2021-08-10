@@ -33,15 +33,6 @@ local artist_title = wibox.widget {
     widget = wibox.widget.textbox
 } 
 
-local top = wibox.widget {
-    {
-        song_title,
-        artist_title,
-        layout = wibox.layout.fixed.vertical
-    },
-    widget = wibox.container.place 
-}
-
 local back_pic = wibox.widget {
     markup = "<b>BACK</b>",
     font = beautiful.font,
@@ -63,19 +54,33 @@ local progressbar = wibox.widget {
     bar_border_width = 1,
     border_width = 2,
     border_color = "#00ffff",
-    forced_width = dpi(100),
+    --forced_width = dpi(100),
     forced_height = dpi(10),
     color = "#00ff00",
     --paddings = 1,
     widget = wibox.widget.progressbar
 }
 
-local bottom = wibox.widget {
+local bar_widget = wibox.widget {
     back_pic,
     progressbar,
     forward_pic,
     spacing = dpi(2),
-    layout = wibox.layout.fixed.horizontal 
+    layout = wibox.layout.flex.horizontal 
+}
+
+local main = wibox.widget {
+    {
+        {
+            song_title,
+            artist_title,
+            layout = wibox.layout.fixed.vertical
+        },
+        bar_widget,
+        spacing = dpi(5),
+        layout = wibox.layout.fixed.vertical
+    },
+    widget = wibox.container.place 
 }
 
 return wibox.widget {
@@ -89,12 +94,7 @@ return wibox.widget {
                 shape_clip = true,
                 widget = wibox.container.background
             },
-            {
-                nil,
-                top,
-                bottom,
-                layout = wibox.layout.align.vertical
-            },
+            main,
             spacing = dpi(10),
             layout = wibox.layout.fixed.horizontal
         },

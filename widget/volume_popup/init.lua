@@ -18,7 +18,7 @@ local vol_text = wibox.widget {
 }
 
 local vol_icon = wibox.widget {
-   image = "/home/jonesad/.config/awesome/music.svg",
+   image = gears.filesystem.get_configuration_dir() .. "/widget/volume_popup/music.svg",
    resize = true,
    forced_height = dpi(100),
    forced_width = dpi(100),

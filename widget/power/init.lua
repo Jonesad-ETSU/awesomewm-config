@@ -1,3 +1,8 @@
+--[[
+--  I can't figure out how to make this widget clickable using my utility class. May have to manually add this one.
+--  But, that means my clickable class needs to learn how to handle this use case ( giving it a layout ). Cursor changes correctly,
+--  however it does not get the 'activate' signal like it should (does nothing).
+--]]
 pcall (require, "luarocks.loader")
 
 local wibox     = require ('wibox')
@@ -9,28 +14,23 @@ local dpi       = require ('beautiful.xresources').apply_dpi
 local bling     = require ('bling')
 local naughty   = require ('naughty')
 
-local l = wibox.layout.fixed.horizontal()
+local l = wibox.layout.fixed.horizontal() 
 l.fill_space = true
 
 function make_heart_widget (fullness)
     local images_dir = gears.filesystem.get_configuration_dir() .. 'widget/power/icons/'
     return wibox.widget {
-        {
-            image = images_dir .. "heart-" .. fullness .. ".svg",
-            resize = true,
-            widget = wibox.widget.imagebox 
-        },
-        forced_width = dpi(50),
-        forced_height = dpi(50),
-        widget = wibox.container.background
+        image = images_dir .. "heart-" .. fullness .. ".svg",
+        resize = true,
+        widget = wibox.widget.imagebox 
     } 
 end
 
 function get_hearts_widget (pct_remaining)
 
     local num_hearts = 5
-    local batl = wibox.layout.fixed.horizontal()
-    batl:fill_space (false)
+    local batl = wibox.layout.flex.horizontal()
+    batl:fill_space (true)
 
     local hearts = {
         full  = make_heart_widget('full'),
@@ -58,30 +58,24 @@ gears.timer {
     autostart = true,
     callback = function()
         awful.spawn.easy_async_with_shell (
-            [[ search=$(upower -e | grep BAT);power=$(upower -i $search);echo "$power" | awk '/percentage/ {gsub("%",""); print $2}'
+            [[ 
+                search=$(upower -e | grep BAT);\
+                power=$(upower -i $search);\
+                echo "$power" | awk '/percentage/ {gsub("%",""); print $2}'
             ]],
             function (stdout, stderr)
                 if stdout:match('error') then
                     naughty.notify { text = "Can't read Battery" }
                 end
                 local hearts = get_hearts_widget(stdout)
-                local w = clickable (
-                    wibox.widget {
-                        {
-                            hearts,
-                            layout = wibox.container.place
-                        },
-                        bg = "#ff0000",
-                        widget = wibox.container.background
-                    }
-                )
-
-                w:connect_signal (
-                    'activate',
-                    function ()
-                        naughty.notify { text = "test" }
-                    end
-                )
+                local w = wibox.widget {
+                    {
+                        hearts,
+                        layout = wibox.container.place
+                    },
+                    bg = "#ff0000",
+                    widget = wibox.container.background
+                }
                     
                 l:reset()
                 l:add(w)

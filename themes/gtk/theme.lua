@@ -103,6 +103,7 @@ theme.gtk.menubar_border_color = mix(
 
 -- theme.font          = theme.gtk.font_family .. ' ' .. theme.gtk.font_size
 theme.font          = theme.gtk.font_family .. ' ' .. dpi(10)
+theme.font_family   = theme.gtk.font_family
 
 theme.bg_normal     = theme.gtk.bg_color
 theme.fg_normal     = theme.gtk.fg_color
@@ -128,7 +129,7 @@ theme.border_marked = theme.gtk.success_color
 theme.border_width  = dpi(theme.gtk.button_border_width or 1)
 theme.border_radius = theme.gtk.button_border_radius
 
-theme.useless_gap   = dpi(3)
+theme.useless_gap   = dpi(5)
 
 local rounded_rect_shape = function(cr,w,h)
     gears_shape.rounded_rect(
@@ -347,6 +348,7 @@ theme.wallpaper = function(s)
 end
 
 --MY DEFINED THEME VARIABLES
+
 panel_item = {}
     panel_item.bg = "#0000ff"
     panel_item.roundness_value = 20

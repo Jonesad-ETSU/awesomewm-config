@@ -13,6 +13,10 @@ local power_widget = require ('widget.power')
 local wall_widget = require ('widget.wall')
 local profile_pic = require ('widget.profile').profile
 local music_widget = require ('widget.music')
+--local brightness_widget = require ('widget.brightness_arc')
+--local volume_widget = require ('widget.volume')
+local time_widget = require ('widget.time')
+local bars    = require ('widget.bars')
 local hidden    = true
 
 --[[screen.connect_signal(
@@ -29,9 +33,10 @@ local hidden    = true
         ontop = true,
         splash = false,
         width = dpi(1000),
-        height = dpi(200),
+        height = dpi(300),
         border_width = 3,
         border_color = "FF00FF",
+        bg = "#282828",
         --screen = s,
         --placement = awful.placement.top,
         x = 240,
@@ -39,7 +44,7 @@ local hidden    = true
         shape = function (cr, width, height)
             return gears.shape.rounded_rect(cr, width, height, 20)
         end,
-        bg = beautiful.bg_normal,
+        --bg = beautiful.bg_normal,
         fg = beautiful.foreground
     }
 
@@ -48,17 +53,22 @@ local hidden    = true
         forced_num_cols = 15,
         --min_cols_size = dpi(50),
         --min_rows_size = dpi(50),
-        homogeneous = false,
+        homogeneous = true,
         spacing = dpi(4),
-        expand = false,
+        expand = 'none',
+        --expand = false,
         layout = wibox.layout.grid
     }
     
     --row,col,row_span,col_span
-    panel_widget:add_widget_at(power_widget, panel_widget.forced_num_rows, 4)
-    panel_widget:add_widget_at(wall_widget,1,3)
+    panel_widget:add_widget_at(power_widget, panel_widget.forced_num_rows, 4,1,3)
+    panel_widget:add_widget_at(wall_widget,1,3,1,1)
     panel_widget:add_widget_at(profile_pic,1,1,2,2)
-    panel_widget:add_widget_at(music_widget,1,4,2,1)
+    panel_widget:add_widget_at(music_widget,1,4,2,4)
+    --panel_widget:add_widget_at(brightness_widget,2,6,1,1)
+    panel_widget:add_widget_at(time_widget,1,9,1,1)
+    --panel_widget:add_widget_at(volume_widget,2,8,1,1)
+    panel_widget:add_widget_at(bars,1,10,1,3)
 
     panel : setup {
         {

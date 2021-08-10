@@ -70,6 +70,7 @@ end
 
 -- This function is the main thing that needs to to be improved.
 function get_weather()
+    local jsonString = ''
     weather_conditions.1 = 'sunny'
     weather_conditions.2 = 'rainy'
     temperature.1 = { 
@@ -88,5 +89,9 @@ function get_weather()
         speed = 7,
         type = 'mi'
     }
+    return jsonString
+end
+
+function parse_day(json)
 
 end
