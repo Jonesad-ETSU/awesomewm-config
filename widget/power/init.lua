@@ -1,6 +1,7 @@
 pcall (require, "luarocks.loader")
 
 local wibox     = require ('wibox')
+local pi        = require ('widget.util.panel_item')
 local clickable = require ('widget.util.clickable')
 local beautiful = require ('beautiful')
 local awful     = require ('awful')
@@ -66,14 +67,12 @@ gears.timer {
                 end
                 local hearts = get_hearts_widget(stdout)
                 bat_pct = stdout
-                local w = wibox.widget {
-                    {
+                local w = pi (
+                    wibox.widget {
                         hearts,
                         layout = wibox.container.place
-                    },
-                    bg = "#ff0000",
-                    widget = wibox.container.background
-                }
+                    }
+                )
                     
                 l:reset()
                 l:add(w)

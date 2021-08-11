@@ -3,6 +3,7 @@ local beautiful = require ('beautiful')
 local awful     = require ('awful')
 local gears     = require ('gears')
 local dpi   = require ('beautiful.xresources').apply_dpi
+local pi   = require ('widget.util.panel_item')
 local naughty = require ('naughty')
 local clickable = require ('widget.util.clickable')
 local user_name = 'jonesad'
@@ -48,27 +49,16 @@ local user_name = 'jonesad'
         widget = wibox.container.background
     }
 
-    local profile = wibox.widget {
+    local profile = pi ( wibox.widget { 
         {
-            {
-                {
-                    user,
-                    direction = 'east',
-                    widget = wibox.container.rotate
-                },
-                profile_pic,
-                nil,
-                layout = wibox.layout.fixed.horizontal
-            },
-            margins = dpi(5),
-            widget = wibox.container.margin
+            user,
+            direction = 'east',
+            widget = wibox.container.rotate
         },
-        bg = '#ff0000',
-        forced_height = dpi(100),
-        forced_width = dpi(100),
-        shape = gears.shape.rounded_rect,
-        widget = wibox.container.background 
-    }
+        profile_pic,
+        nil,
+        layout = wibox.layout.fixed.horizontal
+    })
 
     profile:connect_signal(
         'activate',

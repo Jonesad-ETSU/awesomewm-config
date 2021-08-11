@@ -9,6 +9,7 @@ local wibox = require ('wibox')
 local beautiful = require ('beautiful')
 local dpi = require ('beautiful.xresources').apply_dpi
 local gears = require ('gears')
+local pi    = require ('widget.util.panel_item')
 
 local song = "Song"
 local artist = "Artist"
@@ -83,25 +84,16 @@ local main = wibox.widget {
     widget = wibox.container.place 
 }
 
-return wibox.widget {
+return pi ( wibox.widget {
     {
-        {
-            {
-                album_art,
-                forced_width = dpi(100),
-                forced_height = dpi(100),
-                shape = gears.shape.rounded_rect,
-                shape_clip = true,
-                widget = wibox.container.background
-            },
-            main,
-            spacing = dpi(10),
-            layout = wibox.layout.fixed.horizontal
-        },
-        margins = dpi(10),
-        widget = wibox.container.margin
+        album_art,
+        forced_width = dpi(100),
+        forced_height = dpi(100),
+        shape = gears.shape.rounded_rect,
+        shape_clip = true,
+        widget = wibox.container.background
     },
-    shape = gears.shape.rounded_rect,
-    bg = "#ff0000",
-    widget = wibox.container.background
-}
+    main,
+    spacing = dpi(10),
+    layout = wibox.layout.fixed.horizontal
+})

@@ -1,7 +1,8 @@
 local clickable = require ('widget.util.clickable')
-local wibox = require ('wibox')
-local awful = require ('awful')
-local gfs = require ('gears.filesystem')
+local pi        = require ('widget.util.panel_item')
+local wibox     = require ('wibox')
+local awful     = require ('awful')
+local gfs       = require ('gears.filesystem')
 
 --[[
 --  image function options = {
@@ -14,7 +15,14 @@ local gfs = require ('gears.filesystem')
 
 local button = function (options)
 
-    local image = wibox.widget {
+    local image = pi(
+        wibox.widget {
+            image = options.image or gfs.get_configuration_dir() .. '/unknown.svg', 
+            resize = true,
+            widget = wibox.widget.imagebox
+        }
+    )
+    --[[local image = wibox.widget {
         {
             image = options.image or gfs.get_configuration_dir() .. '/unknown.svg', 
             resize = true,
@@ -22,7 +30,7 @@ local button = function (options)
         },
         bg = options.bg or '#0000ff',
         widget = wibox.container.background 
-    }
+    }--]]
     
     image:connect_signal(
         'activate',
