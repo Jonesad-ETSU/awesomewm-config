@@ -1,8 +1,3 @@
---[[
---  I can't figure out how to make this widget clickable using my utility class. May have to manually add this one.
---  But, that means my clickable class needs to learn how to handle this use case ( giving it a layout ). Cursor changes correctly,
---  however it does not get the 'activate' signal like it should (does nothing).
---]]
 pcall (require, "luarocks.loader")
 
 local wibox     = require ('wibox')
@@ -14,7 +9,9 @@ local dpi       = require ('beautiful.xresources').apply_dpi
 local bling     = require ('bling')
 local naughty   = require ('naughty')
 
+local bat_pct = -1
 local l = wibox.layout.fixed.horizontal() 
+
 l.fill_space = true
 
 function make_heart_widget (fullness)
@@ -68,6 +65,7 @@ gears.timer {
                     naughty.notify { text = "Can't read Battery" }
                 end
                 local hearts = get_hearts_widget(stdout)
+                bat_pct = stdout
                 local w = wibox.widget {
                     {
                         hearts,
@@ -84,5 +82,11 @@ gears.timer {
     end
 } : start()
 
+l:connect_signal(
+    'activate',
+    function()
+        naughty.notify {text = "Percentage Remaining: "..bat_pct}
+    end
+)
 
-return l
+return clickable(l)

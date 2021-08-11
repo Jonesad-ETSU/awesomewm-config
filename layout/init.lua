@@ -61,7 +61,7 @@ local hidden    = true
     }
     
     --row,col,row_span,col_span
-    panel_widget:add_widget_at(power_widget, panel_widget.forced_num_rows, 4,1,3)
+    panel_widget:add_widget_at(power_widget, panel_widget.forced_num_rows, 4,1,4)
     panel_widget:add_widget_at(wall_widget,1,3,1,1)
     panel_widget:add_widget_at(profile_pic,1,1,2,2)
     panel_widget:add_widget_at(music_widget,1,4,2,4)

@@ -1,7 +1,7 @@
 local wibox = require ('wibox')
 local dpi = require ('beautiful.xresources').apply_dpi
 local vol = require ('widget.bars.vol')
-local bri = require ('widget.bars.bri')
+local bri = require ('widget.bars.bria')
 --local hdd = require ('widget.bars.hdd')
 
 local bars = wibox.widget {

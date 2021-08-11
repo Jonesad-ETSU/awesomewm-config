@@ -1,9 +1,9 @@
-local awful = require('awful')
-local wibox = require('wibox')
+local awful     = require('awful')
+local wibox     = require('wibox')
 local beautiful = require('beautiful')
-local dpi = require('beautiful.xresources').apply_dpi
-local gtk = require ('beautiful.gtk')
-local gears = require('gears')
+local dpi       = require('beautiful.xresources').apply_dpi
+local gtk       = require ('beautiful.gtk')
+local gears     = require('gears')
 local clickable = require('widget.util.clickable')
 
 local day = wibox.widget {
@@ -42,14 +42,14 @@ local time = wibox.widget {
         bg = "#ffff00",
         widget = wibox.container.background
     },
-    layout = wibox.layout.fixed.vertical
+    layout = wibox.layout.flex.vertical
 }
 
 local date = wibox.widget {
     day,
     time,
     spacing = dpi(0),
-    layout = wibox.layout.fixed.vertical
+    layout = wibox.layout.flex.vertical
 }
 
 function get_day()
