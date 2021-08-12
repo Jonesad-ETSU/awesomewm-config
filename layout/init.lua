@@ -4,13 +4,16 @@ local wibox     = require ('wibox')
 local clickable = require('widget.util.clickable')
 local panel_item = require ('widget.util.panel_item')
 local awful     = require ('awful')
+--local vol_popup = require ('widget.popup.vol') --remove this
 local gears     = require ('gears')
 local awestore  = require ('awestore')
 local beautiful = require ('beautiful')
 local dpi       = require ('beautiful.xresources').apply_dpi
 local naughty   = require ('naughty')
 local power_widget = require ('widget.power')
-local wall_widget = require ('widget.wall')
+local rofi_widget   = require ('widget.button.rofi_launcher')
+local wall_widget = require ('widget.button.wall')
+local firefox_widget = require ('widget.button.firefox')
 local profile_pic = require ('widget.profile').profile
 local music_widget = require ('widget.music')
 --local brightness_widget = require ('widget.brightness_arc')
@@ -63,11 +66,12 @@ local hidden    = true
     --row,col,row_span,col_span
     panel_widget:add_widget_at(power_widget, panel_widget.forced_num_rows, 4,1,4)
     panel_widget:add_widget_at(wall_widget,1,3,1,1)
-    panel_widget:add_widget_at(wall_widget,2,3,1,1)
+    panel_widget:add_widget_at(firefox_widget,2,3,1,1)
     panel_widget:add_widget_at(profile_pic,1,1,2,2)
     panel_widget:add_widget_at(music_widget,1,4,2,4)
     --panel_widget:add_widget_at(brightness_widget,2,6,1,1)
-    panel_widget:add_widget_at(time_widget,1,9,1,1)
+    panel_widget:add_widget_at(time_widget,1,8,2,2)
+    panel_widget:add_widget_at(rofi_widget,4,10,1,1)
     --panel_widget:add_widget_at(volume_widget,2,8,1,1)
     panel_widget:add_widget_at(bars,1,10,1,3)
 

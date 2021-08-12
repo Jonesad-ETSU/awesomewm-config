@@ -1,5 +1,6 @@
 local awful     = require('awful')
 local wibox     = require('wibox')
+local pi        = require ('widget.util.panel_item')
 local beautiful = require('beautiful')
 local dpi       = require('beautiful.xresources').apply_dpi
 local gtk       = require ('beautiful.gtk')
@@ -102,4 +103,4 @@ date:connect_signal(
     end
 )
 
-return clickable(time)
+return pi(clickable(time))

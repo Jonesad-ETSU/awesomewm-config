@@ -22,15 +22,6 @@ local button = function (options)
             widget = wibox.widget.imagebox
         }
     )
-    --[[local image = wibox.widget {
-        {
-            image = options.image or gfs.get_configuration_dir() .. '/unknown.svg', 
-            resize = true,
-            widget = wibox.widget.imagebox
-        },
-        bg = options.bg or '#0000ff',
-        widget = wibox.container.background 
-    }--]]
     
     image:connect_signal(
         'activate',
