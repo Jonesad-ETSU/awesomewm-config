@@ -48,13 +48,13 @@ local top = function(s)
     local bars    = require ('widget.bars')
 
     --row,col,row_span,col_span
-    panel_widget:add_widget_at(require('widget.power'), panel_widget.forced_num_rows, 4,1,4)
+    panel_widget:add_widget_at(power_widget, panel_widget.forced_num_rows, 4,1,4)
     panel_widget:add_widget_at(wall_widget,1,3,1,1)
     panel_widget:add_widget_at(firefox_widget,2,3,1,1)
     panel_widget:add_widget_at(profile_pic,1,1,2,2)
     panel_widget:add_widget_at(music_widget,1,4,2,4)
     panel_widget:add_widget_at(time_widget,3,1,2,2)
-    panel_widget:add_widget_at(rofi_widget,4,10,1,1)
+    panel_widget:add_widget_at(rofi_widget,3,3,1,1)
     panel_widget:add_widget_at(bars,1,10,1,3)
 
     panel : setup {

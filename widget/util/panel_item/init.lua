@@ -14,6 +14,8 @@ local nw = function(widget)
         shape = beautiful.panel_item.shape,--]]
         bg = "#0000ff",
         shape = gears.shape.rounded_rect,
+        shape_border_color = "#aaaaff",
+        shape_border_width = dpi(2),
         widget = wibox.container.background
     }
 end

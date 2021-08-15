@@ -71,9 +71,10 @@ local bar_widget = wibox.widget {
 }
 
 local main = wibox.widget {
-    {
+    --{
         layout = wibox.layout.align.vertical,
         spacing = dpi(5),
+        expand = 'none',
         nil,
         {
             song_title,
@@ -81,8 +82,8 @@ local main = wibox.widget {
             layout = wibox.layout.fixed.vertical
         },
         bar_widget
-    },
-    widget = wibox.container.place 
+    --},
+    --widget = wibox.container.place 
 }
 
 return pi ( wibox.widget {

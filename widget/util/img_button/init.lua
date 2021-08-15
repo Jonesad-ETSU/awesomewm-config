@@ -10,6 +10,7 @@ local gfs       = require ('gears.filesystem')
 --      bg => background color
 --      cmd => command to run when clicking button
 --      stdout_cmd => command to run from output of button
+--      tooltip
 --  }
 --]]
 
@@ -23,6 +24,13 @@ local button = function (options)
         }
     )
     
+    if not options.hide_tooltip then
+        local tt = awful.tooltip {
+            objects = { image },
+            text = options.tooltip or options.cmd
+        }
+    end
+
     image:connect_signal(
         'activate',
         function() 

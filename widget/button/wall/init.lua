@@ -3,7 +3,6 @@ local gfs = require ('gears.filesystem')
 
 return  ib ({
         image = gfs.get_configuration_dir() .. 'widget/button/wall/wall.svg',
-        bg = '#0000ff',
+        hide_tooltip = true, 
         cmd = "nitrogen",
-        --stdout_cmd = '',
 })
