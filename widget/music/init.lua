@@ -72,14 +72,15 @@ local bar_widget = wibox.widget {
 
 local main = wibox.widget {
     {
+        layout = wibox.layout.align.vertical,
+        spacing = dpi(5),
+        nil,
         {
             song_title,
             artist_title,
             layout = wibox.layout.fixed.vertical
         },
-        bar_widget,
-        spacing = dpi(5),
-        layout = wibox.layout.fixed.vertical
+        bar_widget
     },
     widget = wibox.container.place 
 }
@@ -87,13 +88,11 @@ local main = wibox.widget {
 return pi ( wibox.widget {
     {
         album_art,
-        forced_width = dpi(100),
-        forced_height = dpi(100),
         shape = gears.shape.rounded_rect,
         shape_clip = true,
         widget = wibox.container.background
     },
     main,
     spacing = dpi(10),
-    layout = wibox.layout.fixed.horizontal
+    layout = wibox.layout.flex.horizontal
 })

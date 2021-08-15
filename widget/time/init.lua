@@ -35,11 +35,13 @@ local minute = wibox.widget {
 local time = wibox.widget {
     {
         hour,
+        fg = "#000000",
         bg = "#00ffff",
         widget = wibox.container.background
     },
     {
         minute,
+        fg = "#000000",
         bg = "#ffff00",
         widget = wibox.container.background
     },

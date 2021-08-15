@@ -32,7 +32,6 @@ do
     end)
 end
 -- }}}
-
 -- Initialize theme
 beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/gtk/theme.lua" )
 beautiful.font = "monospace 12"
@@ -137,7 +136,8 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Each screen has its own tag table.
     awful.tag({ "1", "2", "3", "4" }, s, awful.layout.layouts[1])
-
+end)
+--[[
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
@@ -250,8 +250,8 @@ awful.screen.connect_for_each_screen(function(s)
         },
     }
 end)
+--]]
 -- }}}
-
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end),
@@ -262,7 +262,6 @@ root.buttons(gears.table.join(
 
 require ('config.binds.global')
 require ('config.binds.client')
-
 require ('config.rules')
 
 client.connect_signal("manage", function (c)
@@ -323,6 +322,7 @@ client.connect_signal("mouse::enter", function(c)
     c:emit_signal("request::activate", "mouse_enter", {raise = false})
 end)
 
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+--client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+--client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+-- ]]
