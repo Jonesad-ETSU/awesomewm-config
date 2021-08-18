@@ -15,7 +15,7 @@ local song = "Song"
 local artist = "Artist"
 
 local album_art = wibox.widget {
-    image = '/home/jonesad/Media/Pictures/cat_profile_pic.jpg',
+    image = gears.filesystem.get_configuration_dir() .. '/widget/music/album.png',
     resize = true,
     widget = wibox.widget.imagebox
 }
@@ -90,10 +90,12 @@ return pi ( wibox.widget {
     {
         album_art,
         shape = gears.shape.rounded_rect,
+	shape_border_width = dpi(2),
+	shape_border_color = "#00cccc",
         shape_clip = true,
         widget = wibox.container.background
     },
     main,
     spacing = dpi(10),
-    layout = wibox.layout.flex.horizontal
+    layout = wibox.layout.fixed.horizontal
 })

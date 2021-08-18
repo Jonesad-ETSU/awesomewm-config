@@ -15,10 +15,15 @@ local top = function(s)
         ontop = true,
         splash = false,
         width = dpi(1000),
-        height = dpi(300),
+        height = dpi(250),
         border_width = 3,
         border_color = "FF00FF",
-        bg = "#282828",
+        bg = "#2E3440", --[[{
+		type  	= 'linear',
+		from 	= { 0, 0 },
+		to 	= { 0, dpi(300) },
+		stops	= {{0, '#282828'}, {50, '#888888'}}
+	},--]]
         screen = s,
         x = 240,
         y = -40,
@@ -29,7 +34,7 @@ local top = function(s)
     }
 
     local panel_widget = wibox.widget {
-        forced_num_rows = 4,
+        forced_num_rows = 3,
         forced_num_cols = 15,
         --min_cols_size = dpi(50), min_rows_size = dpi(50),
         homogeneous = true,
@@ -42,18 +47,20 @@ local top = function(s)
     local rofi_widget   = require ('widget.button.rofi_launcher')
     local wall_widget = require ('widget.button.wall')
     local firefox_widget = require ('widget.button.firefox')
-    local profile_pic = require ('widget.profile').profile
+    local profile_pic = require ('widget.profile')
     local music_widget = require ('widget.music')
     local time_widget = require ('widget.time')
     local bars    = require ('widget.bars')
 
     --row,col,row_span,col_span
-    panel_widget:add_widget_at(power_widget, panel_widget.forced_num_rows, 4,1,4)
+    panel_widget:add_widget_at(power_widget,3,4,1,4)
     panel_widget:add_widget_at(wall_widget,1,3,1,1)
     panel_widget:add_widget_at(firefox_widget,2,3,1,1)
     panel_widget:add_widget_at(profile_pic,1,1,2,2)
     panel_widget:add_widget_at(music_widget,1,4,2,4)
-    panel_widget:add_widget_at(time_widget,3,1,2,2)
+    panel_widget:add_widget_at(wall_widget,1,8,1,1)
+    panel_widget:add_widget_at(wall_widget,3,8,1,1)
+    panel_widget:add_widget_at(time_widget,3,1,1,2)
     panel_widget:add_widget_at(rofi_widget,3,3,1,1)
     panel_widget:add_widget_at(bars,1,10,1,3)
 

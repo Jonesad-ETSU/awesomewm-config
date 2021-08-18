@@ -10,9 +10,12 @@ local nw = function(widget)
             margins = dpi(10),
             widget = wibox.container.margin
         },
-        --[[bg = beautiful.panel_item.bg,
-        shape = beautiful.panel_item.shape,--]]
-        bg = "#0000ff",
+        bg = {
+		type	= 'linear',
+		from	= { 0, 0 },
+		to 	= { 0, dpi(100)},
+		stops	= {{0, '#00aaaa'}, {50, '#0000ff'}}
+	},
         shape = gears.shape.rounded_rect,
         shape_border_color = "#aaaaff",
         shape_border_width = dpi(2),

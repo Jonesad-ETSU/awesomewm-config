@@ -38,7 +38,7 @@ local user_name = 'jonesad'
                     return '/home/jonesad/Media/Pictures/cat_profile_pic.jpg'
                 end 
             end,--]]
-            image = '/home/'..user_name..'/Media/Pictures/cat_profile_pic.jpg',
+            image = gears.filesystem.get_configuration_dir() .. '/widget/profile/profile.svg',
             resize = true,
             widget = wibox.widget.imagebox
         },
@@ -50,14 +50,9 @@ local user_name = 'jonesad'
     }
 
     local profile = pi ( wibox.widget { 
-        {
-            user,
-            direction = 'east',
-            widget = wibox.container.rotate
-        },
         profile_pic,
         nil,
-        layout = wibox.layout.fixed.horizontal
+        layout = wibox.layout.fixed.vertical
     })
 
     profile:connect_signal(
@@ -67,10 +62,8 @@ local user_name = 'jonesad'
         end
     )
 
-    return {
-       profile = clickable(profile),
-       user = user
-    }
+    return clickable(profile)
+  
    -- return profile_widget 
 --end
 

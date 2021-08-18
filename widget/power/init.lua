@@ -11,7 +11,7 @@ local bling     = require ('bling')
 local naughty   = require ('naughty')
 
 local bat_pct = -1
-local l = wibox.layout.fixed.horizontal() 
+local l = wibox.layout.flex.horizontal() 
 
 l.fill_space = true
 
@@ -84,7 +84,7 @@ gears.timer {
 l:connect_signal(
     'activate',
     function()
-        naughty.notify {text = "Percentage Remaining: "..bat_pct}
+        naughty.notify {text = "Percentage Remaining: "..string.gsub(bat_pct,"\n","")}
     end
 )
 

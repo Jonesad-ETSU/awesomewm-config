@@ -105,9 +105,9 @@ globalkeys = gears.table.join(
 		end,
 		{description = "lua execute prompt", group = "awesome"}),--]] --Don't really understand why this is here
 -- Menubar
-	awful.key({ modkey }, "p", function() awful.spawn.easy_async("rofi -show drun -theme ~/.config/rofi/theme.css -icon-theme 'Papirus-Dark' -show-icons", function() end) end,
+	awful.key({ modkey }, "p", function() awful.spawn.easy_async("rofi -show drun -show-icons", function() end) end,
 		{description = "show the Run Launcher", group = "launcher"}),
-	awful.key({ modkey }, "space", function() awful.spawn.easy_async("rofi -show drun -theme ~/.config/rofi/theme.css -icon-theme 'Papirus-Dark' -show-icons",function() end) end,
+	awful.key({ modkey }, "space", function() awful.spawn.easy_async("rofi -show drun -show-icons", function() end) end,
 		{description = "show the Run Launcher", group = "launcher"}),
 -- Change Wallpaper
 	awful.key({ modkey, }, "Home",

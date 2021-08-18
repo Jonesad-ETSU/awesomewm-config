@@ -45,7 +45,7 @@ local time = wibox.widget {
         bg = "#ffff00",
         widget = wibox.container.background
     },
-    layout = wibox.layout.flex.vertical
+    layout = wibox.layout.flex.horizontal
 }
 
 local date = wibox.widget {
