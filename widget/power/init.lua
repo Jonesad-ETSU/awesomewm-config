@@ -15,25 +15,34 @@ local l = wibox.layout.flex.horizontal()
 
 l.fill_space = true
 
-function make_heart_widget (fullness)
+function make_heart_widget (fullness, bat_state)
     local images_dir = gears.filesystem.get_configuration_dir() .. 'widget/power/icons/'
+    local colors = { 
+	    discharging = "#FF0000",
+	    charging = "#00FF00"
+    }
+    local color
+    if bat_state == 'discharging' then
+	    color = colors.discharging
+    else color = colors.charging end
+
     return wibox.widget {
-        image = images_dir .. "heart-" .. fullness .. ".svg",
+        image = gears.color.recolor_image(images_dir .. "heart-" .. fullness .. ".svg", color),
         resize = true,
         widget = wibox.widget.imagebox 
     } 
 end
 
-function get_hearts_widget (pct_remaining)
+function get_hearts_widget (pct_remaining, status)
 
     local num_hearts = 5
     local batl = wibox.layout.flex.horizontal()
     batl:fill_space (true)
 
     local hearts = {
-        full  = make_heart_widget('full'),
-        half  = make_heart_widget('half'),
-        empty = make_heart_widget('empty'),
+        full  = make_heart_widget('full', status),
+        half  = make_heart_widget('half', status),
+        empty = make_heart_widget('empty', status),
     }
     
     local wholes = math.floor (pct_remaining / (100/num_hearts))
@@ -59,13 +68,20 @@ gears.timer {
             [[ 
                 search=$(upower -e | grep BAT);\
                 power=$(upower -i $search);\
-                echo "$power" | awk '/percentage/ {gsub("%",""); print $2}'
+                echo "$power" | awk '/percentage/ {gsub("%",""); print $2}';\
+                echo "$power" | awk '/state/ {gsub("%",""); print $2}'
             ]],
             function (stdout, stderr)
                 if stdout:match('error') then
                     naughty.notify { text = "Can't read Battery" }
                 end
-                local hearts = get_hearts_widget(stdout)
+
+		local lines = {}
+		for s in stdout:gmatch("[^\r\n]+") do
+			table.insert(lines, s)
+		end
+
+                local hearts = get_hearts_widget(lines[1],lines[2])
                 bat_pct = stdout
                 local w = pi (
                     wibox.widget {
@@ -84,7 +100,7 @@ gears.timer {
 l:connect_signal(
     'activate',
     function()
-        naughty.notify {text = "Percentage Remaining: "..string.gsub(bat_pct,"\n","")}
+        naughty.notify {text = "Percentage Remaining: "..string.gsub(bat_pct,"\n"," ")}
     end
 )
 

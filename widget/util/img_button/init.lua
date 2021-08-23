@@ -10,6 +10,7 @@ local gfs       = require ('gears.filesystem')
 --      bg => background color
 --      cmd => command to run when clicking button
 --      stdout_cmd => command to run from output of button
+--      show_widget => widget to show on click
 --      tooltip
 --  }
 --]]
@@ -34,14 +35,18 @@ local button = function (options)
     image:connect_signal(
         'activate',
         function() 
-            awful.spawn.easy_async (
-                options.cmd,
-                function(stdout)
-                    if options.stdout_cmd then
-                        options.stdout_cmd()
-                    end
-                end
-            )
+		if options.cmd then
+			awful.spawn.easy_async (
+			options.cmd,
+			function(stdout)
+			    if options.stdout_cmd then
+				options.stdout_cmd()
+			    end
+			end
+			)
+		elseif options.show_widget then
+			local shown = require(options.show_widget)
+		end
         end
     )
     return clickable(image)

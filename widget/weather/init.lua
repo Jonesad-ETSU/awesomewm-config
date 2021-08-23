@@ -1,5 +1,8 @@
-local wibox = require ('wibox')
 local beautiful = require ('beautiful')
+local wibox 	= require ('wibox')
+local gears 	= require ('gears')
+local gfs 	= require ('gears.filesystem')
+local pi	= require ('widget.util.panel_item')
 
 local weather_icons = {
     'cloudy' = '/home/jonesad/Media/Pictures/cat_profile_pic.jpg',
@@ -16,18 +19,22 @@ local weather_condtions = {}
 
 get_weather()
 
-local today_image = status_image_widget (weather_conditions.1)
-local tomorrow_image = status_image_widget (weather_conditions.2)
-local today_wind = wind_widget (wind_speed.1) 
-local tomorrow_wind = wind_widget (wind_speed.2) 
+local today_image = status_image_widget (weather_conditions[2])
+local tomorrow_image = status_image_widget (weather_conditions[2])
 
-local today = wibox.widget {
-    
-}
+local today = daily_widget (
+	today_image,
+	wind_speed[1],
+	temperature[1],
+	"Monday"
+)
 
-local tomorrow = wibox.widget {
-
-}
+local tomorrow = daily_widget (
+	tomorrow_image,
+	wind_speed[2],
+	temperature[2],
+	"Tuesday"
+)
 
 function daily_widget (image, wind, temp, day)
     return wibox.widget {
@@ -53,8 +60,9 @@ end
 
 function status_image_widget (status)
     return wibox.widget {
-        image = weather_icons[status],
-        resize = true,
+        --image = weather_icons[status],
+        image = gfs.get_configuration_dir() .. '/widget/weather/icons/cloudy.svg'
+	resize = true,
         widget = wibox.widget.imagebox 
     }
 end
@@ -95,3 +103,9 @@ end
 function parse_day(json)
 
 end
+
+return pi ( wibox.widget {
+	today,
+	tomorrow,
+	layout = wibox.layout.flex.horizontal
+})

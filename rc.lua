@@ -37,7 +37,7 @@ beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/gtk/theme.lua
 beautiful.font = "monospace 12"
 
 -- Bling relies on beautiful's properties, thus must be set after.
-local bling = require ('bling')
+--local bling = require ('bling')
 
 -- Set taskbar  icon size
 awesome.set_preferred_icon_size(32)
@@ -291,12 +291,25 @@ client.connect_signal("request::titlebars", function(c)
         end)
     )
 
-    awful.titlebar(c) : setup {
+    awful.titlebar(c, {position = 'top', bg = beautiful.bg_normal, size = 40}) : setup {
         { -- Left
-            awful.titlebar.widget.iconwidget(c),
-            buttons = buttons,
-            layout  = wibox.layout.fixed.horizontal
-        },
+		{
+			{
+				{
+					awful.titlebar.widget.iconwidget(c),
+					buttons = buttons,
+					layout  = wibox.layout.fixed.horizontal
+				},
+				margins = 5,
+				widget = wibox.container.margin
+			},
+			shape = gears.shape.rounded_rect,
+			bg = "#bb00bb",
+			widget = wibox.container.background
+        	},
+		left = 15,
+		widget = wibox.container.margin
+	},
         { -- Middle
             { -- Title
                 align  = "center",
@@ -306,14 +319,40 @@ client.connect_signal("request::titlebars", function(c)
             layout  = wibox.layout.flex.horizontal
         },
         { -- Right
-            --awful.titlebar.widget.floatingbutton (c),
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.stickybutton   (c),
-            awful.titlebar.widget.ontopbutton    (c),
-            awful.titlebar.widget.closebutton    (c),
-            layout = wibox.layout.fixed.horizontal()
+		{
+			{
+				--awful.titlebar.widget.floatingbutton (c),
+			    --awful.titlebar.widget.maximizedbutton(c),
+			    awful.titlebar.widget.stickybutton   (c),
+			    --awful.titlebar.widget.ontopbutton    (c),
+			    awful.titlebar.widget.closebutton    (c),
+			    layout = wibox.layout.fixed.horizontal()
+			},
+			margins = 10,
+			widget = wibox.container.margin
+		},
+		bg = "#ffffff",
+		shape = gears.shape.rounded_rect,
+		widget = wibox.container.background
         },
+	--[[nil,
+	{
+		align = 'center',
+		awful.titlebar.widget.titlewidget(c),
+		layout = wibox.layout.fixed.horizontal
+	},
+	{
+		{
+			awful.titlebar.widget.iconwidget(c),
+			buttons = buttons,
+			layout = wibox.layout.fixed.horizontal
+		},
+		awful.titlebar.widget.closebutton(c),
+		layout = wibox.layout.flex.horizontal
+	},
+	expand = 'none',--]]
         layout = wibox.layout.align.horizontal
+	
     }
 end)
 

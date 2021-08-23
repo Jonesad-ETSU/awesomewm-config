@@ -42,11 +42,22 @@ local top = function(s)
         expand = 'none',
         layout = wibox.layout.grid
     }
+
+    local anim_show_hide = awestore.tweened(panel.y ,{
+        duration = 350,
+        easing = awestore.linear
+    }) 
+
+    anim_show_hide:subscribe(function(pos) panel.y = pos end)
+
+    --Initialize panel hidden
+    anim_show_hide:set(-panel.height+panel.height/40)
     
     local power_widget = require ('widget.power')
     local rofi_widget   = require ('widget.button.rofi_launcher')
     local wall_widget = require ('widget.button.wall')
     local firefox_widget = require ('widget.button.firefox')
+    local tag_switch_widget = require ('widget.button.tag_switch')
     local profile_pic = require ('widget.profile')
     local music_widget = require ('widget.music')
     local time_widget = require ('widget.time')
@@ -59,10 +70,10 @@ local top = function(s)
     panel_widget:add_widget_at(profile_pic,1,1,2,2)
     panel_widget:add_widget_at(music_widget,1,4,2,4)
     panel_widget:add_widget_at(wall_widget,1,8,1,1)
-    panel_widget:add_widget_at(wall_widget,3,8,1,1)
+    panel_widget:add_widget_at(tag_switch_widget,3,8,1,1)
     panel_widget:add_widget_at(time_widget,3,1,1,2)
     panel_widget:add_widget_at(rofi_widget,3,3,1,1)
-    panel_widget:add_widget_at(bars,1,10,1,3)
+    panel_widget:add_widget_at(bars,1,10,1,4)
 
     panel : setup {
         {
@@ -81,13 +92,6 @@ local top = function(s)
         },
         layout = wibox.container.place
     }
-
-    local anim_show_hide = awestore.tweened(panel.y ,{
-        duration = 350,
-        easing = awestore.linear
-    }) 
-
-    anim_show_hide:subscribe(function(pos) panel.y = pos end)
 
     panel:connect_signal (
         'mouse::enter',

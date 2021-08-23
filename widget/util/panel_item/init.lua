@@ -14,7 +14,7 @@ local nw = function(widget)
 		type	= 'linear',
 		from	= { 0, 0 },
 		to 	= { 0, dpi(100)},
-		stops	= {{0, '#00aaaa'}, {50, '#0000ff'}}
+		stops	= {{0, '#00aaaa'}, {50, '#0088ff'}}
 	},
         shape = gears.shape.rounded_rect,
         shape_border_color = "#aaaaff",

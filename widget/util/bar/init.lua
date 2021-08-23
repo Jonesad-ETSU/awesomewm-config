@@ -101,17 +101,17 @@ local bar_widget = function (options)
         widget = wibox.widget.textbox,
     }
 
-    local flex = wibox.layout.flex.horizontal()
+    local flex = wibox.layout.align.horizontal()
     local stack = wibox.layout.stack()
     flex.spacing = options.elem_spacing or dpi(5)
 
-    flex:add (
-        options.label_widget or wibox.widget {
+    --flex:add (
+    flex.first = options.label_widget or wibox.widget {
             text,
             fg = options.text_fg or "#ffffff",
             widget = wibox.container.background
         }
-    )
+    --)
 
     if options.stack_pct == true then
         stack:add (
@@ -121,15 +121,22 @@ local bar_widget = function (options)
                 fg = options.text_fg or "#ffffff",
                 widget = wibox.container.background
             })
-        flex:add(stack)
+        flex.second = stack 
+	--flex:add(stack)
     else
-        flex:add (
+        --[[flex:add (
             bar,
             wibox.widget {
                 pct,
                 fg = options.text_fg or "#ffffff",
                 widget = wibox.container.background
-            })
+            })--]]
+	    flex.second = bar
+	    flex.third = wibox.widget {
+		pct,
+		fg = options.text_fg or "#ffffff",
+		widget = wibox.container.background
+	    }
     end
 
     flex:connect_signal(
