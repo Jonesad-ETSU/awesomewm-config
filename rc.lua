@@ -128,11 +128,14 @@ local function set_wallpaper(s)
 end
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
--- screen.connect_signal("property::geometry", set_wallpaper)
+screen.connect_signal(
+	"property::geometry",
+	function()
+		awful.spawn([[nitrogen --restore]])
+	end
+)
 
 awful.screen.connect_for_each_screen(function(s)
-    -- Wallpaper
-    -- set_wallpaper(s)
 
     -- Each screen has its own tag table.
     awful.tag({ "1", "2", "3", "4" }, s, awful.layout.layouts[1])
@@ -264,24 +267,39 @@ require ('config.binds.global')
 require ('config.binds.client')
 require ('config.rules')
 
-client.connect_signal("manage", function (c)
-    -- Set the windows at the slave,
-    -- i.e. put it at the end of others instead of setting it master.
-    -- if not awesome.startup then awful.client.setslave(c) end
-
-    if awesome.startup
-      and not c.size_hints.user_position
-      and not c.size_hints.program_position then
-        -- Prevent clients from being unreachable after screen count changes.
-        awful.placement.no_offscreen(c)
-    end
-end)
-
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
+--
+
+local double_click_event_handler = function(event)
+
+	if time_handler then
+		--time_handler:stop()
+		time_handler = nil
+		event()
+		return
+	end
+
+	time_handler = gears.timer.start_new( .15,
+		function()
+			time_handler = nil
+			return false
+		end
+	)
+end
+
 client.connect_signal("request::titlebars", function(c)
     -- buttons for the titlebar
     local buttons = gears.table.join(
         awful.button({ }, 1, function()
+	    double_click_event_handler(function()
+		if c.floating then
+			c.floating = false
+			return
+		end
+		c.maximized = not c.maximized
+		c:raise()
+		return
+	    end)
             c:emit_signal("request::activate", "titlebar", {raise = true})
             awful.mouse.client.move(c)
         end),
@@ -292,7 +310,7 @@ client.connect_signal("request::titlebars", function(c)
     )
 
     awful.titlebar(c, {position = 'top', bg = beautiful.bg_normal, size = 40}) : setup {
-        { -- Left
+	{ -- Left
 		{
 			{
 				{
@@ -306,25 +324,22 @@ client.connect_signal("request::titlebars", function(c)
 			shape = gears.shape.rounded_rect,
 			bg = "#bb00bb",
 			widget = wibox.container.background
-        	},
-		left = 15,
+		},
+		left = 0,
 		widget = wibox.container.margin
 	},
-        { -- Middle
-            { -- Title
-                align  = "center",
-                widget = awful.titlebar.widget.titlewidget(c)
-            },
-            buttons = buttons,
-            layout  = wibox.layout.flex.horizontal
-        },
-        { -- Right
+	{ -- Middle
+	    { -- Title
+		align  = "center",
+		widget = awful.titlebar.widget.titlewidget(c)
+	    },
+	    buttons = buttons,
+	    layout  = wibox.layout.flex.horizontal
+	},
+	{ -- Right
 		{
 			{
-				--awful.titlebar.widget.floatingbutton (c),
-			    --awful.titlebar.widget.maximizedbutton(c),
 			    awful.titlebar.widget.stickybutton   (c),
-			    --awful.titlebar.widget.ontopbutton    (c),
 			    awful.titlebar.widget.closebutton    (c),
 			    layout = wibox.layout.fixed.horizontal()
 			},
@@ -334,29 +349,13 @@ client.connect_signal("request::titlebars", function(c)
 		bg = "#ffffff",
 		shape = gears.shape.rounded_rect,
 		widget = wibox.container.background
-        },
-	--[[nil,
-	{
-		align = 'center',
-		awful.titlebar.widget.titlewidget(c),
-		layout = wibox.layout.fixed.horizontal
 	},
-	{
-		{
-			awful.titlebar.widget.iconwidget(c),
-			buttons = buttons,
-			layout = wibox.layout.fixed.horizontal
-		},
-		awful.titlebar.widget.closebutton(c),
-		layout = wibox.layout.flex.horizontal
-	},
-	expand = 'none',--]]
-        layout = wibox.layout.align.horizontal
+	layout = wibox.layout.align.horizontal
 	
     }
 end)
 
--- Enable sloppy focus, so that focus follows mouse.
+-- enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
     c:emit_signal("request::activate", "mouse_enter", {raise = false})
 end)

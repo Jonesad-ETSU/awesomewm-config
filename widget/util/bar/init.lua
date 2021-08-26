@@ -57,10 +57,12 @@ local bar_widget = function (options)
         widget = wibox.widget.textbox
     }
 
-    local anim = awestore.tweened(0, {
-        duration = options.anim_duration or 600,
-        easing = options.anim_easing or awestore.linear
-    })
+    local anim_stats = {
+	duration = options.anim_duration or 600,
+	easing = options.anim_easing or awestore.linear
+    }
+
+    local anim = awestore.tweened(0, anim_stats)
 
     anim:subscribe (
         function(val)
@@ -70,6 +72,7 @@ local bar_widget = function (options)
     )
 
     local cmd = options.cmd 
+    local anim_duration = options.anim_duration
 
     gears.timer {
         timeout = options.timer or 17,
@@ -88,7 +91,10 @@ local bar_widget = function (options)
                     else
                         bar.color = options.color or "#00ff00"
                    end
-                   anim:set(tonumber(lines[1])) 
+		   local value = tonumber(lines[1])
+		   --anim_stats.duration = anim_duration * (value/100) 
+                   anim:set(value) 
+		   --anim_stats.duration = options.anim_duration
                 end
             )
         end
@@ -101,17 +107,17 @@ local bar_widget = function (options)
         widget = wibox.widget.textbox,
     }
 
-    local flex = wibox.layout.align.horizontal()
+    local ratio = wibox.layout.ratio.horizontal()
     local stack = wibox.layout.stack()
-    flex.spacing = options.elem_spacing or dpi(5)
+    ratio.spacing = options.elem_spacing or dpi(5)
 
-    --flex:add (
-    flex.first = options.label_widget or wibox.widget {
+    ratio:add (
+	options.label_widget or wibox.widget {
             text,
             fg = options.text_fg or "#ffffff",
             widget = wibox.container.background
         }
-    --)
+    )
 
     if options.stack_pct == true then
         stack:add (
@@ -121,25 +127,19 @@ local bar_widget = function (options)
                 fg = options.text_fg or "#ffffff",
                 widget = wibox.container.background
             })
-        flex.second = stack 
-	--flex:add(stack)
+	ratio:add(stack)
     else
-        --[[flex:add (
+        ratio:add (
             bar,
             wibox.widget {
                 pct,
                 fg = options.text_fg or "#ffffff",
                 widget = wibox.container.background
-            })--]]
-	    flex.second = bar
-	    flex.third = wibox.widget {
-		pct,
-		fg = options.text_fg or "#ffffff",
-		widget = wibox.container.background
-	    }
+            })
     end
+    ratio:ajust_ratio(2, .175, .65, .175)
 
-    flex:connect_signal(
+    ratio:connect_signal(
         'activate',
         function()
             if options.activate_function then
@@ -150,7 +150,7 @@ local bar_widget = function (options)
         end
     )
 
-    return clickable(flex)
+    return clickable(ratio)
 end
 
 return bar_widget

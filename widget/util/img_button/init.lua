@@ -46,6 +46,7 @@ local button = function (options)
 			)
 		elseif options.show_widget then
 			local shown = require(options.show_widget)
+			shown.visible = true
 		end
         end
     )

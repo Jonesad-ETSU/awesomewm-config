@@ -1,6 +1,6 @@
 local wibox     = require ('wibox')
 local clickable = require('widget.util.clickable')
-local panel_item = require ('widget.util.panel_item')
+local pi 	= require ('widget.util.panel_item')
 local awful     = require ('awful')
 local gears     = require ('gears')
 local awestore  = require ('awestore')
@@ -18,13 +18,8 @@ local top = function(s)
         height = dpi(250),
         border_width = 3,
         border_color = "FF00FF",
-        bg = "#2E3440", --[[{
-		type  	= 'linear',
-		from 	= { 0, 0 },
-		to 	= { 0, dpi(300) },
-		stops	= {{0, '#282828'}, {50, '#888888'}}
-	},--]]
-        screen = s,
+        bg = "#2E3440",
+	screen = s,
         x = 240,
         y = -40,
         shape = function (cr, width, height)
@@ -35,8 +30,7 @@ local top = function(s)
 
     local panel_widget = wibox.widget {
         forced_num_rows = 3,
-        forced_num_cols = 15,
-        --min_cols_size = dpi(50), min_rows_size = dpi(50),
+        forced_num_cols = 14,
         homogeneous = true,
         spacing = dpi(4),
         expand = 'none',
@@ -53,12 +47,20 @@ local top = function(s)
     --Initialize panel hidden
     anim_show_hide:set(-panel.height+panel.height/40)
     
+    local layout_widget = pi(awful.widget.layoutbox())
+    layout_widget:buttons(gears.table.join(
+	awful.button({ }, 1, function () awful.layout.inc( 1) end),
+	awful.button({ }, 3, function () awful.layout.inc(-1) end),
+	awful.button({ }, 4, function () awful.layout.inc( 1) end),
+	awful.button({ }, 5, function () awful.layout.inc(-1) end)
+    ))
     local power_widget = require ('widget.power')
     local rofi_widget   = require ('widget.button.rofi_launcher')
     local wall_widget = require ('widget.button.wall')
     local firefox_widget = require ('widget.button.firefox')
     local tag_switch_widget = require ('widget.button.tag_switch')
     local profile_pic = require ('widget.profile')
+    local power_btn	= require ('widget.button.power')
     local music_widget = require ('widget.music')
     local time_widget = require ('widget.time')
     local bars    = require ('widget.bars')
@@ -67,13 +69,19 @@ local top = function(s)
     panel_widget:add_widget_at(power_widget,3,4,1,4)
     panel_widget:add_widget_at(wall_widget,1,3,1,1)
     panel_widget:add_widget_at(firefox_widget,2,3,1,1)
+    panel_widget:add_widget_at(layout_widget,3,11)
     panel_widget:add_widget_at(profile_pic,1,1,2,2)
     panel_widget:add_widget_at(music_widget,1,4,2,4)
     panel_widget:add_widget_at(wall_widget,1,8,1,1)
     panel_widget:add_widget_at(tag_switch_widget,3,8,1,1)
-    panel_widget:add_widget_at(time_widget,3,1,1,2)
+    panel_widget:add_widget_at(pi(awful.widget.textclock()),3,1,1,2)
     panel_widget:add_widget_at(rofi_widget,3,3,1,1)
-    panel_widget:add_widget_at(bars,1,10,1,4)
+    panel_widget:add_widget_at(bars,1,12,1,3)
+    panel_widget:add_widget_at(power_btn,3,14)
+    panel_widget:add_widget_at(pi(wibox.widget{
+    	wibox.widget.systray(),
+	widget = wibox.container.place
+	}),3,12,1,2)
 
     panel : setup {
         {

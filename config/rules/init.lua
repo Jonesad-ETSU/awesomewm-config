@@ -1,5 +1,31 @@
-local awful = require ('awful')
 local beautiful = require ('beautiful')
+local awful 	= require ('awful')
+local gears 	= require ('gears')
+
+client.connect_signal ('manage', function(c)
+	
+	c:emit_signal(
+		'request::activate',
+		'mouse::enter',
+		{ raise = true }
+	)
+
+	if not awesome.startup then
+		awful.client.setslave(c)
+	end
+
+	if awesome.startup
+	and not c.size_hints.user_position
+	and not c.size_hints.program_position then
+		awful.placement.no_offscreen(c)
+	end
+
+	c.shape = function (cr, width, height)
+		return gears.shape.rounded_rect(cr, width, height, 15)
+	end
+end)
+
+
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
