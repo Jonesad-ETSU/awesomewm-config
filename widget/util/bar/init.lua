@@ -37,7 +37,7 @@ local bar_widget = function (options)
     local bar = wibox.widget {
         value = options.init_value or 50,
         max_value = options.max_value or 100,
-        bar_shape = options.bar_shape or gears.shape.rounded_rect,
+        bar_shape = options.bar_shape or gears.shape.rounded_bar,
         shape = options.shape or gears.shape.rounded_bar, 
         bar_border_color = options.bar_border_color or "#ff00ff",
         bar_border_width = options.bar_border_width or 1,
@@ -74,11 +74,7 @@ local bar_widget = function (options)
     local cmd = options.cmd 
     local anim_duration = options.anim_duration
 
-    gears.timer {
-        timeout = options.timer or 17,
-        call_now = true,
-        autostart = true,
-        callback = function()
+    function update()
             awful.spawn.easy_async_with_shell (
                 cmd,
                 function(stdout)
@@ -97,8 +93,39 @@ local bar_widget = function (options)
 		   --anim_stats.duration = options.anim_duration
                 end
             )
-        end
+    end
+
+    gears.timer {
+        timeout = options.timer or 17,
+        call_now = true,
+        autostart = true,
+        --callback = function() update() end
+	callback = function()
+            awful.spawn.easy_async_with_shell (
+                cmd,
+                function(stdout)
+                   local lines = {}
+                   for s in stdout:gmatch("[^\r\n]+") do
+                        table.insert(lines,s)
+                   end
+                   if options.alt_check and options.alt_check(lines) then
+                        bar.color = options.alt_color or "#ff0000"
+                    else
+                        bar.color = options.color or "#00ff00"
+                   end
+		   local value = tonumber(lines[1])
+		   --anim_stats.duration = anim_duration * (value/100) 
+                   anim:set(value) 
+		   --anim_stats.duration = options.anim_duration
+                end
+            )
+    	end
     } : start()
+
+    awesome.connect_signal (
+	'widget::util::bar::'..options.name or "bar".."::update",
+	function() update() end
+    )
 
     local text = wibox.widget {
         markup = options.label_text or '<b>BRI:</b> ',
@@ -137,18 +164,25 @@ local bar_widget = function (options)
                 widget = wibox.container.background
             })
     end
-    ratio:ajust_ratio(2, .175, .65, .175)
+
+    if options.ratio then
+	    ratio:ajust_ratio( 2, options.ratio[1], options.ratio[2], options.ratio[3] )
+    else ratio:ajust_ratio( 2, .175, .65, .175 ) end
 
     ratio:connect_signal(
         'activate',
         function()
             if options.activate_function then
                 options.activate_function()
-            else
-                naughty.notify { text = "You clicked me! :D "}
-            end
+            elseif not options.buttons then 
+		    naughty.notify { text = "You clicked me! :D " }
+	    end
         end
     )
+
+    if options.buttons then
+	    return clickable( ratio, options.buttons )
+    end
 
     return clickable(ratio)
 end

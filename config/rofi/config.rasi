@@ -1,0 +1,33 @@
+/* vim:ft=css */
+configuration {
+	modi: "window,drun,run,ssh";
+	theme: "Monokai";
+        font: "DejaVu Sans 10";
+	combi-modi: "windows, drun, ssh";	
+	matching: "fuzzy";
+	show-icons: true;
+	icon-theme: "Obsidian";
+	lines: 8;
+	width: 1000;
+	columns: 6;
+	padding: 10;
+	fullscreen: true;
+}
+
+element {
+	orientation:	vertical;
+	border-radius: 	1%;
+	padding:	2% 0% 2% 0%;
+}
+
+element-text {
+	expand:			true;
+	horizontal-align:	0.5;
+	vertical-align:		0.5;
+	margin:			0.5% 1% 0% 1%;
+}
+
+element-icon {
+	size: 10ch;
+}
+@import "/usr/share/rofi/themes/Adapta-Nokto.rasi"

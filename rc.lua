@@ -137,6 +137,13 @@ screen.connect_signal(
 
 awful.screen.connect_for_each_screen(function(s)
 
+    s.padding = { 
+	    left=5,
+	    right=5,
+	    top=20,
+	    bottom=5
+    }
+
     -- Each screen has its own tag table.
     awful.tag({ "1", "2", "3", "4" }, s, awful.layout.layouts[1])
 end)
@@ -279,7 +286,7 @@ local double_click_event_handler = function(event)
 		return
 	end
 
-	time_handler = gears.timer.start_new( .15,
+	time_handler = gears.timer.start_new( .250,
 		function()
 			time_handler = nil
 			return false

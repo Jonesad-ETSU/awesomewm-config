@@ -8,25 +8,28 @@ local beautiful = require ('beautiful')
 local dpi       = require ('beautiful.xresources').apply_dpi
 local naughty   = require ('naughty')
 local hidden    = true
+local panel_width = dpi(1080)
 
 local top = function(s)     
     local panel = wibox {
         visible = true,
         ontop = true,
         splash = false,
-        width = dpi(1000),
-        height = dpi(250),
+        width = panel_width,
+        height = panel_width/4,
         border_width = 3,
         border_color = "FF00FF",
         bg = "#2E3440",
 	screen = s,
-        x = 240,
-        y = -40,
+        --x = 240,
+        --y = 0,
         shape = function (cr, width, height)
             return gears.shape.rounded_rect(cr, width, height, 20)
         end,
         fg = beautiful.foreground
     }
+
+    awful.placement.top(panel)
 
     local panel_widget = wibox.widget {
         forced_num_rows = 3,
@@ -61,22 +64,23 @@ local top = function(s)
     local tag_switch_widget = require ('widget.button.tag_switch')
     local profile_pic = require ('widget.profile')
     local power_btn	= require ('widget.button.power')
+    local quick_launchers = require ('widget.launchers')
     local music_widget = require ('widget.music')
     local time_widget = require ('widget.time')
     local bars    = require ('widget.bars')
 
     --row,col,row_span,col_span
-    panel_widget:add_widget_at(power_widget,3,4,1,4)
-    panel_widget:add_widget_at(wall_widget,1,3,1,1)
-    panel_widget:add_widget_at(firefox_widget,2,3,1,1)
+    panel_widget:add_widget_at(power_widget,3,1,1,2)
+    --panel_widget:add_widget_at(firefox_widget,2,3,1,1)
     panel_widget:add_widget_at(layout_widget,3,11)
+    panel_widget:add_widget_at(quick_launchers, 2, 3, 2, 2)
     panel_widget:add_widget_at(profile_pic,1,1,2,2)
-    panel_widget:add_widget_at(music_widget,1,4,2,4)
-    panel_widget:add_widget_at(wall_widget,1,8,1,1)
+    panel_widget:add_widget_at(music_widget,2,5,2,4)
+    panel_widget:add_widget_at(wall_widget,3,10,1,1)
     panel_widget:add_widget_at(tag_switch_widget,3,8,1,1)
-    panel_widget:add_widget_at(pi(awful.widget.textclock()),3,1,1,2)
-    panel_widget:add_widget_at(rofi_widget,3,3,1,1)
-    panel_widget:add_widget_at(bars,1,12,1,3)
+    panel_widget:add_widget_at(pi(wibox.container.place(awful.widget.textclock())),3,4,1,4)
+    --panel_widget:add_widget_at(rofi_widget,3,3,1,1)
+    panel_widget:add_widget_at(bars,1,3,1,3)
     panel_widget:add_widget_at(power_btn,3,14)
     panel_widget:add_widget_at(pi(wibox.widget{
     	wibox.widget.systray(),
@@ -84,7 +88,7 @@ local top = function(s)
 	}),3,12,1,2)
 
     panel : setup {
-        {
+	{
             nil,
             {
                 panel_widget,

@@ -15,6 +15,12 @@ local shutdown = ib ({
 	cmd = "systemctl poweroff"
 })
 
+local reboot = ib ({
+	image = image_dir.."reboot.svg",
+	tooltip = "Reboots the Computer",
+	cmd = "systemctl reboot"
+})
+
 local sleep = ib ({
 	image = image_dir.."sleep.svg",
 	tooltip = "Save system state to RAM and enter low-power mode",
@@ -39,6 +45,7 @@ local power_widget = wibox.widget {
 			sleep,
 			log_out,
 			hibernate,
+			reboot,
 			shutdown,
 			layout = wibox.layout.flex.horizontal,
 		},
@@ -48,5 +55,9 @@ local power_widget = wibox.widget {
 	widget = wibox.container.margin
 }
  
-return popup(power_widget)
+return popup(
+	power_widget,
+	{
+		
+	})
 

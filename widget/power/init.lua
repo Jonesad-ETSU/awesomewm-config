@@ -38,6 +38,7 @@ function get_hearts_widget (pct_remaining, status)
     local num_hearts = 5
     local batl = wibox.layout.flex.horizontal()
     batl:fill_space (true)
+    batl.spacing = dpi(5)
 
     local hearts = {
         full  = make_heart_widget('full', status),
@@ -49,14 +50,27 @@ function get_hearts_widget (pct_remaining, status)
 
     for _ = 1, wholes do batl:add(hearts.full) end
     pct_remaining = pct_remaining - ( wholes * 100/num_hearts )
-    
-    if pct_remaining >= (100/(2*num_hearts)) then
+
+    if pct_remaining == 0 then
+	    return wibox.widget {
+		    batl,
+		    top = dpi(5),
+		    bottom = dpi(5),
+		    widget = wibox.container.margin
+	    }
+    elseif pct_remaining >= (100/(2*num_hearts)) then
         batl:add(hearts.half)
     else batl:add(hearts.empty) end
    
     for i= 1, (num_hearts - 1) - wholes, 1 do batl:add(hearts.empty) end
 
-    return batl
+
+    return wibox.widget {
+	    batl,
+	    top = dpi(5),
+	    bottom = dpi(5),
+	    widget = wibox.container.margin
+    }
 end
 
 gears.timer {

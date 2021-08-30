@@ -1,6 +1,7 @@
 local btn	= require ('widget.util.img_button')
 local pi 	= require ('widget.util.panel_item')
 local awful	= require ('awful')
+local popup	= require ('widget.util.my_popup')
 local beautiful	= require ('beautiful')
 local dpi	= require ('beautiful.xresources').apply_dpi
 local wibox	= require ('wibox')
@@ -19,32 +20,6 @@ bling.widget.tag_preview.enable {
 }
 
 local selector = function ()
-	local l = wibox.layout.fixed.horizontal
-	
-	--Adds each tag as a homogenously-spaced column.
-	for t in tags do
-		l:add(make_tag_widget(t))
-	end
-	
-	local pop = awful.popup {
-		widget = {},
-		border_width = dpi(3),
-		border_color = "#ff00ff",
-		forced_width = dpi(500),
-		forced_height = dpi(500),
-		placement = awful.placement.centered,
-		shape = gears.shape.rounded_rect,
-		ontop = true,
-		type = 'normal',
-		visible = true
-	}
-
-	pop : setup {
-		l
-	}
-
-
-
 	function make_tag_widget(tag)
 		if tag.image then
 			local widget = wibox.widget {
@@ -77,7 +52,19 @@ local selector = function ()
 		)
 		return widget_btn
 	end
+
+	local l = wibox.layout.flex.horizontal
+	
+	--Adds each tag as a homogenously-spaced column.
+	for t in tags do
+		naughty.notify { text = "Found a tag"}
+		l:add(make_tag_widget(t))
+	end	
+	naughty.notify { text = "Done searching tags"}
+	l:add(imagebox)
+
+	return l
 end
 
 
-return selector
+return popup(selector)

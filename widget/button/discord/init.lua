@@ -3,7 +3,7 @@ local gfs = require ('gears.filesystem')
 local color = require ('gears.color')
 
 return  ib ({
-        image = color.recolor_image(gfs.get_configuration_dir() .. 'widget/button/wall/wall.svg',"#ffffff"),
+        image = gfs.get_configuration_dir() .. 'widget/button/discord/discord.svg',
         hide_tooltip = true, 
-        cmd = "nitrogen",
+        cmd = "discord",
 })

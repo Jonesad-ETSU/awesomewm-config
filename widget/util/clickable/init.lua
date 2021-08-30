@@ -3,9 +3,11 @@
 --]]
 local wibox = require ('wibox')
 local beautiful = require ('beautiful')
+local awful = require ('awful')
+local naughty = require ('naughty')
 local dpi = require('beautiful.xresources').apply_dpi
 
-local clickable_container = function ( widget )
+local clickable_container = function ( widget, custom_buttons )
     
     local click_widget = wibox.widget {
         {
@@ -71,6 +73,13 @@ local clickable_container = function ( widget )
             widget:emit_signal("deactivate") 
         end
     )
+
+    --naughty.notify { text = click_widget:buttons() or ""}
+    click_widget:buttons(
+    	custom_buttons or 
+	awful.button({},1,function()
+		click_widget:emit_signal('activate') 
+	end))
 
     return click_widget
 end

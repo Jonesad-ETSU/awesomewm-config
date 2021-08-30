@@ -66,9 +66,16 @@ local bar_widget = wibox.widget {
     back_pic,
     progressbar,
     forward_pic,
-    spacing = dpi(2),
-    layout = wibox.layout.flex.horizontal 
+    spacing = dpi(10),
+    expand = 'inner',
+    layout = wibox.layout.align.horizontal 
 }
+--[[local bar_widget = wibox.widget {
+	bar_widget_,
+	bottom = dpi(15),
+	widget = wibox.container.margin
+}--]]
+--bar_widget:ajust_ratio(2,.3,.4,.3)
 
 local main = wibox.widget {
     --{

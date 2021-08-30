@@ -28,6 +28,8 @@ local button = function (options)
     if not options.hide_tooltip then
         local tt = awful.tooltip {
             objects = { image },
+	    mode = 'outside',
+	    delay_show = 1,
             text = options.tooltip or options.cmd
         }
     end

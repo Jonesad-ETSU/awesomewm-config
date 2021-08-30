@@ -6,18 +6,9 @@ local dpi   = require ('beautiful.xresources').apply_dpi
 local pi   = require ('widget.util.panel_item')
 local naughty = require ('naughty')
 local clickable = require ('widget.util.clickable')
-local user_name = 'jonesad'
+local user_name = os.getenv('USER')
 
 --local return_profile_widget = function ()
-
---[[
-    awful.spawn(
-       'whoami',
-       callback = function (stdout)
-        user_name = stdout
-       end
-    )
-    --]]
 
     local user = wibox.widget {
         markup = '<i>'..user_name..'</i>',
