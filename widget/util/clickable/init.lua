@@ -74,7 +74,6 @@ local clickable_container = function ( widget, custom_buttons )
         end
     )
 
-    --naughty.notify { text = click_widget:buttons() or ""}
     click_widget:buttons(
     	custom_buttons or 
 	awful.button({},1,function()

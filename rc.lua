@@ -37,7 +37,7 @@ beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/gtk/theme.lua
 beautiful.font = "monospace 12"
 
 -- Bling relies on beautiful's properties, thus must be set after.
---local bling = require ('bling')
+local bling = require ('bling')
 
 -- Set taskbar  icon size
 awesome.set_preferred_icon_size(32)

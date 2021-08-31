@@ -108,19 +108,36 @@ local top = function(s)
         layout = wibox.container.place
     }
 
+    awesome.connect_signal (
+	'panel::visibility::toggle',
+	function()
+		panel:emit_signal('toggle')	
+	end
+    )
+
+    panel:connect_signal (
+	'toggle',
+	function()
+		if hidden then
+			anim_show_hide:set(-40)
+		else
+			anim_show_hide:set(-panel.height+panel.height/40)
+		end
+		hidden = not hidden
+	end
+    )
+
     panel:connect_signal (
         'mouse::enter',
         function ()
-            anim_show_hide:set(-40)
-            hidden = not hidden    
+		panel:emit_signal('toggle')
         end
     )
 
     panel:connect_signal (
         'mouse::leave',
         function ()
-            anim_show_hide:set(-panel.height+panel.height/40)
-            hidden = not hidden    
+		panel:emit_signal('toggle')
         end
     )
 

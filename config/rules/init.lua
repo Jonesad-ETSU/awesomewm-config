@@ -20,11 +20,20 @@ client.connect_signal ('manage', function(c)
 		awful.placement.no_offscreen(c)
 	end
 
-	c.shape = function (cr, width, height)
-		return gears.shape.rounded_rect(cr, width, height, 15)
-	end
+	update_shape(c)
 end)
 
+client.connect_signal('property::fullscreen',function(c) update_shape(c) end)
+
+function update_shape(c)
+	if c.fullscreen then
+		c.shape = gears.shape.rectangle
+	else
+		c.shape = function (cr, width, height)
+			return gears.shape.rounded_rect( cr, width, height, 15 )
+		end
+	end
+end
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).

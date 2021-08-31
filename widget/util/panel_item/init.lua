@@ -2,10 +2,11 @@ local wibox     = require ('wibox')
 local gears     = require ('gears')
 local beautiful = require ('beautiful')
 local dpi       = require ('beautiful.xresources').apply_dpi
+local old_bg
 
-local nw = function(widget)
-    return wibox.widget {
-        {
+local nw = function(widget, outer)
+    local w = wibox.widget {
+	{
             widget,
             margins = dpi(10),
             widget = wibox.container.margin
@@ -23,6 +24,23 @@ local nw = function(widget)
         shape_border_width = dpi(1),
         widget = wibox.container.background
     }
+    w:connect_signal(
+	'mouse::enter',
+	function()
+		if outer then return end
+		old_bg = w.bg
+		w.bg = "#ff0000"
+	end
+    )
+    w:connect_signal(
+	'mouse::leave',
+	function()
+		if outer then return end
+		w.bg = old_bg
+		old_bg = nil
+	end
+    )
+    return w
 end
 
 return nw

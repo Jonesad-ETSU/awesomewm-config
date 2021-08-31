@@ -74,6 +74,8 @@ globalkeys = gears.table.join(
 		{description = "select next", group = "layout"}),
 	awful.key({ modkey, "Shift"   }, "l", function () awful.layout.inc(-1) end,
 		{description = "select previous", group = "layout"}),
+	--awful.key({ modkey }, "t", function () awesome.emit_signal('panel::visibility::toggle') end, function () awesome.emit_signal('panel::visibility::toggle') end,
+	--	{description = "Shows the panel", group = "layout"}),
 
 	awful.key({ modkey, "Control" }, "n",
 	    function ()
@@ -85,11 +87,6 @@ globalkeys = gears.table.join(
 		end,
 		{description = "restore minimized", group = "client"}),
 
-	awful.key({ modkey },	"b",	
-		function()
-			awesome.emit_signal('test_wibox::toggle')
-		end,
-		{description = "Spawns the test widget", group = "client"}),
 -- Prompt
 	awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
 		{description = "run prompt", group = "launcher"}),

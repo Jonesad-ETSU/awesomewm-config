@@ -11,7 +11,7 @@ configuration {
 	width: 1000;
 	columns: 6;
 	padding: 10;
-	fullscreen: true;
+	fullscreen: false;
 }
 
 element {

@@ -4,8 +4,9 @@ local discord	= require ('widget.button.discord')
 local terminal	= require ('widget.button.terminal')
 local pi	= require ('widget.util.panel_item')
 local wibox	= require ('wibox')
+local naughty	= require ('naughty')
 
-return pi ( wibox.widget {
+local launchers = wibox.widget {
 	firefox,
 	discord,
 	terminal,
@@ -16,4 +17,6 @@ return pi ( wibox.widget {
 	expand		= true,
 	spacing		= 10,
 	layout = wibox.layout.grid
-})
+}
+
+return pi(launchers, true)
