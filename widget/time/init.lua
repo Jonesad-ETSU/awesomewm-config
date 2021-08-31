@@ -1,108 +1,29 @@
-local awful     = require('awful')
-local wibox     = require('wibox')
-local pi        = require ('widget.util.panel_item')
-local beautiful = require('beautiful')
-local dpi       = require('beautiful.xresources').apply_dpi
-local gtk       = require ('beautiful.gtk')
-local gears     = require('gears')
-local clickable = require('widget.util.clickable')
+local wibox = require ('wibox')
+local awful = require ('awful')
+local gfs = require ('gears.filesystem')
+local color = require('gears.color').recolor_image
+local pi  = require ('widget.util.panel_item')
+local dpi = require ('beautiful.xresources').apply_dpi
 
-local day = wibox.widget {
-   markup = "<b>N/A</b>",
-   font = "monospace 24",
-   align = 'center',
-   widget = wibox.widget.textbox 
+local widget = wibox.widget {
+	{
+		nil,
+		{
+			image = color(gfs.get_configuration_dir()..'/widget/time/time.svg',"#ffffff"), 
+			resize = true,
+			widget = wibox.widget.imagebox
+		},
+		nil,
+		expand = 'none',
+		layout = wibox.layout.align.vertical
+	},
+	{
+		format = "<span font='DejaVu Sans 16'>%a, %b %d %n %I:%M %p</span>",
+		widget = wibox.widget.textclock
+	},
+	spacing = dpi(10),
+	layout = wibox.layout.ratio.horizontal
 }
+widget:ajust_ratio(2, .3, .7, 0)
 
-local hour = wibox.widget {
-   markup = "<b>N/A</b>",
-   --font = beautiful.font,
-   font = "monospace 24",
-   align = 'center',
-   valign = 'center',
-   widget = wibox.widget.textbox 
-}
-
-local minute = wibox.widget {
-   markup = "<b>N/A</b>",
-   --font = beautiful.font,
-   font = "monospace 24",
-   align = 'center',
-   valign = 'center',
-   widget = wibox.widget.textbox 
-}
-
-local time = wibox.widget {
-    {
-        hour,
-        fg = "#000000",
-        bg = "#00ffff",
-        widget = wibox.container.background
-    },
-    {
-        minute,
-        fg = "#000000",
-        bg = "#ffff00",
-        widget = wibox.container.background
-    },
-    layout = wibox.layout.flex.horizontal
-}
-
-local date = wibox.widget {
-    day,
-    time,
-    spacing = dpi(0),
-    layout = wibox.layout.flex.vertical
-}
-
-function get_day()
-    awful.spawn.easy_async_with_shell (
-        [[ date '+%a']],
-        function(stdout) day.markup = '<b>'..stdout..'</b>' end
-    )
-end
-
-function get_hour()
-    awful.spawn.easy_async_with_shell (
-        [[ date '+%H']],
-        function(stdout) hour.markup = stdout end
-    )
-end
-
-function get_minute()
-    awful.spawn.easy_async_with_shell (
-        [[ date '+%M']],
-        function(stdout) minute.markup = stdout end
-    )
-end
-
-gears.timer {
-    timeout = 9973,
-    call_now = true,
-    autostart = true,
-    callback = get_day()
-} : start()
-
-gears.timer {
-    timeout = 3,
-    call_now = true,
-    autostart = true,
-    callback = function()
-        get_hour()
-        get_minute()
-    end
-} : start()
-
-date:connect_signal(
-    'activate',
-    function()
-        awful.spawn.easy_async (
-        [[date]],
-        function(stdout)
-            naughty.notify { text = stdout }  
-        end
-        )
-    end
-)
-
-return pi(clickable(time))
+return pi(widget)
