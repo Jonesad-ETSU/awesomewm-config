@@ -1,10 +1,8 @@
 --[[
---  The following file is a modified version of the clickable-container module from the-glorious-dotfiles. 
+--  The following file is a modified version of the clickable-container module from the-glorious-dotfiles.
 --]]
 local wibox = require ('wibox')
-local beautiful = require ('beautiful')
 local awful = require ('awful')
-local naughty = require ('naughty')
 local dpi = require('beautiful.xresources').apply_dpi
 
 local clickable_container = function ( widget, custom_buttons )
@@ -62,7 +60,7 @@ local clickable_container = function ( widget, custom_buttons )
     click_widget:connect_signal(
         'button::press',
         function()
-            widget:emit_signal("activate") 
+            widget:emit_signal("activate")
         end
     )
     

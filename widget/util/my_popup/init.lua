@@ -49,21 +49,37 @@ local popup = function (w, options)
 		placement(popup_wibox)
 	end
 
-	local disappear_event = gears.timer {
-		timeout = 5,
+	local toggle_timer = gears.timer {
+		timeout = 1,
 		callback = function()
-			popup_wibox:emit_signal('toggle')
-			return false	-- start_new will loop if this returns true
+			popup_wibox.visible = not popup_wibox.visible
 		end
 	}
+
+	function toggle()
+		popup_wibox.visible = not popup_wibox.visible
+	end
 
 	popup_wibox:connect_signal (
 		'toggle',
 		function()
-			self.visible = not self.visible
-			if self.visible then
-				disappear_event:start_new()
+			if not popup_wibox.visible then
+				gears.timer.start_new (
+					1,
+					function()
+						toggle()
+						return false
+					end
+				)
 			end
+			popup_wibox.visible = not popup_wibox.visible
+		end
+	)
+
+	popup_wibox:connect_signal (
+		'mouse::leave',
+		function()
+			toggle()
 		end
 	)
 

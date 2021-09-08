@@ -39,13 +39,14 @@ local bar_widget = function (options)
         max_value = options.max_value or 100,
         bar_shape = options.bar_shape or gears.shape.rounded_bar,
         shape = options.shape or gears.shape.rounded_bar, 
-        bar_border_color = options.bar_border_color or "#ff00ff",
+        bar_border_color = options.bar_border_color or nil,
         bar_border_width = options.bar_border_width or 1,
         border_width = options.border_width or 2,
         border_color = options.border_color or "#00ffff",
         forced_width = options.forced_width or dpi(100),
         forced_height = options.forced_height or dpi(1),
         color = options.color or "#00ff00",
+        background_color = options.background_color or "#282828",
         --paddings = 1,
         widget = wibox.widget.progressbar
     }
@@ -122,10 +123,6 @@ local bar_widget = function (options)
     	end
     } : start()
 
-    awesome.connect_signal (
-	'widget::util::bar::'..options.name or "bar".."::update",
-	function() update() end
-    )
 
     local text = wibox.widget {
         markup = options.label_text or '<b>BRI:</b> ',
@@ -181,7 +178,8 @@ local bar_widget = function (options)
     )
 
     if options.buttons then
-	    return clickable( ratio, options.buttons )
+	    local final = clickable( ratio, options.buttons )
+            return final
     end
 
     return clickable(ratio)

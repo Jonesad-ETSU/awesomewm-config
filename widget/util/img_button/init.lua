@@ -17,18 +17,29 @@ local gfs       = require ('gears.filesystem')
 
 local button = function (options)
 
-    local image = pi(
-        wibox.widget {
-            image = options.image or gfs.get_configuration_dir() .. '/unknown.svg', 
-            resize = true,
-            widget = wibox.widget.imagebox
+    local image_base = wibox.widget {
+		{
+			image = options.image or gfs.get_configuration_dir() .. '/unknown.svg', 
+		    	resize = true,
+		    	widget = wibox.widget.imagebox
+		},
+		widget = wibox.container.place
         }
-    )
+      local image
+      if options.use_pi then
+        image = pi {
+		widget = image_base,
+		name = options.name,
+		margins = options.margins,
+		ratio = options.ratio,
+		outer = options.outer or false
+	}
+      else image = image_base end
     
     if not options.hide_tooltip then
         local tt = awful.tooltip {
             objects = { image },
-	    mode = 'outside',
+	    --mode = 'outside',
 	    delay_show = 1,
             text = options.tooltip or options.cmd
         }

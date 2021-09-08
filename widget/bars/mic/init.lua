@@ -5,16 +5,12 @@ local awful = require ('awful')
 local dpi = require ('beautiful.xresources').apply_dpi
 local awestore = require ('awestore')
 local vol_step = 10
-local this_name = "vol"
+local this_name = "mic"
 
 return auto_bar ({
     name = this_name,
     value = 50,
-    label_text = "<b>VOL:</b>",
-    --bar_shape = gears.shape.rounded_rect,
-    --shape = gears.shape.rounded_rect,
-    --bar_border_color = "#888888",
-    --bar_border_width = 1,
+    label_text = "<b>MIC:</b>",
     border_width = dpi(1),
     border_color = "#ffff00",
     color = {
@@ -23,7 +19,7 @@ return auto_bar ({
 	to	= {100,0},
 	stops	= {{0,"#ffffff"},{50,"#ffff00"}}
     },--"#00ff00",
-    cmd = [[pamixer --get-volume ; pamixer --get-mute]],
+    cmd = [[pamixer --default-source --get-volume ; pamixer --default-source --get-mute]],
     --activate_function = function()
     --    require('widget.popup.vol')
     --end,
@@ -34,28 +30,23 @@ return auto_bar ({
         else return false
         end
     end ,
-    timer = 3,
+    timer = 7,
     elem_spacing = dpi(5),
     buttons = gears.table.join(
 	awful.button( { }, 1, function()
-		awful.spawn( "pamixer -i "..vol_step )
-		awesome.emit_signal('widget::util::bar::'..this_name..'::update')
+		awful.spawn( "pamixer --default-source -i "..vol_step )
 	end),
 	awful.button( { }, 2, function()
-		awful.spawn( "pamixer -t")
-		awesome.emit_signal('widget::util::bar::'..this_name..'::update')
+		awful.spawn( "pamixer --default-source -t")
 	end),
 	awful.button( { }, 3, function()
-		awful.spawn( "pamixer -d "..vol_step )
-		awesome.emit_signal('widget::util::bar::'..this_name..'::update')
+		awful.spawn( "pamixer --default-source -d "..vol_step )
 	end),
 	awful.button( { }, 4, function()
-		awful.spawn( "pamixer -i "..vol_step )
-		awesome.emit_signal('widget::util::bar::'..this_name..'::update')
+		awful.spawn( "pamixer --default-source -i "..vol_step )
 	end),
 	awful.button( { }, 5, function()
-		awful.spawn( "pamixer -d "..vol_step )
-		awesome.emit_signal('widget::util::bar::'..this_name..'::update')
+		awful.spawn( "pamixer --default-source -d "..vol_step )
 	end)
     )
 })

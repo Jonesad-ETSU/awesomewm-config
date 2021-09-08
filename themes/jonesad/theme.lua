@@ -4,11 +4,12 @@
 ----------------------------------------------
 
 local theme_assets = require("beautiful.theme_assets")
-local naughty = require("naughty")
 local dpi = require("beautiful.xresources").apply_dpi
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
+local gears_shape = require("gears.shape")
 local wibox = require("wibox")
+local awful_widget_clienticon = require("awful.widget.clienticon")
 local gtk = require("beautiful.gtk")
 
 
@@ -90,7 +91,6 @@ if not theme.gtk then
     gears_debug.print_warning("Can't load GTK+3 theme. Using 'xresources' theme as a fallback.")
     return theme
 end
-naughty.notify { text = "Loading GTK+3 Theme" }
 theme.gtk.button_border_radius = dpi(theme.gtk.button_border_radius or 0)
 theme.gtk.button_border_width = dpi(theme.gtk.button_border_width or 1)
 theme.gtk.bold_font = theme.gtk.font_family .. ' Bold ' .. theme.gtk.font_size
@@ -101,10 +101,8 @@ theme.gtk.menubar_border_color = mix(
 )
 
 
---theme.font          = theme.gtk.font_family .. ' ' .. theme.gtk.font_size
-theme.font          = 'Terminus (TTF) ' .. theme.gtk.font_size
-theme.small_font          = theme.gtk.font_family .. ' ' .. dpi(12)
-theme.small_font          = theme.gtk.font_family .. ' ' .. dpi(24)
+-- theme.font          = theme.gtk.font_family .. ' ' .. theme.gtk.font_size
+theme.font          = theme.gtk.font_family .. ' ' .. dpi(10)
 theme.font_family   = theme.gtk.font_family
 
 theme.bg_normal     = theme.gtk.bg_color
@@ -122,8 +120,8 @@ theme.fg_urgent     = theme.gtk.error_fg_color
 theme.bg_minimize   = mix(theme.wibar_fg, theme.wibar_bg, 0.3)
 theme.fg_minimize   = mix(theme.wibar_fg, theme.wibar_bg, 0.9)
 
---theme.bg_systray    = theme.wibar_bg
-theme.bg_systray    = "#00000000"
+--theme.bg_systray    = "#00000000"
+theme.bg_systray    = "#ffffff"
 
 theme.border_normal = theme.gtk.wm_border_unfocused_color
 theme.border_focus  = theme.gtk.fg_color
@@ -135,10 +133,19 @@ theme.border_radius = theme.gtk.button_border_radius
 theme.useless_gap   = dpi(5)
 
 local rounded_rect_shape = function(cr,w,h)
-    gears.shape.rounded_rect(
+    gears_shape.rounded_rect(
         cr, w, h, theme.border_radius
     )
 end
+
+-- There are other variable sets
+-- overriding the default one when
+-- defined, the sets are:
+-- taglist_[bg|fg|shape|shape_border_color|shape_border_width]_[focus|urgent|occupied|empty|volatile]
+-- tasklist_[bg|fg|shape|shape_border_color|shape_border_width]_[focus|urgent|minimized]
+-- titlebar_[bg|fg]_[normal|focus]
+-- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
+-- mouse_finder_[color|timeout|animate_timeout|radius|factor]
 
 theme.tasklist_fg_normal = theme.wibar_fg
 theme.tasklist_bg_normal = theme.wibar_bg
@@ -198,7 +205,7 @@ theme.tasklist_widget_template = {
             {
                 {
                     id     = 'clienticon',
-                    widget = awful.widget.clienticon,
+                    widget = awful_widget_clienticon,
                 },
                 margins = dpi(4),
                 widget  = wibox.container.margin,
@@ -238,33 +245,58 @@ theme.taglist_fg_empty = mix(
     theme.gtk.menubar_bg_color,
     theme.gtk.header_button_fg_color
 )
---]]
+
 theme.titlebar_font_normal = theme.gtk.bold_font
 theme.titlebar_bg_normal = theme.gtk.wm_border_unfocused_color
 theme.titlebar_fg_normal = theme.gtk.wm_title_unfocused_color
+--theme.titlebar_fg_normal = choose_contrast_color(
+    --theme.titlebar_bg_normal,
+    --theme.gtk.menubar_fg_color,
+    --theme.gtk.menubar_bg_color
+--)
+
 theme.titlebar_font_focus = theme.gtk.bold_font
 theme.titlebar_bg_focus = theme.gtk.wm_border_focused_color
 theme.titlebar_fg_focus = theme.gtk.wm_title_focused_color
+--theme.titlebar_fg_focus = choose_contrast_color(
+    --theme.titlebar_bg_focus,
+    --theme.gtk.menubar_fg_color,
+    --theme.gtk.menubar_bg_color
+--)
 
 theme.tooltip_fg = theme.gtk.tooltip_fg_color
 theme.tooltip_bg = theme.gtk.tooltip_bg_color
+
+-- Variables set for theming the menu:
+-- menu_[bg|fg]_[normal|focus]
+-- menu_[border_color|border_width]
 
 theme.menu_border_width = theme.gtk.button_border_width
 theme.menu_border_color = theme.gtk.menubar_border_color
 theme.menu_bg_normal = theme.gtk.menubar_bg_color
 theme.menu_fg_normal = theme.gtk.menubar_fg_color
 
+-- @TODO: get from gtk menu height
 theme.menu_height = dpi(24)
 theme.menu_width  = dpi(200)
 theme.menu_submenu_icon = nil
 theme.menu_submenu = "->"
 
-theme.panel_item.bg = "#0000ff"
-theme.panel_item.shape = rounded_rect_shape
-theme.panel_item.margins = dpi(10)
+-- You can add as many variables as
+-- you wish and access them by using
+-- beautiful.variable in your rc.lua
+--theme.bg_widget = "#cc0000"
 
+theme.panel_item_bg = "#0000ff"
+theme.panel_item_margins = dpi(10)
+theme.panel_item_shape = rounded_rect_shape
+
+
+-- Recolor Layout icons:
 theme = theme_assets.recolor_layout(theme, theme.wibar_fg)
 
+-- Recolor titlebar icons:
+--
 theme = theme_assets.recolor_titlebar(
     theme, theme.titlebar_fg_normal, "normal"
 )
@@ -283,11 +315,42 @@ theme = theme_assets.recolor_titlebar(
 theme = theme_assets.recolor_titlebar(
     theme, theme.gtk.error_bg_color, "focus", "press"
 )
+
+-- Define the icon theme for application icons. If not set then the icons
+-- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
 
+-- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(
     theme.menu_height, mix(theme.bg_focus, theme.fg_normal), theme.wibar_bg
 )
+
+-- Generate taglist squares:
+--local taglist_square_size = dpi(4)
+--theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
+    --taglist_square_size, theme.gtk.header_button_border_color
+--)
+--theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
+    --taglist_square_size, theme.gtk.header_button_border_color
+--)
+-- Or disable them:
+theme.taglist_squares_sel = nil
+theme.taglist_squares_unsel = nil
+
+-- Generate wallpaper:
+local wallpaper_bg = theme.gtk.base_color
+local wallpaper_fg = theme.gtk.bg_color
+local wallpaper_alt_fg = theme.gtk.selected_bg_color
+if not is_dark(theme.bg_normal) then
+    wallpaper_bg, wallpaper_fg = wallpaper_fg, wallpaper_bg
+end
+wallpaper_bg = reduce_contrast(wallpaper_bg, 50)
+wallpaper_fg = reduce_contrast(wallpaper_fg, 30)
+wallpaper_fg = mix(wallpaper_fg, wallpaper_bg, 0.4)
+wallpaper_alt_fg = mix(wallpaper_alt_fg, wallpaper_fg, 0.4)
+theme.wallpaper = function(s)
+    return theme_assets.wallpaper(wallpaper_bg, wallpaper_fg, wallpaper_alt_fg, s)
+end
 
 return theme
 

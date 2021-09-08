@@ -19,9 +19,12 @@ end
 
 local profile_container = wibox.widget {
 	{
-		image = profile_img(),
-		resize = true,
-		widget = wibox.widget.imagebox
+		{
+			image = profile_img(),
+			resize = true,
+			widget = wibox.widget.imagebox
+		},
+		widget = wibox.container.place
 	},
 	shape = gears.shape.circle,
 	shape_clip = true,
@@ -30,11 +33,12 @@ local profile_container = wibox.widget {
 	widget = wibox.container.background
 }
 
-local profile = pi ( wibox.widget { 
-	profile_container,
-	nil,
-	layout = wibox.layout.fixed.vertical
-})
+local profile = pi { 
+	widget = profile_container,
+	name = user_name,
+        margins = dpi(3),
+	outer = false
+}
 
 profile:connect_signal(
 	'activate',

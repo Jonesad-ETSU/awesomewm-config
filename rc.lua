@@ -3,10 +3,8 @@ pcall(require, "luarocks.loader")
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
-local wibox = require("wibox")
-local beautiful = require("beautiful")
+local wibox = require("wibox") local beautiful = require("beautiful")
 local naughty = require("naughty")
-local top_panel = require ('layout')
 --local scratch = require('widget.terminal-scratch')
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -33,9 +31,12 @@ do
 end
 -- }}}
 -- Initialize theme
-beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/gtk/theme.lua" )
-beautiful.font = "monospace 12"
+if not beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/gtk/theme.lua") then
+	naughty.notify { text = "Failed to load theme."}
+end
 
+-- Panel relies on layout
+local panel = require ('layout')
 -- Bling relies on beautiful's properties, thus must be set after.
 local bling = require ('bling')
 
@@ -77,54 +78,54 @@ bat_widget = wibox.widget {
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
-                    awful.button({ }, 1, function(t) t:view_only() end),
-                    awful.button({ modkey }, 1, function(t)
-                                              if client.focus then
-                                                  client.focus:move_to_tag(t)
-                                              end
-                                          end),
-                    awful.button({ }, 3, awful.tag.viewtoggle),
-                    awful.button({ modkey }, 3, function(t)
-                                              if client.focus then
-                                                  client.focus:toggle_tag(t)
-                                              end
-                                          end),
-                    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
-                    awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
-                )
+    awful.button({ }, 1, function(t) t:view_only() end),
+    awful.button({ modkey }, 1, function(t)
+        if client.focus then
+            client.focus:move_to_tag(t)
+        end
+    end),
+    awful.button({ }, 3, awful.tag.viewtoggle),
+    awful.button({ modkey }, 3, function(t)
+        if client.focus then
+            client.focus:toggle_tag(t)
+        end
+    end),
+    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
+    awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
+)
 
 local tasklist_buttons = gears.table.join(
-                     awful.button({ }, 1, function (c)
-                                              if c == client.focus then
-                                                  c.minimized = true
-                                              else
-                                                  c:emit_signal(
-                                                      "request::activate",
-                                                      "tasklist",
-                                                      {raise = true}
-                                                  )
-                                              end
-                                          end),
-                     awful.button({ }, 3, function()
-                                              awful.menu.client_list({ theme = { width = 250 } })
-                                          end),
-                     awful.button({ }, 4, function ()
-                                              awful.client.focus.byidx(1)
-                                          end),
-                     awful.button({ }, 5, function ()
-                                              awful.client.focus.byidx(-1)
-                                          end))
+  awful.button({ }, 1, function (c)
+   if c == client.focus then
+     c.minimized = true
+   else
+     c:emit_signal(
+       "request::activate",
+       "tasklist",
+       {raise = true}
+     )
+   end
+  end),
+  awful.button({ }, 3, function()
+    awful.menu.client_list({ theme = { width = 250 } })
+   end),
+  awful.button({ }, 4, function ()
+      awful.client.focus.byidx(1)
+   end),
+  awful.button({ }, 5, function ()
+    awful.client.focus.byidx(-1)
+   end))
 
 local function set_wallpaper(s)
-    -- Wallpaper
-    if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
-        -- If wallpaper is a function, call it with the screen
-        if type(wallpaper) == "function" then
-            wallpaper = wallpaper(s)
-        end
-        gears.wallpaper.maximized(wallpaper, s, true)
+  -- Wallpaper
+  if beautiful.wallpaper then
+    local wallpaper = beautiful.wallpaper
+    -- If wallpaper is a function, call it with the screen
+    if type(wallpaper) == "function" then
+      wallpaper = wallpaper(s)
     end
+    gears.wallpaper.maximized(wallpaper, s, true)
+  end
 end
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
@@ -316,12 +317,13 @@ client.connect_signal("request::titlebars", function(c)
         end)
     )
 
-    awful.titlebar(c, {position = 'top', bg = beautiful.bg_normal, size = 40}) : setup {
+    awful.titlebar(c, {position = 'top', bg = beautiful.wibar_bg, size = 40}) : setup {
 	{ -- Left
 		{
 			{
 				{
 					awful.titlebar.widget.iconwidget(c),
+			    awful.titlebar.widget.stickybutton   (c),
 					buttons = buttons,
 					layout  = wibox.layout.fixed.horizontal
 				},
@@ -346,7 +348,6 @@ client.connect_signal("request::titlebars", function(c)
 	{ -- Right
 		{
 			{
-			    awful.titlebar.widget.stickybutton   (c),
 			    awful.titlebar.widget.minimizebutton (c),
 			    awful.titlebar.widget.closebutton    (c),
 			    layout = wibox.layout.fixed.horizontal()

@@ -1,4 +1,5 @@
 local beautiful = require ('beautiful')
+local dpi = require ('beautiful.xresources').apply_dpi
 local wibox 	= require ('wibox')
 local gears 	= require ('gears')
 local gfs 	= require ('gears.filesystem')
@@ -41,39 +42,34 @@ function status_image_widget (status)
     }
 end
 
-function daily_widget (image, wind, temp, day)
+function daily_widget (arg)
     local l = wibox.widget {
-        {
-		{
-			markup = '<b>'..day..'</b>',
-			font = beautiful.font,
-			widget = wibox.widget.textbox
-		},
-		widget = wibox.container.place
-        },
 	{
-		image,
+		arg.image,
 		widget = wibox.container.place
 	},
         {
-		{
-			markup = 'Temp: <i>'..temp.degrees..' '..temp.type..'</i>',
-            		font = beautiful.font,
-            		widget = wibox.widget.textbox
-		},
-		widget = wibox.container.place
+          nil,
+          {
+            {
+              markup = 'Temp: <i>'..arg.temp.degrees..' '..arg.temp.type..'</i>',
+              font = beautiful.font,
+              widget = wibox.widget.textbox
+            },
+            {
+              markup = 'Wind: '.. arg.wind.speed ..' '.. arg.wind.type,
+              font = beautiful.font,
+              widget = wibox.widget.textbox
+            },
+            layout = wibox.layout.fixed.vertical
+          },
+          nil,
+          expand = 'none',
+          layout = wibox.layout.align.vertical
         },
-        {
-		{
-			markup = 'Wind: '.. wind.speed ..' '.. wind.type,
-		    	font = beautiful.font,
-		    	widget = wibox.widget.textbox
-		},
-		widget = wibox.container.place
-        },
-        layout = wibox.layout.ratio.vertical
+        layout = wibox.layout.flex.horizontal
     }
-    l:ajust_ratio(2,.1,.7,.2)
+    --l:ajust_ratio(2,.1,.7,.2)
     return l
 end
 
@@ -93,27 +89,23 @@ end
 get_weather()
 
 local today_image = status_image_widget (weather_conditions[2])
-local tomorrow_image = status_image_widget (weather_conditions[2])
+--local tomorrow_image = status_image_widget (weather_conditions[2])
 
-local today = daily_widget (
-	today_image,
-	wind_speed[1],
-	temperature[1],
-	"Monday"
-)
+local today = daily_widget {
+	image = today_image,
+	wind = wind_speed[1],
+	temp= temperature[1]	
+}
 
-local tomorrow = daily_widget (
+--[[local tomorrow = daily_widget (
 	tomorrow_image,
 	wind_speed[2],
 	temperature[2],
 	"Tuesday"
-)
+)--]]
 
-local weather_widget =  wibox.widget {
-	today,
-	tomorrow,
-	layout = wibox.layout.ratio.horizontal
+return pi { 
+	widget = today,
+	outer = false,
+	margins = dpi(2),
 }
-weather_widget:ajust_ratio(2,.6,.4,0)
-
-return pi(weather_widget)

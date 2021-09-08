@@ -1,10 +1,3 @@
---[[
---      |  Pic   |  Song Name
---      |        |    Album
---      |        |    time
---      << -----------x--------- >> << = back >> = forward --x-- = progressbar 
---]]
-
 local wibox = require ('wibox')
 local beautiful = require ('beautiful')
 local dpi = require ('beautiful.xresources').apply_dpi
@@ -21,14 +14,14 @@ local album_art = wibox.widget {
 }
 
 local song_title = wibox.widget {
-    markup = "<b>"..song.."</b>",
+    markup = "<span font='"..beautiful.font.." 16'><b>"..song.."</b></span>",
     font = beautiful.font,
     align = 'center',
     widget = wibox.widget.textbox
 } 
 
 local artist_title = wibox.widget {
-    markup = "<i>"..artist.."</i>",
+    markup = "<span font='"..beautiful.font.." 12'><i>"..artist.."</i></span>",
     font = beautiful.font,
     align = 'center',
     widget = wibox.widget.textbox
@@ -78,7 +71,7 @@ local bar_widget = wibox.widget {
 --bar_widget:ajust_ratio(2,.3,.4,.3)
 
 local main = wibox.widget {
-    --{
+    {
         layout = wibox.layout.align.vertical,
         spacing = dpi(5),
         expand = 'none',
@@ -89,15 +82,17 @@ local main = wibox.widget {
             layout = wibox.layout.fixed.vertical
         },
         bar_widget
-    --},
-    --widget = wibox.container.place 
+    },
+    margins = dpi(10),
+    widget = wibox.container.margin 
 }
 
-return pi ( wibox.widget {
+local final_widget = wibox.widget {
     {
         album_art,
         shape = gears.shape.rounded_rect,
 	shape_border_width = dpi(2),
+	--shape_border_width = 0,
 	shape_border_color = "#00cccc",
         shape_clip = true,
         widget = wibox.container.background
@@ -105,4 +100,11 @@ return pi ( wibox.widget {
     main,
     spacing = dpi(10),
     layout = wibox.layout.fixed.horizontal
-})
+}
+
+return pi {
+	widget = final_widget,
+	margins = 0,
+	outer = false,
+	name = nil,
+} 

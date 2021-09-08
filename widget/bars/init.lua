@@ -1,10 +1,13 @@
 local wibox = require ('wibox')
 local awestore = require ('awestore')
+local lighten = require ('widget.util.color').lighter
+local beautiful = require ('beautiful')
 local naughty = require ('naughty')
 local pi = require ('widget.util.panel_item')
 local dpi = require ('beautiful.xresources').apply_dpi
 local gears = require ('gears')
 local vol = require ('widget.bars.vol')
+local mic = require ('widget.bars.mic')
 local bri = require ('widget.bars.bri')
  
 local bars = wibox.widget {
@@ -15,36 +18,30 @@ local bars = wibox.widget {
 		widget = wibox.container.background
 	},
 	{
+		id = "mic",
+		mic,
+		shape = gears.shape.rounded_bar,
+		widget = wibox.container.background
+	},
+	{
 		id = "bri",
 		bri,
 		shape = gears.shape.rounded_bar,
 		widget = wibox.container.background
 	},
 	spacing = dpi(3),
-	layout = wibox.layout.ratio.vertical
+	layout = wibox.layout.flex.vertical
 }
-bars:ajust_ratio(2, .5, .5, 0)
-
-bars.bri.shape = gears.shape.rounded_bar
-
-
---[[local zoom = awestore.tweened(0, {
-	duration = 200,
-	easing = awestore.easing.back_in_out
-})
-
-zoom:subscribe( function(v)
-		
-end)
---]]
 
 for _,w in pairs(bars.children) do
 	w:connect_signal(
 		'mouse::enter',
 		function()
-			w.bg = "#ff0000"
-			w.shape_border_width = 3
-			w.shape_border_color = "#00ff00"
+--			w.bg = "#ff0000"
+			--naughty.notify { text = "wibar_bg: "..beautiful.wibar_bg}			
+			w.bg = lighten("#585858", 50)
+			w.shape_border_width = 1
+			w.shape_border_color = "#888888"
 		end
 	)
 	w:connect_signal(
@@ -58,4 +55,7 @@ for _,w in pairs(bars.children) do
 end
 
 
-return pi(bars)
+return pi {
+	widget = bars,
+	outer = true,
+}

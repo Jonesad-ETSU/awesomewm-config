@@ -42,12 +42,20 @@ local log_out = ib ({
 local power_widget = wibox.widget {
 	{
 		{
-			sleep,
-			log_out,
-			hibernate,
-			reboot,
-			shutdown,
-			layout = wibox.layout.flex.horizontal,
+			{
+				markup = "Think Wisely, <i>" .. os.getenv('USER').."</i>!!",
+				font = beautiful.font .. " 32",
+				widget = wibox.widget.textbox
+			},
+			{
+				sleep,
+				log_out,
+				hibernate,
+				reboot,
+				shutdown,
+				layout = wibox.layout.flex.horizontal,
+			},
+			layout = wibox.layout.flex.vertical
 		},
 		widget = wibox.container.place
 	},
@@ -55,9 +63,15 @@ local power_widget = wibox.widget {
 	widget = wibox.container.margin
 }
  
-return popup(
+local p = popup(
 	power_widget,
 	{
-		
+		width = 1000,
+		height = 300,
+		shape = gears.shape.rounded_rect,
+		bg = "#282828"
 	})
+p:emit_signal('toggle')
+
+return p
 
