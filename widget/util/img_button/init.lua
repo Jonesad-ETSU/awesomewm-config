@@ -17,25 +17,27 @@ local gfs       = require ('gears.filesystem')
 
 local button = function (options)
 
-    local image_base = wibox.widget {
-		{
-			image = options.image or gfs.get_configuration_dir() .. '/unknown.svg', 
-		    	resize = true,
-		    	widget = wibox.widget.imagebox
-		},
-		widget = wibox.container.place
-        }
-      local image
+    local image
+    if not options.widget then
+      local image_base = wibox.widget {
+        {
+          image = options.image or gfs.get_configuration_dir() .. '/unknown.svg', 
+          resize = true,
+          widget = wibox.widget.imagebox
+        },
+        widget = wibox.container.place
+      }
       if options.use_pi then
         image = pi {
-		widget = image_base,
-		name = options.name,
-		margins = options.margins,
-		ratio = options.ratio,
-		outer = options.outer or false
+          widget = image_base,
+          name = options.name,
+          margins = options.margins,
+          ratio = options.ratio,
+          outer = options.outer or false
 	}
       else image = image_base end
-    
+    else image = options.widget end
+
     if not options.hide_tooltip then
         local tt = awful.tooltip {
             objects = { image },
@@ -45,25 +47,26 @@ local button = function (options)
         }
     end
 
-    image:connect_signal(
-        'activate',
-        function() 
-		if options.cmd then
-			awful.spawn.easy_async (
-			options.cmd,
-			function(stdout)
-			    if options.stdout_cmd then
-				options.stdout_cmd()
-			    end
-			end
-			)
-		elseif options.show_widget then
-			local shown = require(options.show_widget)
-			shown.visible = true
-		end
+    image:connect_signal (
+      'activate', function()
+        if options.cmd then
+          awful.spawn.easy_async_with_shell (
+            options.cmd,
+            function(stdout)
+              if options.stdout_cmd then
+                options.stdout_cmd(stdout)
+              end
+            end
+          )
+        elseif options.show_widget then
+          local shown = require(options.show_widget)
+          shown:emit_signal('toggle')
         end
-    )
-    return clickable(image)
+      end
+  )
+    if options.buttons then
+      return clickable(image, options.buttons)
+    else return clickable(image) end
 end
 
 return button

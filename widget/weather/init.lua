@@ -1,111 +1,123 @@
 local beautiful = require ('beautiful')
-local dpi = require ('beautiful.xresources').apply_dpi
+local dpi       = require ('beautiful.xresources').apply_dpi
 local wibox 	= require ('wibox')
+local naughty 	= require ('naughty')
+local awful 	= require ('awful')
 local gears 	= require ('gears')
 local gfs 	= require ('gears.filesystem')
 local pi	= require ('widget.util.panel_item')
 
-local wind_speed = {}
-local temperature = {}
+-- local wind_speed = {}
+-- local temperature = {}
 local weather_conditions = {}
+local location = "37303"
 
--- This function is the main thing that needs to to be improved.
-function get_weather()
-    local jsonString = ''
-    weather_conditions[1] = 'sunny'
-    weather_conditions[2] = 'rainy'
-    temperature[1] = { 
-        degrees = 80,
-        type = 'F'
-    }
-    temperature[2] = {
-        degrees = 62,
-        type = 'F'
-    }
-    wind_speed[1] = {
-        speed = 3,
-        type = 'mi'
-    }
-    wind_speed[2] = {
-        speed = 7,
-        type = 'mi'
-    }
-    return jsonString
-end
-
-function status_image_widget (status)
+local function weather_icon (status)
+  local icon = gfs.get_configuration_dir().. 'widget/weather/icons/'..(status or '')..'.svg'
+  if gears.filesystem.file_readable(icon) then
     return wibox.widget {
-        --image = weather_icons[status],
-        image = gfs.get_configuration_dir() .. '/widget/weather/icons/cloudy.svg',
-	resize = true,
-        widget = wibox.widget.imagebox 
+      image = gfs.get_configuration_dir() .. 'widget/weather/icons/'..status..'.svg',
+      resize = true,
+      widget = wibox.widget.imagebox 
     }
+  else return wibox.widget {
+    markup = "<b>"..(status or '').."</b>",
+    font = beautiful.font .. " 32",
+    align = 'center',
+    widget = wibox.widget.textbox
+  } end
 end
 
-function daily_widget (arg)
-    local l = wibox.widget {
-	{
-		arg.image,
-		widget = wibox.container.place
-	},
+
+local function get()
+
+  local temp = wibox.widget {
+    markup = 'Temp: <i></i>',
+    font = beautiful.font,
+    widget = wibox.widget.textbox
+  }
+
+  local wind = wibox.widget {
+    markup = 'Wind: ',
+    font = beautiful.font,
+    widget = wibox.widget.textbox
+  }
+
+  local icon = wibox.widget {
+    image = "",
+    resize = true,
+    widget = wibox.widget.imagebox
+  }
+
+  local dw = wibox.widget {
+      {
+        icon,
+        widget = wibox.container.place
+      },
+      {
+        nil,
         {
-          nil,
-          {
-            {
-              markup = 'Temp: <i>'..arg.temp.degrees..' '..arg.temp.type..'</i>',
-              font = beautiful.font,
-              widget = wibox.widget.textbox
-            },
-            {
-              markup = 'Wind: '.. arg.wind.speed ..' '.. arg.wind.type,
-              font = beautiful.font,
-              widget = wibox.widget.textbox
-            },
-            layout = wibox.layout.fixed.vertical
-          },
-          nil,
-          expand = 'none',
-          layout = wibox.layout.align.vertical
+          temp,
+          wind,
+          layout = wibox.layout.fixed.vertical
         },
-        layout = wibox.layout.flex.horizontal
+        nil,
+        expand = 'none',
+        layout = wibox.layout.align.vertical
+      },
+      layout = wibox.layout.flex.horizontal
     }
-    --l:ajust_ratio(2,.1,.7,.2)
-    return l
+
+  local cmd = [[curl wttr.in/]]..location..[[?format="%C\n%t\n%w\n"]]
+  awful.spawn.easy_async_with_shell ( 
+    --cmd,
+    'echo "Partly cloudy\n+70°F\n0mph\n"', --Hardcoded value so I can test this at work.
+    function(stdout,stderr)
+      -- Handles case when curl can't connect.
+      -- if stderr:find('%a+') then
+      --   return wibox.widget {
+      --     markup = "OFFLINE",
+      --     font = beautiful.font,
+      --     widget = wibox.widget.textbox
+      --   }
+      -- end
+
+      --naughty.notify {text = "Weather test "..stdout}
+      local lines = {}
+      for s in stdout:gmatch("[^\r\n]+") do
+        naughty.notify {text=s}
+        table.insert(lines,s)
+      end
+
+      for _,s in ipairs(lines) do
+        naughty.notify { text = "Line: "..s}
+      end
+      naughty.notify {text = "Icon's image: "}
+
+      icon.image = gfs.get_configuration_dir() .. 'widget/weather/icons/'..lines[1]..'.svg'
+      naughty.notify {text = "Icon's image: "..icon.image}
+      temp.markup = 'TEST '..lines[2]
+      wind.markup = 'TEST2 '..lines[3]
+      return dw
+    end
+  )
 end
 
-function wind_widget (wind)
-   return wibox.widget {
-        markup = '<i>'.. wind.speed ' ' .. wind.type ..'</i>',
-        font = beautiful.font,
-        align = 'center',
-        widget = wibox.widget.textbox
-   } 
-end
 
-function parse_day(json)
+--get_weather()
 
-end
+--local today_image = weather_icon (weather_conditions[2])
 
-get_weather()
+--[[today = daily_widget() --[[{
+  image_widget = today_image,
+  wind = wind_speed[1],
+  temp= temperature[1],
+}--]]
 
-local today_image = status_image_widget (weather_conditions[2])
---local tomorrow_image = status_image_widget (weather_conditions[2])
+local today = get()
 
-local today = daily_widget {
-	image = today_image,
-	wind = wind_speed[1],
-	temp= temperature[1]	
-}
-
---[[local tomorrow = daily_widget (
-	tomorrow_image,
-	wind_speed[2],
-	temperature[2],
-	"Tuesday"
-)--]]
-
-return pi { 
-	widget = today,
-	outer = false,
-	margins = dpi(2),
+return pi {
+  widget = today,
+  outer = false,
+  margins = dpi(2),
 }

@@ -1,4 +1,4 @@
-local rofi	= require ('widget.button.rofi_launcher')
+local steam	= require ('widget.button.steam')
 local firefox	= require ('widget.button.firefox')
 local discord	= require ('widget.button.discord')
 local terminal	= require ('widget.button.terminal')
@@ -7,16 +7,16 @@ local pi	= require ('widget.util.panel_item')
 local wibox	= require ('wibox')
 
 local launchers = wibox.widget {
-	firefox,
-	discord,
-	terminal,
-	rofi,
-	forced_num_rows = 1,
-	forced_num_cols = 4,
-	homogeneous	= true,
-	expand		= true,
-	spacing		= 2,
-	layout = wibox.layout.grid
+  firefox,
+  discord,
+  terminal,
+  steam,
+  forced_num_rows = 1,
+  forced_num_cols = 4,
+  homogeneous	= true,
+  expand		= true,
+  spacing		= 2,
+  layout = wibox.layout.grid
 }
 
 return launchers

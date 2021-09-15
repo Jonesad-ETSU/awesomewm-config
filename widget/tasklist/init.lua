@@ -26,8 +26,8 @@ local make_tasklist = function (s)--(s)
     end)
   )
 
-  s.tasklist = pi {
-    widget = awful.widget.tasklist {
+  local tasklist = wibox.widget {
+      awful.widget.tasklist {
       screen = s,
       filter = awful.widget.tasklist.filter.currenttags,
       buttons = tasklist_buttons,
@@ -44,11 +44,22 @@ local make_tasklist = function (s)--(s)
         layout = wibox.layout.flex.horizontal
       }
     },
-    margins = dpi(2),
+    require ('widget.button.rofi_launcher'),
+    spacing = 0,
+    layout = wibox.layout.ratio.horizontal
+  }
+
+  s.tasklist = pi {
+    widget = tasklist,
+    --margins = dpi(2),
+    margins = 0,
     outer = true,
     shape = gears.shape.rounded_bar,
     spacing = 20
   }
+
+  tasklist:ajust_ratio(2,.95,.05,0)
+
   return s.tasklist
 end
 

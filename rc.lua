@@ -5,52 +5,51 @@ local awful = require("awful")
 require("awful.autofocus")
 local wibox = require("wibox") local beautiful = require("beautiful")
 local naughty = require("naughty")
---local scratch = require('widget.terminal-scratch')
--- {{{ Error handling
--- Check if awesome encountered an error during startup and fell back to
--- another config (This code will only ever execute for the fallback config)
+
 if awesome.startup_errors then
-    naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Oops, there were errors during startup!",
-                     text = awesome.startup_errors })
+  naughty.notify({ preset = naughty.config.presets.critical,
+   title = "Oops, there were errors during startup!",
+   text = awesome.startup_errors })
 end
 
 -- Handle runtime errors after startup
 do
-    local in_error = false
-    awesome.connect_signal("debug::error", function (err)
-        -- Make sure we don't go into an endless error loop
-        if in_error then return end
-        in_error = true
+  local in_error = false
+  awesome.connect_signal("debug::error", function (err)
+    -- Make sure we don't go into an endless error loop
+    if in_error then return end
+    in_error = true
 
-        naughty.notify({ preset = naughty.config.presets.critical,
-                         title = "Oops, an error happened!",
-                         text = tostring(err) })
-        in_error = false
-    end)
+    naughty.notify({
+      preset = naughty.config.presets.critical,
+      title = "Oops, an error happened!",
+      text = tostring(err)
+    })
+    in_error = false
+  end)
 end
 -- }}}
 -- Initialize theme
 if not beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/gtk/theme.lua") then
-	naughty.notify { text = "Failed to load theme."}
+  naughty.notify { text = "Failed to load theme."}
 end
 
--- Panel relies on layout
-local panel = require ('layout')
 -- Bling relies on beautiful's properties, thus must be set after.
 local bling = require ('bling')
+-- Panel relies on layout
+local panel = require ('layout')
 
 -- Set taskbar  icon size
 awesome.set_preferred_icon_size(32)
 
 -- Run autostart shell script
-awful.spawn.with_shell(gears.filesystem.get_configuration_dir() .. "autostart" )
+awful.spawn.easy_async_with_shell(gears.filesystem.get_configuration_dir() .. "autostart" )
 
 naughty.notify({
-	title = "Loaded",
-	text = "Running jonesad's configuration files",
-	timeout = 3,
-	position = 'bottom_middle',
+  title = "Loaded",
+  text = "Running jonesad's configuration files",
+  timeout = 3,
+  position = 'bottom_middle',
 })
 
 
@@ -63,9 +62,6 @@ modkey = "Mod4"
 
 require ('config.layouts')
 require ('config.menu')
-
--- Keyboard map indicator and switcher
---mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
@@ -130,23 +126,23 @@ end
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal(
-	"property::geometry",
-	function()
-		awful.spawn([[nitrogen --restore]])
-	end
+  "property::geometry",
+  function()
+    awful.spawn([[nitrogen --restore]])
+  end
 )
 
 awful.screen.connect_for_each_screen(function(s)
 
-    s.padding = { 
-	    left=5,
-	    right=5,
-	    top=20,
-	    bottom=5
-    }
+  s.padding = {
+    left=5,
+    right=5,
+    top=20,
+    bottom=5
+  }
 
-    -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4" }, s, awful.layout.layouts[1])
+  -- Each screen has its own tag table.
+  awful.tag({ "1", "2", "3", "4" }, s, awful.layout.layouts[1])
 end)
 --[[
     -- Create a promptbox for each screen

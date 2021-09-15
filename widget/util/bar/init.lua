@@ -50,6 +50,14 @@ local bar_widget = function (options)
         --paddings = 1,
         widget = wibox.widget.progressbar
     }
+    
+    if options.tooltip then
+      local tt = awful.tooltip {
+        objects = { bar },
+        delay_show = 1,
+        text = options.tooltip
+      }
+    end
 
     local pct = wibox.widget {
         markup = "N/A",

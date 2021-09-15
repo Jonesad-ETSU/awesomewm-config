@@ -1,15 +1,17 @@
 local auto_bar = require ('widget.util.bar')
-local naughty = require ('naughty')
+--local naughty = require ('naughty')
 local gears = require ('gears')
 local awful = require ('awful')
 local dpi = require ('beautiful.xresources').apply_dpi
-local awestore = require ('awestore')
+--local awestore = require ('awestore')
 local vol_step = 10
 local this_name = "vol"
 
 return auto_bar ({
     name = this_name,
     value = 50,
+    tooltip = "Left Click/Scroll Up ==> Raise Volume by "..vol_step
+      .. "\nRight Click/Scroll Down ==> Lower Volume by "..vol_step,
     label_text = "<b>VOL:</b>",
     --bar_shape = gears.shape.rounded_rect,
     --shape = gears.shape.rounded_rect,

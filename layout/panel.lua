@@ -1,16 +1,14 @@
 local wibox     = require ('wibox')
-local clickable = require('widget.util.clickable')
 local pi 	= require ('widget.util.panel_item')
 local awful     = require ('awful')
 local gears     = require ('gears')
 local awestore  = require ('awestore')
 local beautiful = require ('beautiful')
 local dpi       = require ('beautiful.xresources').apply_dpi
-local naughty   = require ('naughty')
 local hidden    = true
 local panel_width = dpi(1000)
 
-local _panel = function(s, side)     
+local _panel = function(s, side)
     local panel = wibox {
         visible = true,
         ontop = true,
@@ -101,32 +99,51 @@ local _panel = function(s, side)
 
     --COL 3
     panel_widget:add_widget_at(widgets.bars,1,3,3,3)
-    panel_widget:add_widget_at(widgets.weather,4,3,2,2)
+    panel_widget:add_widget_at(widgets.btn.tag_switch,4,3,2,1)
     panel_widget:add_widget_at(widgets.launchers, 6, 3, 1, 2)
 
+    --COL 4
+    panel_widget:add_widget_at(layout_widget,4,4,2,1)
+
     --COL 5
-    panel_widget:add_widget_at(widgets.time,4,5,2,3)
+    panel_widget:add_widget_at(widgets.weather,4,5,2,2)
     panel_widget:add_widget_at(widgets.tasklist(s),6,5,1,7)
 
     --COL 6
     panel_widget:add_widget_at(widgets.music,1,6,3,4)
 
+    --COL 7
+    panel_widget:add_widget_at(widgets.time,4,7,2,3)
+
     --COL 8
-    panel_widget:add_widget_at(widgets.btn.tag_switch,4,8,2,1)
 
     --COL 9
-    panel_widget:add_widget_at(layout_widget,4,9,2,1)
 
     --COL 10
-    panel_widget:add_widget_at(widgets.btn.wall,1,10,2,1)
+    --[[panel_widget:add_widget_at(wibox.widget {
+      widgets.updates,
+      widgets.updates,
+      widgets.updates,
+      widgets.updates,
+      expand = 'none',
+      forced_num_rows = 2,
+      forced_num_cols = 2,
+      layout = wibox.layout.grid
+    },1,10,5,4)--]]
+    panel_widget:add_widget_at(widgets.charts,1,10,5,4)
+
+    --COL 11
 
     --COL 12
-    panel_widget:add_widget_at(widgets.actions,1,12,5,2)
+    --panel_widget:add_widget_at(widgets.actions,1,12,5,2)
     panel_widget:add_widget_at(systray,6,12,1,2)
+    
+    --COL 13
 
     --COL 14
     panel_widget:add_widget_at(widgets.btn.notif,1,14,2,1)
-    panel_widget:add_widget_at(widgets.btn.power,6,14,1,1)
+    panel_widget:add_widget_at(widgets.btn.wall,3,14,2,1)
+    panel_widget:add_widget_at(widgets.btn.settings,5,14,2,1)
 
 
 

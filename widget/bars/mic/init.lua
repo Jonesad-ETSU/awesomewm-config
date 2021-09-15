@@ -10,6 +10,8 @@ local this_name = "mic"
 return auto_bar ({
     name = this_name,
     value = 50,
+    tooltip = "Left Click/Scroll Up ==> Raise Volume by "..vol_step
+      .. "\nRight Click/Scroll Down ==> Lower Volume by "..vol_step,
     label_text = "<b>MIC:</b>",
     border_width = dpi(1),
     border_color = "#ffff00",

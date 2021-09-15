@@ -16,7 +16,7 @@ return pi {
   --name = "Discord",
   --margins = dpi(3),
   shape = gears.shape.circle,
-  margins = 2,
+  margins = dpi(4),
   ratio = {
     target 	= 2,
     before 	= 0.8,
