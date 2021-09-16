@@ -6,7 +6,8 @@
 local theme_assets = require("beautiful.theme_assets")
 local naughty = require("naughty")
 local dpi = require("beautiful.xresources").apply_dpi
-local gfs = require("gears.filesystem")
+local gears = require("gears")
+local gfs = gears.filesystem
 local themes_path = gfs.get_themes_dir()
 local wibox = require("wibox")
 local gtk = require("beautiful.gtk")
@@ -101,8 +102,7 @@ theme.gtk.menubar_border_color = mix(
 )
 
 
---theme.font          = theme.gtk.font_family .. ' ' .. theme.gtk.font_size
-theme.font          = 'Terminus (TTF) ' .. theme.gtk.font_size
+theme.font          = theme.gtk.font_family .. ' ' .. theme.gtk.font_size
 theme.small_font          = theme.gtk.font_family .. ' ' .. dpi(12)
 theme.small_font          = theme.gtk.font_family .. ' ' .. dpi(24)
 theme.font_family   = theme.gtk.font_family
@@ -122,8 +122,8 @@ theme.fg_urgent     = theme.gtk.error_fg_color
 theme.bg_minimize   = mix(theme.wibar_fg, theme.wibar_bg, 0.3)
 theme.fg_minimize   = mix(theme.wibar_fg, theme.wibar_bg, 0.9)
 
---theme.bg_systray    = theme.wibar_bg
-theme.bg_systray    = "#00000000"
+theme.bg_systray    = theme.wibar_bg
+--theme.bg_systray    = "#00000000"
 
 theme.border_normal = theme.gtk.wm_border_unfocused_color
 theme.border_focus  = theme.gtk.fg_color
@@ -132,7 +132,7 @@ theme.border_marked = theme.gtk.success_color
 theme.border_width  = dpi(theme.gtk.button_border_width or 1)
 theme.border_radius = theme.gtk.button_border_radius
 
-theme.useless_gap   = dpi(5)
+--theme.useless_gap   = 100
 
 local rounded_rect_shape = function(cr,w,h)
     gears.shape.rounded_rect(

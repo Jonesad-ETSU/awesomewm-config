@@ -30,7 +30,8 @@ do
 end
 -- }}}
 -- Initialize theme
-if not beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/gtk/theme.lua") then
+--if not beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/gtk/theme.lua") then
+if not beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/zenburn/theme.lua") then
   naughty.notify { text = "Failed to load theme."}
 end
 
@@ -314,25 +315,26 @@ client.connect_signal("request::titlebars", function(c)
     )
 
     awful.titlebar(c, {position = 'top', bg = beautiful.wibar_bg, size = 40}) : setup {
-	{ -- Left
-		{
-			{
-				{
-					awful.titlebar.widget.iconwidget(c),
-			    awful.titlebar.widget.stickybutton   (c),
-					buttons = buttons,
-					layout  = wibox.layout.fixed.horizontal
-				},
-				margins = 5,
-				widget = wibox.container.margin
-			},
-			shape = gears.shape.rounded_rect,
-			bg = "#bb00bb",
-			widget = wibox.container.background
-		},
-		left = 0,
-		widget = wibox.container.margin
-	},
+        nil,
+	-- { -- Left
+	--           {
+	--             {
+	--               {
+	--                 awful.titlebar.widget.iconwidget(c),
+	--                 awful.titlebar.widget.stickybutton   (c),
+	--                 buttons = buttons,
+	--                 layout  = wibox.layout.fixed.horizontal
+	--               },
+	--               margins = 5,
+	--               widget = wibox.container.margin
+	--             },
+	--             shape = gears.shape.rounded_rect,
+	--             bg = "#bb00bb",
+	--             widget = wibox.container.background
+	--           },
+	--           left = 0,
+	--           widget = wibox.container.margin
+	-- },
 	{ -- Middle
 	    { -- Title
 		align  = "center",
@@ -342,22 +344,22 @@ client.connect_signal("request::titlebars", function(c)
 	    layout  = wibox.layout.flex.horizontal
 	},
 	{ -- Right
-		{
-			{
-			    awful.titlebar.widget.minimizebutton (c),
-			    awful.titlebar.widget.closebutton    (c),
-			    layout = wibox.layout.fixed.horizontal()
-			},
-			margins = 10,
-			widget = wibox.container.margin
-		},
-		bg = "#ffffff",
-		shape = gears.shape.rounded_rect,
-		widget = wibox.container.background
-	},
+          -- {
+            -- {
+              -- awful.titlebar.widget.minimizebutton (c),
+              awful.titlebar.widget.stickybutton   (c),
+              awful.titlebar.widget.closebutton    (c),
+              layout = wibox.layout.fixed.horizontal()
+            -- },
+            -- margins = 10,
+            -- widget = wibox.container.margin
+          },
+	--           bg = "#ffffff",
+	--           shape = gears.shape.rounded_rect,
+	--           widget = wibox.container.background
+	-- },
 	layout = wibox.layout.align.horizontal
-	
-    }
+      }
 end)
 
 -- enable sloppy focus, so that focus follows mouse.

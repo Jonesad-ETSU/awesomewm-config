@@ -50,9 +50,9 @@ local bar_widget = function (options)
         --paddings = 1,
         widget = wibox.widget.progressbar
     }
-    
+
     if options.tooltip then
-      local tt = awful.tooltip {
+      awful.tooltip {
         objects = { bar },
         delay_show = 1,
         text = options.tooltip
@@ -74,16 +74,16 @@ local bar_widget = function (options)
     local anim = awestore.tweened(0, anim_stats)
 
     anim:subscribe (
-        function(val)
-            bar.value = val    
-            pct.markup = math.floor(val)..'%'
-        end
+      function(val)
+        bar.value = val
+        pct.markup = math.floor(val)..'%'
+      end
     )
 
-    local cmd = options.cmd 
-    local anim_duration = options.anim_duration
+    local cmd = options.cmd or [[echo $(( $RANDOM % 100 )) ]]
+    -- local anim_duration = options.anim_duration
 
-    function update()
+    local function update()
             awful.spawn.easy_async_with_shell (
                 cmd,
                 function(stdout)
@@ -95,10 +95,10 @@ local bar_widget = function (options)
                         bar.color = options.alt_color or "#ff0000"
                     else
                         bar.color = options.color or "#00ff00"
-                   end
+                  end
 		   local value = tonumber(lines[1])
-		   --anim_stats.duration = anim_duration * (value/100) 
-                   anim:set(value) 
+		   --anim_stats.duration = anim_duration * (value/100)
+                   anim:set(value)
 		   --anim_stats.duration = options.anim_duration
                 end
             )
@@ -108,32 +108,14 @@ local bar_widget = function (options)
         timeout = options.timer or 17,
         call_now = true,
         autostart = true,
-        --callback = function() update() end
 	callback = function()
-            awful.spawn.easy_async_with_shell (
-                cmd,
-                function(stdout)
-                   local lines = {}
-                   for s in stdout:gmatch("[^\r\n]+") do
-                        table.insert(lines,s)
-                   end
-                   if options.alt_check and options.alt_check(lines) then
-                        bar.color = options.alt_color or "#ff0000"
-                    else
-                        bar.color = options.color or "#00ff00"
-                   end
-		   local value = tonumber(lines[1])
-		   --anim_stats.duration = anim_duration * (value/100) 
-                   anim:set(value) 
-		   --anim_stats.duration = options.anim_duration
-                end
-            )
+          update()
     	end
     } : start()
 
 
     local text = wibox.widget {
-        markup = options.label_text or '<b>BRI:</b> ',
+        markup = options.label_text or '<b>LABEL:</b> ',
         align = 'center',
         font = beautiful.font,
         widget = wibox.widget.textbox,

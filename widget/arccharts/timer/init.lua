@@ -61,7 +61,7 @@ local chart = wibox.widget {
 }
 
 gears.timer {
-  timeout = 6007,
+  timeout =3001,
   call_now = true,
   autostart = true,
   callback = function()

@@ -62,13 +62,13 @@ local pause_pic = click (
     widget = wibox.widget.textbox
   },
   gears.table.join (
-    awful.button( { }, 1, function(self)
+    awful.button( { }, 1, function(--[[self--]])
       awful.spawn('mpc toggle')
-      if playing then
+--[[      if playing then
         self.markup = "<b>PLAY</b>"
       else
         self.markup = "<b>PAUSE</b>"
-      end
+      end --]]
       playing = not playing
     end)
   )
@@ -122,7 +122,7 @@ tt:connect_signal(
 --   color = "#00ff00",
 --   widget = wibox.widget.progressbar
 -- }
--- 
+--
 -- progressbar = click(progressbar,
 --   gears.table.join(
 --     awful.button( {}, 1, function()
@@ -140,7 +140,7 @@ tt:connect_signal(
 --   forward_pic,
 --   spacing = dpi(10),
 --   expand = 'inner',
---   layout = wibox.layout.align.horizontal 
+--   layout = wibox.layout.align.horizontal
 -- }
 
 local main = wibox.widget {
@@ -220,13 +220,12 @@ local function update_song(first)
       stdout = function(line)
         if line:find("TITLE") then
           song_title.markup = "<span font= '"..beautiful.font.." 10'><b><i>"..
-                                line:gsub("TITLE","").."</i></b></span>"
+            line:gsub("TITLE","").."</i></b></span>"
         else
           artist_title.markup = "<span font= '"..beautiful.font.." 8'><i>"..
-                                  line:gsub("ARTIST","").."</i></span>"
+            line:gsub("ARTIST","").."</i></span>"
         end
       end,
-      stderr = function(_) end,
       output_done = function()
         update_song(false)
       end

@@ -2,43 +2,37 @@ local ib = require ('widget.util.img_button')
 local pi = require ('widget.util.panel_item')
 local awful = require ('awful')
 local gears = require ('gears')
-local naughty = require ('naughty')
-local gfs = gears.filesystem
-local color = require ('gears.color').recolor_image
+-- local naughty = require ('naughty')
+-- local gfs = gears.filesystem
+-- local color = require ('gears.color').recolor_image
 local beautiful = require ('beautiful')
 local wibox = require ('wibox')
 
-local updates_txt = wibox.widget {
+local home_txt = wibox.widget {
   markup = 'N/A',
   align = 'center',
   font = beautiful.font,
   widget = wibox.widget.textbox
 }
 
-local updates_txt_btn = ib {
-  widget = updates_txt,
+local home_txt_btn = ib {
+  widget = home_txt,
   cmd = [[notify-send "$(checkupdates)"]],
   tooltip = "Number of updates. Click to see the updates."
 }
 
--- local updates_icon = ib {
---   image = color(gfs.get_configuration_dir() .. "/widget/arccharts/home/home.svg","#ffffff"),
---   cmd = "alacritty -e sudo pacman -Syu",
---   tooltip = "Click to update system"
--- }
---
-local updates_icon = ib {
+local home_icon = ib {
   widget = wibox.widget {
     markup = "<b><u>HOME</u></b>",
     font = beautiful.font .. ' 8',
     align = 'center',
     widget = wibox.widget.textbox
   },
-  cmd = [[alacritty -e "df ; read -p 'Press Any Key to Continue'"]],
-  tooltip = "home partition\nLeft Click ===> Open terminal and display disk usage."
+  cmd = [[alacritty -e "df; read -p 'Press Any Key to EXIT'"]],
+  tooltip = "Home partition\nLeft Click ===> Open terminal and display disk usage."
 }
 
-local updates = wibox.widget {
+local home = wibox.widget {
   {
     id = 'txt',
     markup = "",
@@ -46,25 +40,38 @@ local updates = wibox.widget {
     font = beautiful.font,
     widget = wibox.widget.textbox
   },
-  updates_icon,
-  updates_txt_btn,
+  home_icon,
+  home_txt_btn,
   expand = 'center',
   spacing = 3,
   layout = wibox.layout.ratio.vertical
 }
-updates:ajust_ratio(2,.0,.9,.1)
+home:ajust_ratio(2,.0,.9,.1)
 
 local chart = wibox.widget {
-  
-  updates,
+  home,
   id = 'bar',
   paddings = 10,
   max_value = 100,
   start_angle = math.pi/2,
   rounded_edge = true,
   value = 19,
-  colors = "#ffffff",
-  bg = "#000000",
+  --colors = "#ffffff",
+  colors = {{
+    type    = 'linear',
+    from    = {0,0},
+    to      = {150,0},
+    stops   = {{0,"#ededed"},{50,"#ffff00"}}
+  }},
+  --[[border_width = 1,
+  border_color = {
+    type    = 'linear',
+    from    = {0,0},
+    to      = {150,0},
+    stops   = {{50,"#ededed"},{0,"#ffff00"}}
+  },--]]
+  --bg = "#000000",
+  bg = nil,
   thickness = 16,
   widget = wibox.container.arcchart
 }
@@ -79,8 +86,8 @@ gears.timer {
       --[[ checkupdates 2>/dev/null | wc -l ]]--,
       [[df 2>/dev/null | grep /home | grep -o '[0-9]*%' | tr -d '%' ]],
       function(out)
-        chart.value = tonumber(out)
-        updates.txt.markup = out
+        chart.value = 100 - tonumber(out)
+        home_txt.markup = out
         -- naughty.notify {text = "Disk "..out}
       end
     )
@@ -90,7 +97,7 @@ gears.timer {
 local pi_chart = pi {
   widget = chart,
   shape = gears.shape.circle,
-  bg = "#ff00ff",
+  --bg = "#ff00ff",
   margins = 4,
 }
 

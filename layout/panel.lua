@@ -130,7 +130,8 @@ local _panel = function(s, side)
       forced_num_cols = 2,
       layout = wibox.layout.grid
     },1,10,5,4)--]]
-    panel_widget:add_widget_at(widgets.charts,1,10,5,4)
+    panel_widget:add_widget_at(widgets.charts,1,10,3,4)
+    panel_widget:add_widget_at(widgets.motd,4,10,2,4)
 
     --COL 11
 
@@ -150,13 +151,13 @@ local _panel = function(s, side)
     local vertical_margins = {}
     if side == 'top' then
       vertical_margins.top = 50
-      vertical_margins.bottom = 20
+      vertical_margins.bottom = 5
     elseif side == 'bottom' then
-      vertical_margins.top = 20
+      vertical_margins.top = 5
       vertical_margins.bottom = 50
     else
       vertical_margins.top = 50
-      vertical_margins.bottom = 20
+      vertical_margins.bottom = 5
     end
 
     panel : setup {

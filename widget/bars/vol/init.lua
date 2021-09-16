@@ -1,3 +1,4 @@
+-- local wibox = require ('wibox')
 local auto_bar = require ('widget.util.bar')
 --local naughty = require ('naughty')
 local gears = require ('gears')

@@ -23,8 +23,8 @@ local popup = function (w, options)
 
   local placement = options.placement or awful.placement.centered
   --naughty.notify { text = "type: " .. type(placement)}
+  local place = awful.placement
   if type(placement) == "string" then
-    local place = awful.placement
     if placement == "centered" then
       place.centered(popup_wibox)
     elseif placement == "top" then
@@ -46,6 +46,8 @@ local popup = function (w, options)
     end
   elseif type(placement) == "table" or type(placement) == "function" then
     placement(popup_wibox)
+  else
+    place.centered(popup_wibox)
   end
 
   local function toggle()

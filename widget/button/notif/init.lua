@@ -5,15 +5,15 @@ local color = require ('gears.color')
 local dpi = require ('beautiful.xresources').apply_dpi
 
 local notif_btn = ib {
-        image = gfs.get_configuration_dir() .. 'widget/button/notif/notif.svg',
-        hide_tooltip = true, 
-        cmd = "discord",
+  image = gfs.get_configuration_dir() .. 'widget/button/notif/notif.svg',
+  hide_tooltip = true, 
+  cmd = "discord",
 }
 
 return pi {
   widget = notif_btn,
   name = "Notif",
-  margins = dpi(6),
+  margins = dpi(12),
   ratio = {
     target 	= 2,
     before 	= 0.8,
