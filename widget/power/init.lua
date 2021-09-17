@@ -18,8 +18,8 @@ l.fill_space = true
 local function make_heart_widget (fullness, bat_state)
     local images_dir = gears.filesystem.get_configuration_dir() .. 'widget/power/icons/'
     local colors = { 
-	    discharging = "#FF0000",
-	    charging = "#00FF00"
+      discharging = "#FF0000",
+      charging = "#00FF00"
     }
     local color
     if bat_state == 'discharging' then
@@ -114,13 +114,17 @@ gears.timer {
                         hearts,
                         layout = wibox.container.place
                     },
-		    name = "Battery",
-		    ratio = {
-			target = 2,
-			before	= 0.8,
-			at	= 0.2,
-			after	= 0
-		    },
+                    top = dpi(5),
+                    bottom = dpi(5),
+                    margins = dpi(2),
+                    shape = gears.shape.rounded_rect,
+			-- 		    name = "Battery",
+			-- 		    ratio = {
+			-- target = 2,
+			-- before	= 0.8,
+			-- at	= 0.2,
+			-- after	= 0
+			-- 		    },
 		    outer = false
 	    	}
                     

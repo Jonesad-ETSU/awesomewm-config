@@ -13,6 +13,8 @@ local rofi_btn = ib {
 
 return pi {
   widget = rofi_btn,
-  shape = gears.shape.circle,
+  shape = gears.shape.rounded_rect,
+  top = dpi(8),
+  bottom = dpi(8),
   margins = dpi(4),
 }

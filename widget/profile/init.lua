@@ -29,15 +29,16 @@ local profile_container = wibox.widget {
   },
   shape = gears.shape.circle,
   shape_clip = true,
-  shape_border_width = 1,
+  shape_border_width = dpi(1),
   shape_border_color = "#ffffff",
   widget = wibox.container.background
 }
 
 local profile = pi { 
   widget = profile_container,
+  spacing = dpi(0),
   name = user_name,
-  margins = dpi(3),
+  margins = dpi(8),
   outer = false
 }
 

@@ -13,7 +13,7 @@ local settings_btn = ib {
   -- image = recolor(gfs.get_configuration_dir() .. '/widget/button/settings/settings.svg','#ffffff'),
   widget = wibox.widget {
     {
-      markup = "<b>Settings</b>",
+      markup = "<b>Files</b>",
       font = beautiful.font ,
       align = 'center',
       widget = wibox.widget.textbox
@@ -22,8 +22,8 @@ local settings_btn = ib {
     right = dpi(5),
     widget = wibox.container.margin
   },
-  show_widget = "layout.settings",
-  tooltip = 'Show Settings window',
+  cmd = 'nautilus',
+  tooltip = 'Open File Explorer',
   buttons = gears.table.join(
     awful.button ( {} , 1, function() end )
   )

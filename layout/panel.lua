@@ -15,7 +15,7 @@ local _panel = function(s, side)
         ontop = true,
         splash = false,
         width = panel_width,
-        height = panel_width/4,
+        height = panel_width/4.5,
         border_width = 3,
         border_color = "FF00FF",
 	screen = s,
@@ -23,7 +23,8 @@ local _panel = function(s, side)
             return gears.shape.rounded_rect(cr, width, height, 20)
         end,
         fg = beautiful.foreground,
-        bg = beautiful.wibar_bg
+        -- bg = beautiful.wibar_bg
+        bg = beautiful.black_light
     }
 
     if side == 'top' then
@@ -36,7 +37,7 @@ local _panel = function(s, side)
 
 
     local panel_widget = wibox.widget {
-        forced_num_rows = 6,
+        forced_num_rows = 5,
         forced_num_cols = 14,
         homogeneous = true,
         spacing = dpi(5),
@@ -84,7 +85,9 @@ local _panel = function(s, side)
     ))
 
     local widgets = require ('widget')
-    local systray = wibox.widget {
+    local systray = wibox.widget.systray()
+    systray:set_base_size(32)
+    systray = wibox.widget {
 	wibox.widget.systray(),
 	widget = wibox.container.place
     }
@@ -96,56 +99,45 @@ local _panel = function(s, side)
     --widget, row, col, row_span, col_span
     --COL 1
     panel_widget:add_widget_at(widgets.profile,1,1,4,2)
-    panel_widget:add_widget_at(widgets.power,5,1,2,2)
+    panel_widget:add_widget_at(widgets.power,5,1,1,2)
 
     --COL 3
-    panel_widget:add_widget_at(widgets.bars,1,3,3,3)
-    panel_widget:add_widget_at(widgets.btn.tag_switch,4,3,2,1)
-    panel_widget:add_widget_at(widgets.launchers, 6, 3, 1, 2)
+    panel_widget:add_widget_at(widgets.bars,1,3,2,3)
+    panel_widget:add_widget_at(widgets.weather,3,3,2,3)
+    panel_widget:add_widget_at(widgets.tasklist(s),5,3,1,9)
 
     --COL 4
-    panel_widget:add_widget_at(layout_widget,4,4,2,1)
 
     --COL 5
-    panel_widget:add_widget_at(widgets.weather,4,5,2,2)
-    panel_widget:add_widget_at(widgets.tasklist(s),6,5,1,7)
 
     --COL 6
-    panel_widget:add_widget_at(widgets.music,1,6,3,4)
+    panel_widget:add_widget_at(widgets.music,2,6,3,4)
+    panel_widget:add_widget_at(widgets.time,1,6,1,4)
 
     --COL 7
-    panel_widget:add_widget_at(widgets.time,4,7,2,3)
 
     --COL 8
 
     --COL 9
 
     --COL 10
-    --[[panel_widget:add_widget_at(wibox.widget {
-      widgets.updates,
-      widgets.updates,
-      widgets.updates,
-      widgets.updates,
-      expand = 'none',
-      forced_num_rows = 2,
-      forced_num_cols = 2,
-      layout = wibox.layout.grid
-    },1,10,5,4)--]]
     panel_widget:add_widget_at(widgets.charts,1,10,3,4)
-    panel_widget:add_widget_at(widgets.motd,4,10,2,4)
+    -- panel_widget:add_widget_at(widgets.motd,4,10,1,4)
 
     --COL 11
 
     --COL 12
     --panel_widget:add_widget_at(widgets.actions,1,12,5,2)
-    panel_widget:add_widget_at(systray,6,12,1,2)
+    panel_widget:add_widget_at(systray,5,12,1,2)
     
     --COL 13
 
     --COL 14
-    panel_widget:add_widget_at(widgets.btn.notif,1,14,2,1)
-    panel_widget:add_widget_at(widgets.btn.wall,3,14,2,1)
-    panel_widget:add_widget_at(widgets.btn.settings,5,14,2,1)
+    panel_widget:add_widget_at(widgets.btn.notif,1,14,1,1)
+    panel_widget:add_widget_at(widgets.btn.wall,2,14,1,1)
+    panel_widget:add_widget_at(widgets.btn.files,3,14,1,1)
+    panel_widget:add_widget_at(widgets.btn.settings,4,14,1,1)
+    panel_widget:add_widget_at(widgets.btn.power,5,14,1,1)
 
 
 

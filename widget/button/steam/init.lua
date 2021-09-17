@@ -14,5 +14,6 @@ local steam_btn = ib {
 return pi {
   widget = steam_btn,
   shape = gears.shape.circle,
-  margins = dpi(4),
+  shape_border_width = 0,
+  margins = dpi(3),
 }

@@ -62,7 +62,7 @@ local bar_widget = function (options)
 
     local pct = wibox.widget {
         markup = "N/A",
-        align = 'center',
+        align = 'left',
         font = options.font or beautiful.font,
         widget = wibox.widget.textbox
     }
@@ -77,7 +77,7 @@ local bar_widget = function (options)
     anim:subscribe (
       function(val)
         bar.value = val
-        pct.markup = math.floor(val)..'%'
+        pct.markup = math.floor(val)
       end
     )
 

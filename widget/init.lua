@@ -10,6 +10,7 @@ return {
     wall = require ('widget.button.wall'),
     power = require ('widget.button.power'),
     settings = require ('widget.button.settings'),
+    files = require ('widget.button.files'),
   },
   launchers = require ('widget.launchers'),
   profile = require ('widget.profile'),

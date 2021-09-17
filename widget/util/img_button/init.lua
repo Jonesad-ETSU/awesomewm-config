@@ -19,7 +19,7 @@ local button = function (options)
 
     local image
     if not options.widget then
-      local image_base = wibox.widget {
+      image = wibox.widget {
         {
           image = options.image or gfs.get_configuration_dir() .. '/unknown.svg', 
           resize = true,
@@ -27,15 +27,6 @@ local button = function (options)
         },
         widget = wibox.container.place
       }
-      if options.use_pi then
-        image = pi {
-          widget = image_base,
-          name = options.name,
-          margins = options.margins,
-          ratio = options.ratio,
-          outer = options.outer or false
-	}
-      else image = image_base end
     else image = options.widget end
 
     if not options.hide_tooltip then

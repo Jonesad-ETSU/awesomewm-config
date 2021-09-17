@@ -9,24 +9,21 @@ local bri = require ('widget.bars.bri')
 
 local bars = wibox.widget {
   {
-    id = "vol",
     vol,
     shape = gears.shape.rounded_bar,
     widget = wibox.container.background
   },
   {
-    id = "mic",
     mic,
     shape = gears.shape.rounded_bar,
     widget = wibox.container.background
   },
   {
-    id = "bri",
     bri,
     shape = gears.shape.rounded_bar,
     widget = wibox.container.background
   },
-  spacing = dpi(10),
+  spacing = dpi(2),
   layout = wibox.layout.flex.vertical
 }
 
@@ -52,5 +49,6 @@ end
 
 return pi {
   widget = bars,
+  margins = dpi(10),
   outer = true,
 }
