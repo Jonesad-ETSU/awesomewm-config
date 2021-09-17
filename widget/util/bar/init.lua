@@ -34,6 +34,7 @@ local dpi = require ('beautiful.xresources').apply_dpi
 --]]
 local bar_widget = function (options)
 
+
     local bar = wibox.widget {
         value = options.init_value or 50,
         max_value = options.max_value or 100,

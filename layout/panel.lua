@@ -9,6 +9,7 @@ local hidden    = true
 local panel_width = dpi(1000)
 
 local _panel = function(s, side)
+    -- local time_wibox = require ('layout.time')(s)
     local panel = wibox {
         visible = true,
         ontop = true,
@@ -179,10 +180,10 @@ local _panel = function(s, side)
     }
 
     awesome.connect_signal (
-	'panel::visibility::toggle',
-	function()
-		panel:emit_signal('toggle')	
-	end
+      'panel::visibility::toggle',
+      function()
+        panel:emit_signal('toggle')	
+      end
     )
 
     panel:connect_signal (
@@ -205,6 +206,7 @@ local _panel = function(s, side)
                 )
               end
 	    end
+            s.time.visible = not hidden
             hidden = not hidden
       end)
 

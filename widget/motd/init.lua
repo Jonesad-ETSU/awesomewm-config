@@ -10,13 +10,11 @@ local txt = wibox.widget {
   widget = wibox.widget.textbox
 }
 
-awful.spawn.with_line_callback (
-  "tail -f /etc/motd",
-  {
-    stdout = function(stdout)
-      txt.markup = "<b>"..stdout.."</b>"
-    end
-  }
+awful.spawn.easy_async_with_shell (
+  "cat /etc/motd",
+   function(stdout)
+    txt.markup = "<b>"..stdout.."</b>"
+   end
 )
 
 return pi {

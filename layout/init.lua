@@ -1,18 +1,11 @@
 local panel = require ('layout.panel')
---local time = require ('layout.time')
-local awful = require ('awful')
+local time = require ('layout.time')
+-- local awful = require ('awful')
 
 require('awful').screen.connect_for_each_screen (
     function(s)
+        s.time = time(s)
         s.panel = panel(s,'top')
-        --[[s.time_panel = awful.placement.next_to(
-          time(s),
-          {
-            preferred_postitions = 'right',
-            preferred_anchors = 'front',
-            geometry = s.top_panel
-          })--]]
-          --s.time_panel = time(s)
     end
 )
 
@@ -23,11 +16,9 @@ function update()
             if s.panel then
                 s.panel.visible = not fullscreen
             end
-            
-
-            --[[if s.time_panel then
-              s.time_panel.visible = not fullscreen
-            end--]]
+            if s.time then
+              s.time.visible = not fullscreen
+            end
         end
     end
 end

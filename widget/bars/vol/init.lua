@@ -27,9 +27,6 @@ return auto_bar ({
 	stops	= {{0,"#ffffff"},{50,"#ffff00"}}
     },--"#00ff00",
     cmd = [[pamixer --get-volume ; pamixer --get-mute]],
-    --activate_function = function()
-    --    require('widget.popup.vol')
-    --end,
     alt_color = "#ff0000",
     alt_check = function (lines)
         if lines[2] == 'true' then --checks if mute 

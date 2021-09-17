@@ -26,54 +26,99 @@ local make_tasklist = function (s)--(s)
     end)
   )
 
+  local layout_widget = pi {
+            widget = wibox.widget {
+                    awful.widget.layoutbox(),
+                    widget = wibox.container.place
+            },
+            margins = 0,
+            -- name = "Layout",
+            -- margins = dpi(5),
+            -- ratio = {
+            --     target  = 2,
+            --     before  = 0.8,
+            --     at      = 0.2,
+            --     after   = 0
+            -- }
+    }
+    layout_widget:buttons(gears.table.join(
+        awful.button({ }, 1, function () awful.layout.inc( 1) end),
+        awful.button({ }, 3, function () awful.layout.inc(-1) end),
+        awful.button({ }, 4, function () awful.layout.inc( 1) end),
+        awful.button({ }, 5, function () awful.layout.inc(-1) end)
+    ))
+
   local tasklist = wibox.widget {
-    {
-      awful.widget.tasklist {
-        screen = s,
-        filter = awful.widget.tasklist.filter.currenttags,
-        buttons = tasklist_buttons,
-        widget_template = {
-            {
-              wibox.widget.base.make_widget(),
-              forced_height = 5,
-              id            = 'background_role',
-              widget        = wibox.container.background,
-            },
-            {
+    -- {
+      -- {
+      --     layout_widget,
+      --     -- require('widget.button.tag_switch'),
+      --     require ('widget.launchers'),
+      --     expand = 'none',
+      --     layout = wibox.layout.fixed.horizontal
+      -- },
+      -- {
+       {
+          awful.widget.tasklist {
+          screen = s,
+          filter = awful.widget.tasklist.filter.currenttags,
+          buttons = tasklist_buttons,
+          widget_template = {
               {
-                id     = 'clienticon',
-                widget = awful.widget.clienticon,
+                wibox.widget.base.make_widget(),
+                forced_height = 5,
+                id            = 'background_role',
+                widget        = wibox.container.background,
               },
-              margins = 5,
-              widget  = wibox.container.margin
+              {
+                {
+                  id     = 'clienticon',
+                  widget = awful.widget.clienticon,
+                },
+                margins = 5,
+                widget  = wibox.container.margin
+              },
+              nil,
+              create_callback = function(self, c, index, objects) --luacheck: no unused args
+                  self:get_children_by_id('clienticon')[1].client = c
+              end,
+              layout = wibox.layout.align.vertical,
             },
-            nil,
-            create_callback = function(self, c, index, objects) --luacheck: no unused args
-                self:get_children_by_id('clienticon')[1].client = c
-            end,
-            layout = wibox.layout.align.vertical,
+          style = {
+            shape = gears.shape.rounded_bar,
+            --shape_border_width = dpi(1),
+            shape_border_width = 0,
+            bg_focus = "#ffffff",
+            --disable_task_name = true,
+            align = 'center',
+            spacing = 5,
+            --shape_border_color = "#ebe321",
           },
-        style = {
-          shape = gears.shape.rounded_bar,
-          --shape_border_width = dpi(1),
-          shape_border_width = 0,
-          bg_focus = "#ffffff",
-          --disable_task_name = true,
-          align = 'center',
-          spacing = 5,
-          --shape_border_color = "#ebe321",
+          layout = {
+            widget = wibox.container.place,
+            layout = wibox.layout.flex.horizontal
+          }
         },
-        layout = {
-          widget = wibox.container.place,
-          layout = wibox.layout.flex.horizontal
-        }
-      },
+      --   require ('widget.button.rofi_launcher'),
+      --   layout = wibox.layout.fixed.horizontal
+      -- },
       widget = wibox.container.place
     },
     require ('widget.button.rofi_launcher'),
     spacing = 0,
     layout = wibox.layout.ratio.horizontal
+    -- layout = wibox.layout.flex.horizontal
   }
+
+
+  -- s.taglist = pi {
+  --   widget = tasklist,
+  --   --margins = dpi(2),
+  --   margins = dpi(3),
+  --   outer = true,
+  --   shape = gears.shape.rounded_bar,
+  --   spacing = 20
+  -- }
 
   s.tasklist = pi {
     widget = tasklist,
@@ -84,6 +129,7 @@ local make_tasklist = function (s)--(s)
     spacing = 20
   }
 
+  --tasklist:ajust_ratio(2,.25,.7,.05)
   tasklist:ajust_ratio(2,.95,.05,0)
 
   return s.tasklist
