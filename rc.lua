@@ -32,8 +32,14 @@ end
 -- Initialize theme
 --if not beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/gtk/theme.lua") then
 if not beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/zenburn/theme.lua") then
+-- if not beautiful.init(require('themes.mine')) then
+--if not beautiful.init(require('themes.mine')) then
   naughty.notify { text = "Failed to load theme."}
 end
+-- beautiful.font = "Roboto 8"
+-- if not beautiful.wibar_bg then
+--   naughty.notify { text = "RIP 2"}
+-- end
 
 -- Bling relies on beautiful's properties, thus must be set after.
 local bling = require ('bling')

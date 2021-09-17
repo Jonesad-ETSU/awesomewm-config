@@ -28,10 +28,10 @@ local make_tasklist = function (s)--(s)
 
   local layout_widget = pi {
             widget = wibox.widget {
-                    awful.widget.layoutbox(),
-                    widget = wibox.container.place
+              awful.widget.layoutbox(),
+              widget = wibox.container.place
             },
-            margins = 0,
+            margins = dpi(4),
             -- name = "Layout",
             -- margins = dpi(5),
             -- ratio = {
@@ -49,24 +49,23 @@ local make_tasklist = function (s)--(s)
     ))
 
   local tasklist = wibox.widget {
-    -- {
-      -- {
-      --     layout_widget,
-      --     -- require('widget.button.tag_switch'),
-      --     require ('widget.launchers'),
-      --     expand = 'none',
-      --     layout = wibox.layout.fixed.horizontal
-      -- },
-      -- {
-       {
+      {
+          layout_widget,
+          require ('widget.launchers'),
+          expand = 'none',
+          spacing = 3,
+          layout = wibox.layout.fixed.horizontal
+      },
+      {
+        {
           awful.widget.tasklist {
-          screen = s,
-          filter = awful.widget.tasklist.filter.currenttags,
-          buttons = tasklist_buttons,
-          widget_template = {
+            screen = s,
+            filter = awful.widget.tasklist.filter.currenttags,
+            buttons = tasklist_buttons,
+            widget_template = {
               {
                 wibox.widget.base.make_widget(),
-                forced_height = 5,
+                forced_height = dpi(2),
                 id            = 'background_role',
                 widget        = wibox.container.background,
               },
@@ -75,40 +74,41 @@ local make_tasklist = function (s)--(s)
                   id     = 'clienticon',
                   widget = awful.widget.clienticon,
                 },
-                margins = 5,
+                margins = dpi(1),
                 widget  = wibox.container.margin
               },
               nil,
               create_callback = function(self, c, index, objects) --luacheck: no unused args
                   self:get_children_by_id('clienticon')[1].client = c
               end,
+              spacing = 0,
               layout = wibox.layout.align.vertical,
             },
-          style = {
-            shape = gears.shape.rounded_bar,
-            --shape_border_width = dpi(1),
-            shape_border_width = 0,
-            bg_focus = "#ffffff",
-            --disable_task_name = true,
-            align = 'center',
-            spacing = 5,
-            --shape_border_color = "#ebe321",
+            style = {
+              shape = gears.shape.rounded_bar,
+              --shape_border_width = dpi(1),
+              shape_border_width = 0,
+              bg_focus = "#ffffff",
+              --disable_task_name = true,
+              align = 'center',
+              spacing = 5,
+              --shape_border_color = "#ebe321",
+            },
+            layout = {
+              widget = wibox.container.place,
+              layout = wibox.layout.flex.horizontal
+            }
           },
-          layout = {
-            widget = wibox.container.place,
-            layout = wibox.layout.flex.horizontal
-          }
+          --require ('widget.button.rofi_launcher'),
+          layout = wibox.layout.fixed.horizontal
         },
-      --   require ('widget.button.rofi_launcher'),
-      --   layout = wibox.layout.fixed.horizontal
-      -- },
-      widget = wibox.container.place
-    },
-    require ('widget.button.rofi_launcher'),
-    spacing = 0,
-    layout = wibox.layout.ratio.horizontal
+        widget = wibox.container.place
+      },
+      require ('widget.button.rofi_launcher'),
+      spacing = 0,
+      layout = wibox.layout.align.horizontal
     -- layout = wibox.layout.flex.horizontal
-  }
+    }
 
 
   -- s.taglist = pi {
@@ -123,6 +123,8 @@ local make_tasklist = function (s)--(s)
   s.tasklist = pi {
     widget = tasklist,
     --margins = dpi(2),
+    left = dpi(16),
+    right = dpi(16),
     margins = dpi(3),
     outer = true,
     shape = gears.shape.rounded_bar,
@@ -130,7 +132,7 @@ local make_tasklist = function (s)--(s)
   }
 
   --tasklist:ajust_ratio(2,.25,.7,.05)
-  tasklist:ajust_ratio(2,.95,.05,0)
+  -- tasklist:ajust_ratio(2,.25,.7,.05)
 
   return s.tasklist
 end

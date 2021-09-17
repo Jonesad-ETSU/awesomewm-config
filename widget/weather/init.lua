@@ -35,18 +35,12 @@ local function get()
   local dw = wibox.widget {
       {
         --icon,
-        {
           {
             id = 'icon',
             image = "",
             resize = true,
             widget = wibox.widget.imagebox
           },
-          bg = "#aaaaaa",
-          shape = gears.shape.rounded_rect,
-          id = 'bg',
-          widget = wibox.container.background
-        },
         id = "left",
         widget = wibox.container.place
       },
@@ -104,10 +98,14 @@ local function get()
       -- end
 
       local icon_file = lines[1]:gsub(" ","_"):lower()
-      dw.left.bg.icon.image = gfs.get_configuration_dir() .. 'widget/weather/icons/'..icon_file..'.svg'
+      dw.left.icon.image = gfs.get_configuration_dir() .. 'widget/weather/icons/'..icon_file..'.svg'
       -- naughty.notify {text = "Icon's image: "..dw.left.icon.image}
       dw.right.data.temp.markup = "Temp: "..lines[2]
       dw.right.data.wind.markup = "Wind: "..lines[3]
+      dw = wibox.widget {
+        dw,
+        widget = wibox.container.place
+      }
     end
   )
   return dw

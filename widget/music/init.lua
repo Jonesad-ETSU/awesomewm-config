@@ -4,6 +4,8 @@ local awful = require ('awful')
 local beautiful = require ('beautiful')
 local dpi = require ('beautiful.xresources').apply_dpi
 local gears = require ('gears')
+local gfs = gears.filesystem
+local color = gears.color.recolor_image
 local pi    = require ('widget.util.panel_item')
 local click    = require ('widget.util.clickable')
 local playing = false
@@ -42,10 +44,13 @@ local artist_title = wibox.widget {
 
 local back_pic = click (
   wibox.widget {
-    markup = "<b>PREV</b>",
-    align = 'center',
-    font = beautiful.font,
-    widget = wibox.widget.textbox
+    -- markup = "<b>PREV</b>",
+    -- align = 'center',
+    -- font = beautiful.font,
+    -- widget = wibox.widget.textbox
+    image = color(gfs.get_configuration_dir()..'widget/music/prev.svg',"#ffffff"),
+    resize = true,
+    widget = wibox.widget.imagebox
   },
   gears.table.join(
     awful.button( { }, 1, function() 
@@ -56,10 +61,13 @@ local back_pic = click (
 
 local pause_pic = click (
   wibox.widget {
-    markup = "<b>TOGGLE</b>",
-    align = 'center',
-    font = beautiful.font,
-    widget = wibox.widget.textbox
+    -- markup = "<b>TOGGLE</b>",
+    -- align = 'center',
+    -- font = beautiful.font,
+    -- widget = wibox.widget.textbox
+    image = color(gfs.get_configuration_dir()..'widget/music/toggle.svg',"#ffffff"),
+    resize = true,
+    widget = wibox.widget.imagebox
   },
   gears.table.join (
     awful.button( { }, 1, function(--[[self--]])
@@ -76,10 +84,13 @@ local pause_pic = click (
 
 local forward_pic = click (
   wibox.widget {
-    markup = "<b>NEXT</b>",
-    align = 'center',
-    font = beautiful.font,
-    widget = wibox.widget.textbox
+    -- markup = "<b>NEXT</b>",
+    -- align = 'center',
+    -- font = beautiful.font,
+    -- widget = wibox.widget.textbox
+    image = color(gfs.get_configuration_dir()..'widget/music/next.svg',"#ffffff"),
+    resize = true,
+    widget = wibox.widget.imagebox
   },
   gears.table.join(
     awful.button( { }, 1, function()
@@ -199,7 +210,12 @@ local final_widget = wibox.widget {
     shape_clip = true,
     widget = wibox.container.background
   },
-  main,
+  {
+    main,
+    left = dpi(15),
+    right = dpi(15),
+    widget = wibox.container.margin
+  },
   nil,
   spacing = dpi(3),
   layout = wibox.layout.align.horizontal

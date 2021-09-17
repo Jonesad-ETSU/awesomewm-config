@@ -1,13 +1,19 @@
-local wibox     = require ('wibox') local gears     = require ('gears')
+local wibox     = require ('wibox')
+local gears     = require ('gears')
+local naughty     = require ('naughty')
 local beautiful = require ('beautiful')
 local dpi       = require ('beautiful.xresources').apply_dpi
 local old_bg
 
 local nw = function(arg)
 
+  -- if not beautiful.wibar_bg then
+  --   naughty.notify {text = "RIP"}
+  -- end
+
   local bg_container = wibox.widget {
     --widget = {},
-    bg = arg.bg or "#282828",
+    bg = arg.bg or beautiful.wibar_bg or "#282828",
     shape = arg.shape or gears.shape.rounded_rect,
     --shape_border_color = "#aaaaff",
     shape_border_color = arg.shape_border_color or "#888888",
@@ -18,10 +24,13 @@ local nw = function(arg)
   local w = wibox.widget {
     {
       arg.widget,
-      margins = arg.margins or dpi(10),
+      left = arg.left or arg.margins or dpi(10),
+      right = arg.right or arg.margins or dpi(10),
+      top = arg.top or arg.margins or dpi(10),
+      bottom = arg.bottom or arg.margins or dpi(10),
       widget = wibox.container.margin
     },
-    spacing = arg.spacing or -10,
+    spacing = arg.spacing or dpi(2),
     layout = wibox.layout.ratio.vertical
     --layout = wibox.layout.stack
   }
@@ -29,16 +38,24 @@ local nw = function(arg)
   if arg.name then
     w:add(wibox.widget {
       {
-        markup = "" .. arg.name,
-        font = beautiful.font,
-        align = 'center',
-        widget = wibox.widget.textbox
+        {
+          markup = arg.name,
+          font = beautiful.font,
+          align = 'center',
+          widget = wibox.widget.textbox
+        },
+        bg = "#888888",
+        shape = gears.shape.rounded_bar,
+        shape_border_width = dpi(0),
+        widget = wibox.container.background
       },
-      bg = "#888888",
-      shape = gears.shape.rounded_rect,
-      shape_border_width = dpi(1),
-      widget = wibox.container.background
-    })
+      top = dpi(0),
+      bottom = dpi(5),
+      left = dpi(8),
+      right = dpi(8),
+      -- margins = dpi(2),
+      widget = wibox.container.margin
+  })
     if arg.ratio then
       w:ajust_ratio(arg.ratio.target, arg.ratio.before, arg.ratio.at, arg.ratio.after)
     else w:ajust_ratio(2,.85,.15,0) end

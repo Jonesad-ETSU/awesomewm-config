@@ -11,12 +11,13 @@ local launchers = wibox.widget {
   discord,
   terminal,
   steam,
-  forced_num_rows = 1,
-  forced_num_cols = 4,
-  homogeneous	= true,
-  expand	= true,
-  spacing       = 2,
-  layout = wibox.layout.grid
+  -- forced_num_rows = 1,
+  -- forced_num_cols = 4,
+  -- homogeneous	= true,
+  -- expand	= 'none',
+  -- spacing       = 2,
+  -- layout = wibox.layout.grid
+  layout = wibox.layout.fixed.horizontal
 }
 
 return launchers
