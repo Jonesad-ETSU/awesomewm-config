@@ -9,7 +9,7 @@ local theme = {}
   theme.font = "Roboto 8"
 
   theme.black_dark = "#000000"
-  theme.black_light = "#aaaaaa"
+  theme.black_light = "#1A1A1A"
 
   theme.gtk = gtk.get_theme_variables()
   if not theme.gtk then

@@ -8,27 +8,8 @@ local gfs 	= require ('gears.filesystem')
 local pi	= require ('widget.util.panel_item')
 
 -- local wind_speed = {}
--- local temperature = {}
---local weather_conditions = {}
 local location = "37303"
 local today
-
--- local function weather_icon (status)
---   local icon = gfs.get_configuration_dir().. 'widget/weather/icons/'..(status or '')..'.svg'
---   if gears.filesystem.file_readable(icon) then
---     return wibox.widget {
---       image = gfs.get_configuration_dir() .. 'widget/weather/icons/'..status..'.svg',
---       resize = true,
---       widget = wibox.widget.imagebox 
---     }
---   else return wibox.widget {
---     markup = "<b>"..(status or '').."</b>",
---     font = beautiful.font .. " 32",
---     align = 'center',
---     widget = wibox.widget.textbox
---   } end
--- end
-
 
 local function get()
 

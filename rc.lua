@@ -3,7 +3,8 @@ pcall(require, "luarocks.loader")
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
-local wibox = require("wibox") local beautiful = require("beautiful")
+local wibox = require("wibox")
+local beautiful = require("beautiful")
 local naughty = require("naughty")
 
 if awesome.startup_errors then
@@ -31,8 +32,8 @@ end
 -- }}}
 -- Initialize theme
 --if not beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/gtk/theme.lua") then
-if not beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/zenburn/theme.lua") then
--- if not beautiful.init(require('themes.mine')) then
+--if not beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/zenburn/theme.lua") then
+if not beautiful.init(require('themes.mine')) then
 --if not beautiful.init(require('themes.mine')) then
   naughty.notify { text = "Failed to load theme."}
 end

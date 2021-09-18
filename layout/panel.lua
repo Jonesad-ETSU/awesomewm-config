@@ -40,7 +40,7 @@ local _panel = function(s, side)
         forced_num_rows = 5,
         forced_num_cols = 14,
         homogeneous = true,
-        spacing = dpi(5),
+        spacing = dpi(8),
         expand = 'none',
         layout = wibox.layout.grid
     }
@@ -103,7 +103,7 @@ local _panel = function(s, side)
 
     --COL 3
     panel_widget:add_widget_at(widgets.bars,1,3,2,3)
-    panel_widget:add_widget_at(widgets.weather,3,3,2,3)
+    panel_widget:add_widget_at(widgets.weather,3,3,2,2)
     panel_widget:add_widget_at(widgets.tasklist(s),5,3,1,9)
 
     --COL 4
@@ -143,11 +143,11 @@ local _panel = function(s, side)
 
     local vertical_margins = {}
     if side == 'top' then
-      vertical_margins.top = 50
-      vertical_margins.bottom = 5
+      vertical_margins.top = dpi(40)
+      vertical_margins.bottom = dpi(10)
     elseif side == 'bottom' then
-      vertical_margins.top = 5
-      vertical_margins.bottom = 50
+      vertical_margins.top = dpi(10)
+      vertical_margins.bottom = dpi(40)
     else
       vertical_margins.top = 50
       vertical_margins.bottom = 5
@@ -180,25 +180,30 @@ local _panel = function(s, side)
 
     panel:connect_signal (
 	'toggle',
-	function()        
+	function()
             if side == 'top' then
 		if hidden then
-			anim_show_hide:set(-40)
+                  anim_show_hide:set(dpi(-30))
 		else
-			anim_show_hide:set(-panel.height+panel.height/40)
+                  anim_show_hide:set(-panel.height+dpi(panel.height/40))
 		end
             else
               if hidden then
-                anim_show_hide:set(
+                anim_show_hide:set (
                   awful.screen.focused().geometry.height - panel.height + 40
                 )
               else
-                anim_show_hide:set(
+                anim_show_hide:set (
                   awful.screen.focused().geometry.height - panel.height/40
                 )
               end
 	    end
-            s.time.visible = not hidden
+            gears.timer.start_new (
+              1, function()
+                s.time.visible = hidden
+                return false
+              end
+            )
             hidden = not hidden
       end)
 

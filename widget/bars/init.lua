@@ -23,7 +23,7 @@ local bars = wibox.widget {
     shape = gears.shape.rounded_bar,
     widget = wibox.container.background
   },
-  spacing = dpi(2),
+  spacing = dpi(4),
   layout = wibox.layout.flex.vertical
 }
 

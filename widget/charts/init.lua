@@ -8,7 +8,7 @@ local root = require ('widget.arccharts.root')
 return pi {
   widget = wibox.widget {
     layout = wibox.layout.flex.horizontal,
-    spacing = 10,
+    spacing = 20,
     -- forced_num_rows = 2,
     -- forced_num_cols = 3,
     -- expand = 'none',
@@ -17,6 +17,6 @@ return pi {
     root,
     -- timer
   },
-  margins = 20,
+  margins = 15,
   outer = true,
 }

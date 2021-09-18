@@ -11,6 +11,8 @@ return {
     power = require ('widget.button.power'),
     settings = require ('widget.button.settings'),
     files = require ('widget.button.files'),
+    next_tag = require ('widget.button.tags.next'),
+    previous_tag = require ('widget.button.tags.prev')
   },
   launchers = require ('widget.launchers'),
   profile = require ('widget.profile'),

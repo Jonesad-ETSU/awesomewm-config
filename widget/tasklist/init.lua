@@ -50,6 +50,7 @@ local make_tasklist = function (s)--(s)
 
   local tasklist = wibox.widget {
       {
+          require ('widget.button.tags.prev'),
           layout_widget,
           require ('widget.launchers'),
           expand = 'none',
@@ -104,7 +105,11 @@ local make_tasklist = function (s)--(s)
         },
         widget = wibox.container.place
       },
-      require ('widget.button.rofi_launcher'),
+      {
+        require ('widget.button.rofi_launcher'),
+        require ('widget.button.tags.next'),
+        layout = wibox.layout.fixed.horizontal
+      },
       spacing = 0,
       layout = wibox.layout.align.horizontal
     -- layout = wibox.layout.flex.horizontal

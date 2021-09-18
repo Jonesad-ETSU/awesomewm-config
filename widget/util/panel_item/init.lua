@@ -17,7 +17,7 @@ local nw = function(arg)
     shape = arg.shape or gears.shape.rounded_rect,
     --shape_border_color = "#aaaaff",
     shape_border_color = arg.shape_border_color or "#888888",
-    shape_border_width = arg.shape_border_width or dpi(1),	
+    shape_border_width = arg.shape_border_width or dpi(0),	
     widget = wibox.container.background
   }
 

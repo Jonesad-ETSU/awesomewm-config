@@ -44,10 +44,6 @@ local artist_title = wibox.widget {
 
 local back_pic = click (
   wibox.widget {
-    -- markup = "<b>PREV</b>",
-    -- align = 'center',
-    -- font = beautiful.font,
-    -- widget = wibox.widget.textbox
     image = color(gfs.get_configuration_dir()..'widget/music/prev.svg',"#ffffff"),
     resize = true,
     widget = wibox.widget.imagebox
@@ -155,47 +151,46 @@ tt:connect_signal(
 -- }
 
 local main = wibox.widget {
+
+  id = 'bg_container',
+  layout = wibox.layout.flex.vertical,
+  spacing = dpi(10),
+  --expand = 'none',
   {
-    id = 'bg_container',
-    layout = wibox.layout.flex.vertical,
-    spacing = dpi(10),
-    --expand = 'none',
-    {
-      nil,
-      highlight_widget(wibox.widget {
-        song_title,
-        artist_title,
-        layout = wibox.layout.fixed.vertical
-      }),
-      nil,
-      layout = wibox.layout.align.horizontal
-    },
-    {
-      --{
-        highlight_widget(back_pic),
-        highlight_widget(pause_pic),
-        highlight_widget(forward_pic),
-        spacing = 5,
-        layout = wibox.layout.flex.horizontal
-      --},
-      --widget = wibox.container.background
-    },
-    --[[{
-      layout = wibox.layout.fixed.horizontal,
-      highlight_widget (
-        wibox.widget {
-          markup = "TIME",
-          font = beautiful.font,
-          align = 'center',
-          widget = wibox.widget.textbox
-        }
-      ),
-      highlight_widget(progressbar),
-    }--]]
+    nil,
+    highlight_widget(wibox.widget {
+      song_title,
+      artist_title,
+      layout = wibox.layout.fixed.vertical
+    }),
+    nil,
+    layout = wibox.layout.align.horizontal
   },
-  top = dpi(10),
-  bottom = dpi(10),
-  widget = wibox.container.margin
+  {
+    {
+      highlight_widget(back_pic),
+      highlight_widget(pause_pic),
+      highlight_widget(forward_pic),
+      spacing = 5,
+      layout = wibox.layout.flex.horizontal
+    },
+    right = dpi(10),
+    left = dpi(10),
+    widget = wibox.container.margin
+    --widget = wibox.container.background
+  },
+  --[[{
+    layout = wibox.layout.fixed.horizontal,
+    highlight_widget (
+      wibox.widget {
+        markup = "TIME",
+        font = beautiful.font,
+        align = 'center',
+        widget = wibox.widget.textbox
+      }
+    ),
+    highlight_widget(progressbar),
+  }--]]
 }
 
 --main.bg_container:ajust_ratio(2, .7, .1, .2)
@@ -251,7 +246,7 @@ update_song(true)
 
 return pi {
   widget = final_widget,
-  margins = 0,
+  margins = dpi(10),
   outer = true,
   name = nil
 }
