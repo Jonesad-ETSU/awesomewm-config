@@ -33,8 +33,8 @@ end
 -- Initialize theme
 --if not beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/gtk/theme.lua") then
 --if not beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/zenburn/theme.lua") then
-if not beautiful.init(require('themes.mine')) then
 --if not beautiful.init(require('themes.mine')) then
+if not beautiful.init(require('themes.gtk')) then
   naughty.notify { text = "Failed to load theme."}
 end
 -- beautiful.font = "Roboto 8"
