@@ -36,8 +36,8 @@ local song_title = wibox.widget {
 }
 
 local artist_title = wibox.widget {
-  markup = "<span font='"..beautiful.font.." 8'><i>"..artist.."</i></span>",
-  font = beautiful.font,
+  text = artist,
+  font = beautiful.large_font,
   align = 'center',
   widget = wibox.widget.textbox
 }

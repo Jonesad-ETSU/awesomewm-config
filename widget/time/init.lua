@@ -2,11 +2,13 @@ local wibox = require ('wibox')
 local beautiful = require ('beautiful')
 local dpi = beautiful.xresources.apply_dpi
 local pi  = require ('widget.util.panel_item')
---local ib  = require ('widget.util.img_button')
 
+-- require('naughty').notify {text = beautiful.font }
 local time = wibox.widget {
   {
-    format = "<span font='"..beautiful.font.." 12'>%a, %b %d %I:%M %p</span>",
+    --format = "<span font='"..beautiful.font.." 12'>%a, %b %d %I:%M %p</span>",
+    format = "%a, %b %d %I:%M %p",
+    font = beautiful.large_font,
     widget = wibox.widget.textclock
   },
   widget = wibox.container.place
