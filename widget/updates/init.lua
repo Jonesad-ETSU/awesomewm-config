@@ -49,7 +49,6 @@ local chart = wibox.widget {
     margins = 10,
     widget = wibox.container.margin
   },
-  id = 'bar',
   paddings = 10,
   max_value = 100,
   start_angle = math.pi/2,
@@ -70,9 +69,11 @@ gears.timer {
       --gfs.get_configuration_dir()..'/widget/updates/check.sh',
       [[ checkupdates 2>/dev/null | wc -l ]],
       function(out)
-        chart.bar.value = out
+        chart.value = out
         updates.txt.markup = out
-        naughty.notify {text = out}
+        if tonumber(out) > 0 then
+          naughty.notify {text = "There are " .. out .. " Packages out of Date. Consider updating your system with `sudo pacman -Syu`"}
+        end
       end
     )
   end

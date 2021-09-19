@@ -104,8 +104,8 @@ theme.gtk.menubar_border_color = mix(
 
 
 theme.font          = theme.gtk.font_family .. ' ' .. theme.gtk.font_size
-theme.medium_font          = theme.gtk.font_family .. ' ' .. dpi(5)
-theme.small_font          = theme.gtk.font_family .. ' ' .. dpi(8)
+theme.small_font          = theme.gtk.font_family .. ' ' .. dpi(5)
+theme.medium_font          = theme.gtk.font_family .. ' ' .. dpi(8)
 theme.large_font          = theme.gtk.font_family .. ' ' .. dpi(10)
 theme.extra_large_font          = theme.gtk.font_family .. ' ' .. dpi(24)
 theme.font_family   = theme.gtk.font_family

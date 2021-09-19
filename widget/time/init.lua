@@ -8,7 +8,7 @@ local time = wibox.widget {
   {
     --format = "<span font='"..beautiful.font.." 12'>%a, %b %d %I:%M %p</span>",
     format = "%a, %b %d %I:%M %p",
-    font = beautiful.large_font,
+    font = beautiful.medium_font,
     widget = wibox.widget.textclock
   },
   widget = wibox.container.place
