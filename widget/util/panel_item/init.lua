@@ -1,23 +1,22 @@
 local wibox     = require ('wibox')
 local gears     = require ('gears')
 local naughty     = require ('naughty')
+local color_manipulation     = require ('widget.util.color')
+local lighten = color_manipulation.lighter
+local darker = color_manipulation.darker
 local beautiful = require ('beautiful')
 local dpi       = require ('beautiful.xresources').apply_dpi
 local old_bg
 
 local nw = function(arg)
 
-  -- if not beautiful.wibar_bg then
-  --   naughty.notify {text = "RIP"}
-  -- end
-
   local bg_container = wibox.widget {
     --widget = {},
-    bg = arg.bg or beautiful.wibar_bg or "#282828",
-    shape = arg.shape or gears.shape.rounded_rect,
+    bg = arg.bg or beautiful.panel_item.bg or "#282828",
+    shape = arg.shape or beautiful.panel_item.shape or gears.shape.rounded_rect,
     --shape_border_color = "#aaaaff",
-    shape_border_color = arg.shape_border_color or "#888888",
-    shape_border_width = arg.shape_border_width or dpi(0),	
+    shape_border_color = arg.shape_border_color or beautiful.panel_item.border_color or  "#888888",
+    shape_border_width = arg.shape_border_width or dpi(0),
     widget = wibox.container.background
   }
 
@@ -44,7 +43,7 @@ local nw = function(arg)
           align = 'center',
           widget = wibox.widget.textbox
         },
-        bg = "#888888",
+        bg = lighten(beautiful.wibar_bg,30) or "#888888",
         shape = gears.shape.rounded_bar,
         shape_border_width = dpi(0),
         widget = wibox.container.background
@@ -53,7 +52,6 @@ local nw = function(arg)
       bottom = dpi(5),
       left = dpi(8),
       right = dpi(8),
-      -- margins = dpi(2),
       widget = wibox.container.margin
   })
     if arg.ratio then
@@ -68,8 +66,7 @@ local nw = function(arg)
     function()
       if arg.outer then return end
       old_bg = bg_container.bg
-      bg_container.bg = "#484848"
-      --w.bg = beautiful.panel_item.bg
+      bg_container.bg = darker(beautiful.wibar_bg,30) or "#888888"
     end
   )
   bg_container:connect_signal(

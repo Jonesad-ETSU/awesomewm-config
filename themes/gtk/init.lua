@@ -104,8 +104,10 @@ theme.gtk.menubar_border_color = mix(
 
 
 theme.font          = theme.gtk.font_family .. ' ' .. theme.gtk.font_size
-theme.small_font          = theme.gtk.font_family .. ' ' .. dpi(12)
-theme.small_font          = theme.gtk.font_family .. ' ' .. dpi(24)
+theme.small_font          = theme.gtk.font_family .. ' ' .. dpi(5)
+theme.medium_font          = theme.gtk.font_family .. ' ' .. dpi(8)
+theme.large_font          = theme.gtk.font_family .. ' ' .. dpi(10)
+theme.extra_large_font          = theme.gtk.font_family .. ' ' .. dpi(24)
 theme.font_family   = theme.gtk.font_family
 
 theme.bg_normal     = theme.gtk.bg_color
@@ -137,7 +139,7 @@ theme.border_radius = theme.gtk.button_border_radius
 
 local rounded_rect_shape = function(cr,w,h)
     gears.shape.rounded_rect(
-        cr, w, h, theme.border_radius
+        cr, w, h, theme.border_radius + 10
     )
 end
 
@@ -261,9 +263,13 @@ theme.menu_submenu_icon = nil
 theme.menu_submenu = "->"
 
 theme.panel_item = {}
-theme.panel_item.bg = "#0000ff"
-theme.panel_item.shape = rounded_rect_shape
-theme.panel_item.margins = dpi(10)
+    theme.panel_item.bg = theme.wibar_bg
+    theme.panel_item.name_bg = darker(theme.wibar_bg,-30)
+    theme.panel_item.border_color = darker(theme.wibar_bg,60)
+    theme.panel_item.border_width = 0
+    -- theme.panel_item.border_width = dpi(1) -- uncomment for borders
+    theme.panel_item.shape = rounded_rect_shape
+    theme.panel_item.margins = dpi(10)
 
 theme = theme_assets.recolor_layout(theme, theme.wibar_fg)
 

@@ -36,15 +36,15 @@ local song_title = wibox.widget {
 }
 
 local artist_title = wibox.widget {
-  markup = "<span font='"..beautiful.font.." 8'><i>"..artist.."</i></span>",
-  font = beautiful.font,
+  text = artist,
+  font = beautiful.font .. "8",
   align = 'center',
   widget = wibox.widget.textbox
 }
 
 local back_pic = click (
   wibox.widget {
-    image = color(gfs.get_configuration_dir()..'widget/music/prev.svg',"#ffffff"),
+    image = color(gfs.get_configuration_dir()..'widget/music/prev.svg',beautiful.wibar_fg),
     resize = true,
     widget = wibox.widget.imagebox
   },
@@ -57,22 +57,13 @@ local back_pic = click (
 
 local pause_pic = click (
   wibox.widget {
-    -- markup = "<b>TOGGLE</b>",
-    -- align = 'center',
-    -- font = beautiful.font,
-    -- widget = wibox.widget.textbox
-    image = color(gfs.get_configuration_dir()..'widget/music/toggle.svg',"#ffffff"),
+    image = color(gfs.get_configuration_dir()..'widget/music/toggle.svg',beautiful.wibar_fg),
     resize = true,
     widget = wibox.widget.imagebox
   },
   gears.table.join (
     awful.button( { }, 1, function(--[[self--]])
       awful.spawn('mpc toggle')
---[[      if playing then
-        self.markup = "<b>PLAY</b>"
-      else
-        self.markup = "<b>PAUSE</b>"
-      end --]]
       playing = not playing
     end)
   )
@@ -80,11 +71,7 @@ local pause_pic = click (
 
 local forward_pic = click (
   wibox.widget {
-    -- markup = "<b>NEXT</b>",
-    -- align = 'center',
-    -- font = beautiful.font,
-    -- widget = wibox.widget.textbox
-    image = color(gfs.get_configuration_dir()..'widget/music/next.svg',"#ffffff"),
+    image = color(gfs.get_configuration_dir()..'widget/music/next.svg',beautiful.wibar_fg),
     resize = true,
     widget = wibox.widget.imagebox
   },

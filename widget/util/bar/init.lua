@@ -129,7 +129,7 @@ local bar_widget = function (options)
     ratio:add (
 	options.label_widget or wibox.widget {
             text,
-            fg = options.text_fg or "#ffffff",
+            fg = options.text_fg or beautiful.wibar_fg,
             widget = wibox.container.background
         }
     )
