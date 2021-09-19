@@ -5,19 +5,18 @@ Awesomewm, or the Awesome Window Manager, is a minimalist program based on dwm, 
 <br/>
 <br/>
 ## Introduction to my Theme
-This theme with the following design ideas:
+This theme was designed with the following set of standards:
 - Good User Interfaces should improve the workflow of both Power-Users and New Users alike. 
 - Good User Interfaces should not take up unnessecary screenspace.
 - Good User Interfaces should consist of items that are immediately recognizable in their functionality.
 - Good User Interfaces should be consistent with different screen resolutions.
 - Good User Interfaces should be easily customizable.
 - Good User Interfaces should, well... look nice.
+<br/>
+<br/>
 
-<br/>
-<br/>
 ## Gallery
-
-
+[<img align='center' alt='Bright colors sharks and water with a matching drop-down theme' src="images/showcase_juno_sharks.png"/>]
 
 ## Installation
 
