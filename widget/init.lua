@@ -24,5 +24,5 @@ return {
   actions = require ('widget.actions'),
   weather = require ('widget.weather'),
   power = require ('widget.power'),
-  updates = require ('widget.updates'),
+  --updates = require ('widget.updates'),
 }
