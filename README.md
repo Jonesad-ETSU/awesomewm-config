@@ -26,7 +26,7 @@ In order to tackle these challenges, I took the following steps:
 ## Gallery
 **Note: The following images are subject to, and <em>will</em>, change as the project develops. As a primary example, several colors in the panel are not currently defined by gtk and <em>will</em> be in the future.**
 <br/>
-The following image uses the <strong>[Juno](https://github.com/EliverLara/Juno)</strong> GTK3+ theme: 
+The following images uses the <strong>[Juno](https://github.com/EliverLara/Juno)</strong> GTK3+ theme: 
 <img align='center' alt='Bright colors sharks and water with a matching drop-down theme' src="images/showcase_juno_sharks.png"/>
 <img align='center' alt='Bright colors sharks and water with the panel hidden to the top of the screen' src="images/showcase_juno_sharks_hidden_panel.png"/>
 <br/>
@@ -38,7 +38,7 @@ The following images use the <strong>[Nordic]()</strong> GTK3+ theme:
 
 
 ## Functionality
-By default, Awesomewm comes with a set of fairly sane defaults. However, many aspects of modern desktop environments are left to the user to work around or designate to external programs. As an example, the default Awesomewm config does not have any way to modify the volume of the system or display the battery life. To do so, you would need to install a third-party systray application or make a custom configuration. Another example comes in the form of the panel not hiding for fullscreen applications by default. My configuration offers the following features over the basic awesomewm config:
+<p align='center'>By default, Awesomewm comes with a set of fairly sane defaults. However, many aspects of modern desktop environments are left to the user to work around or designate to external programs. As an example, the default Awesomewm config does not have any way to modify the volume of the system or display the battery life. To do so, you would need to install a third-party systray application or make a custom configuration. Another example comes in the form of the panel not hiding for fullscreen applications by default. My configuration offers the following features over the basic awesomewm config:</p>
 
 * On Screen Volume, Microphone Volume, and Brightness Controls 
 * On Screen Battery Display
