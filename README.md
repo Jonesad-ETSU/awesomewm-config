@@ -26,7 +26,7 @@ In order to tackle these challenges, I took the following steps:
 ## Gallery
 **Note: The following images are subject to, and <em>will</em>, change as the project develops. As a primary example, several colors in the panel are not currently defined by gtk and <em>will</em> be in the future.**
 <br/>
-<p align='center'>The following images uses the <strong><a href='https://github.com/EliverLara/Juno')Juno</a></strong> GTK3+ theme:</p>
+<p align='center'>The following images uses the <strong><a href='https://github.com/EliverLara/Juno')>Juno</a></strong> GTK3+ theme:</p>
 <img align='center' alt='Bright colors sharks and water with a matching drop-down theme' src="images/showcase_juno_sharks.png"/>
 <img align='center' alt='Bright colors sharks and water with the panel hidden to the top of the screen' src="images/showcase_juno_sharks_hidden_panel.png"/>
 <br/>
