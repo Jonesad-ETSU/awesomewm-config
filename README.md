@@ -31,7 +31,7 @@ The same setup as above but with the panel hidden:
 <br/>
 The following uses the <strong>[Adwaita-Dark]()</strong> GTK3+ theme:
 <img align='center' alt='Adwaita Dark themed panel with neovim configuration open in lower right of screen and nitrogen, the wall paper changer, in middle left of screen' src="images/adwaita_dark_nitrogen.png"/>
-The following uses the <strong>[Nordic]()</strong> GTK3+ theme:
+The following images use the <strong>[Nordic]()</strong> GTK3+ theme:
 <img align='center' alt='Nordic panel with audio visualizer and file browser shown' src="images/nord_cava_shown.png"/>
 <img align='center' alt='Nordic panel hidden with audio visualizer and file browser shown' src="images/nord_cava_hidden.png"/>
 
@@ -39,14 +39,14 @@ The following uses the <strong>[Nordic]()</strong> GTK3+ theme:
 ## Functionality
 By default, Awesomewm comes with a set of fairly sane defaults. However, many aspects of modern desktop environments are left to the user to work around or designate to external programs. As an example, the default Awesomewm config does not have any way to modify the volume of the system or display the battery life. To do so, you would need to install a third-party systray application or make a custom configuration. Another example comes in the form of the panel not hiding for fullscreen applications by default. My configuration offers the following features over the basic awesomewm config:
 
-- On Screen Volume, Microphone Volume, and Brightness Controls 
-- On Screen Battery Display
-- On Screen Weather provided by wttr.in
-- Clickable shortcuts for common applcations (WIP)
-- Buttons to swap between Virtual Desktops, or more precisely, tags.
-- Built in MPD, or Music Player Daemon, Controls.
-- Easily Configure Panel Settings, such as changing profile image (WIP)
-- View disk usage for both home and root partitions.
+* On Screen Volume, Microphone Volume, and Brightness Controls 
+* On Screen Battery Display
+* On Screen Weather provided by wttr.in
+* Clickable shortcuts for common applcations (WIP)
+* Buttons to swap between Virtual Desktops, or more precisely, tags.
+* Built in MPD, or Music Player Daemon, Controls.
+* Easily Configure Panel Settings, such as changing profile image (WIP)
+* View disk usage for both home and root partitions.
 
 ## TODO
 - [ ] Make it possible to change taskbar shortcuts through GUI
@@ -74,6 +74,7 @@ By default, Awesomewm comes with a set of fairly sane defaults. However, many as
 | [`pamixer`](https://github.com/cdemoulins/pamixer)| PulseAudio/PipeWire Volume Controller | Volume and Microphone Volume Controls use this |
 | [`brightnessctl`](https://github.com/Hummer12007/brightnessctl)| Screen Brightness Controller | Brightness Control uses this |
 | [`upower`](https://github.com/freedesktop/upower)| Power Daemon | Configures Power for System & Battery widget uses this|
+||||
 ***NOTE: PLEASE INSTALL WHAT YOU CAN FROM YOUR PACKAGE MANAGER FIRST***
 
 ## Installation
