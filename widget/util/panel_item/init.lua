@@ -27,6 +27,7 @@ local nw = function(arg)
       right = arg.right or arg.margins or dpi(10),
       top = arg.top or arg.margins or dpi(10),
       bottom = arg.bottom or arg.margins or dpi(10),
+      color = arg.margin_color or nil,
       widget = wibox.container.margin
     },
     spacing = arg.spacing or dpi(2),

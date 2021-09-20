@@ -34,22 +34,21 @@ local dpi = require ('beautiful.xresources').apply_dpi
 --]]
 local bar_widget = function (options)
 
-
     local bar = wibox.widget {
-        value = options.init_value or 50,
-        max_value = options.max_value or 100,
-        bar_shape = options.bar_shape or gears.shape.rounded_bar,
-        shape = options.shape or gears.shape.rounded_bar, 
-        bar_border_color = options.bar_border_color or nil,
-        bar_border_width = options.bar_border_width or 1,
-        border_width = options.border_width or 2,
-        border_color = options.border_color or "#00ffff",
-        forced_width = options.forced_width or dpi(100),
-        forced_height = options.forced_height or dpi(1),
-        color = options.color or "#00ff00",
-        background_color = options.background_color or "#282828",
-        --paddings = 1,
-        widget = wibox.widget.progressbar
+      value = options.init_value or 50,
+      max_value = options.max_value or 100,
+      bar_shape = options.bar_shape or gears.shape.rounded_bar,
+      shape = options.shape or gears.shape.rounded_bar, 
+      bar_border_color = options.bar_border_color or options.color or beautiful.wibar_fg or nil,
+      bar_border_width = options.bar_border_width or 1,
+      border_width = options.border_width or 2,
+      border_color = options.border_color or options.color or beautiful.wibar_fg or "#00ffff",
+      forced_width = options.forced_width or dpi(100),
+      forced_height = options.forced_height or dpi(1),
+      color = options.color or beautiful.wibar_bg or "#00ff00",
+      background_color = options.background_color or beautiful.wibar_bg or "#282828",
+      paddings = options.padding or 0,
+      widget = wibox.widget.progressbar
     }
 
     if options.tooltip then
@@ -61,15 +60,15 @@ local bar_widget = function (options)
     end
 
     local pct = wibox.widget {
-        markup = "N/A",
-        align = 'left',
-        font = options.font or beautiful.font,
-        widget = wibox.widget.textbox
+      markup = "N/A",
+      align = 'left',
+      font = options.font or beautiful.font,
+      widget = wibox.widget.textbox
     }
 
     local anim_stats = {
-	duration = options.anim_duration or 600,
-	easing = options.anim_easing or awestore.linear
+      duration = options.anim_duration or 600,
+      easing = options.anim_easing or awestore.linear
     }
 
     local anim = awestore.tweened(0, anim_stats)
@@ -95,7 +94,7 @@ local bar_widget = function (options)
                    if options.alt_check and options.alt_check(lines) then
                         bar.color = options.alt_color or "#ff0000"
                     else
-                        bar.color = options.color or "#00ff00"
+                        bar.color = options.color or beautiful.wibar_fg or "#00ff00"
                   end
 		   local value = tonumber(lines[1])
 		   --anim_stats.duration = anim_duration * (value/100)
