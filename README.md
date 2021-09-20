@@ -26,7 +26,6 @@ In order to tackle these challenges, I took the following steps:
 ## Gallery
 The following image uses the <strong>[Juno](https://github.com/EliverLara/Juno)</strong> GTK3+ theme: 
 <img align='center' alt='Bright colors sharks and water with a matching drop-down theme' src="images/showcase_juno_sharks.png"/>
-The same setup as above but with the panel hidden:
 <img align='center' alt='Bright colors sharks and water with the panel hidden to the top of the screen' src="images/showcase_juno_sharks_hidden_panel.png"/>
 <br/>
 The following uses the <strong>[Adwaita-Dark]()</strong> GTK3+ theme:
@@ -74,7 +73,7 @@ By default, Awesomewm comes with a set of fairly sane defaults. However, many as
 | [`pamixer`](https://github.com/cdemoulins/pamixer)| PulseAudio/PipeWire Volume Controller | Volume and Microphone Volume Controls use this |
 | [`brightnessctl`](https://github.com/Hummer12007/brightnessctl)| Screen Brightness Controller | Brightness Control uses this |
 | [`upower`](https://github.com/freedesktop/upower)| Power Daemon | Configures Power for System & Battery widget uses this|
-||||
+<br/>
 ***NOTE: PLEASE INSTALL WHAT YOU CAN FROM YOUR PACKAGE MANAGER FIRST***
 
 ## Installation
