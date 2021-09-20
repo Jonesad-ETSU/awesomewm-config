@@ -82,7 +82,12 @@ By default, Awesomewm comes with a set of fairly sane defaults. However, many as
 One of my tenants for good UI is that it <em>cannot</em> be over overly-specialized. Overly-specialized UI's are generally amazing for what they are designed for and <em>useless</em> for everything else. Being useable for everyone is a core goal of the project. As such, the installation is designed to be simple with minimal dependencies. 
 <br/>
 1. Install the [Dependencies](#required_dependencies)
-
+2. Clone the repository into the $HOME/.config/awesome directory. To do so, please copy the following command:
+```git clone https://github.com/jonesad-etsu/awesomewm-config.git $HOME/.config/awesome```
+<br/>
+OR
+<br/>
+- Use the provided [Ansible Playbook](#todo)
 
 ## How to Contribute
 
