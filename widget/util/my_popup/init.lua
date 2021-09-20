@@ -17,8 +17,10 @@ local popup = function (w, options)
     width 	= options.width or 1000,
     height 	= options.height or 500,
     shape	= options.shape or gears.shape.rounded_rect,
-    bg	= options.bg or beautiful.background,
-    fg	= options.fg or beautiful.fg_normal
+    border_width = options.border_width or 0,
+    border_color = options.border_color or beautiful.wibar_fg,
+    bg	= options.bg or beautiful.wibar_bg,
+    fg	= options.fg or beautiful.wibar_fg
   }
 
   local placement = options.placement or awful.placement.centered
@@ -52,12 +54,12 @@ local popup = function (w, options)
 
   local function toggle()
     popup_wibox.visible = not popup_wibox.visible
-    if popup_wibox.visible then
-      mouse.coords {
-        x = options.mouse.x or (popup_wibox.x + popup_wibox.width/2),
-        y = options.mouse.y or (popup_wibox.y + popup_wibox.height/2),
-      }
-    end
+    -- if popup_wibox.visible then
+    --   mouse.coords {
+    --     x = options.mouse.x or (popup_wibox.x + popup_wibox.width/2),
+    --     y = options.mouse.y or (popup_wibox.y + popup_wibox.height/2),
+    --   }
+    -- end
   end
 
   popup_wibox:connect_signal (
@@ -65,7 +67,7 @@ local popup = function (w, options)
     function()
       toggle()
       if popup_wibox.visible then
-        gears.timer.weak_start_new (
+        gears.timer.start_new (
           1,
           function()
             toggle()
