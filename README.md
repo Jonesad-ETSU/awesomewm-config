@@ -1,5 +1,4 @@
 # Welcome to my Awesomewm dotfiles
-[[maintained](https://img.shields.io/maintenance/yes/2020?label=maintained&style=flat-square)](https://github.com/jonesad-etsu/awesomewm-config/commits/main) [![contributions](https://img.shields.io/badge/contribution-welcome-brightgreen&?style=flat-square)](https://github.com/jonesad-etsu/awesomewm-config/pulls) 
 
 ## Introduction to Awesome
 Awesomewm, or the <em>Awesome Window Manager</em>, is a minimalist program based on dwm, an <em>even more minimal program</em> designed to manipulate, display, and manage clients in a Linux X server environment. Awesomewm provides a well-defined API for defining custom widgets, controlling windows, and responding to button presses. This allows for awesome to be used to create User Interfaces that are dynamic and beautiful while still remaining light weight. For more information, visit the awesomewm documentation at https://awesomewm.org/apidoc/
