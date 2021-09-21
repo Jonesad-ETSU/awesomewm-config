@@ -10,7 +10,6 @@ local hidden    = true
 local panel_width = dpi(1000)
 
 local _panel = function(s, side)
-    -- local time_wibox = require ('layout.time')(s)
     local panel = wibox {
         visible = true,
         ontop = true,
@@ -24,8 +23,8 @@ local _panel = function(s, side)
             return gears.shape.rounded_rect(cr, width, height, 20)
         end,
         fg = beautiful.foreground,
-        -- bg = beautiful.wibar_bg
-        bg = beautiful.black_light
+        bg = beautiful.wibar_bg
+        -- bg = beautiful.black_light
     }
 
     if side == 'top' then
@@ -47,9 +46,10 @@ local _panel = function(s, side)
     }
 
     local anim_show_hide = awestore.tweened(panel.y ,{
-        duration = 500,
-        --easing = awestore.linear
-        easing = awestore.easing.back_in_out
+        -- duration = 500,
+        duration = 250,
+        easing = awestore.linear
+        -- easing = awestore.easing.back_in_out
     })
 
     anim_show_hide:subscribe(function(pos) panel.y = pos end)
@@ -67,12 +67,16 @@ local _panel = function(s, side)
     local systray = wibox.widget.systray()
     systray:set_base_size(32)
     systray = wibox.widget {
-      wibox.widget.systray(),
+      {
+        bg = beautiful.panel_item.bg,
+        widget = wibox.widget.systray
+      },
       widget = wibox.container.place
     }
 
     systray = pi {
       widget = systray,
+      outer = true,
       margins = 0,
     }
 

@@ -11,10 +11,8 @@ local old_bg
 local nw = function(arg)
 
   local bg_container = wibox.widget {
-    --widget = {},
     bg = arg.bg or beautiful.panel_item.bg or "#282828",
     shape = arg.shape or beautiful.panel_item.shape or gears.shape.rounded_rect,
-    --shape_border_color = "#aaaaff",
     shape_border_color = arg.shape_border_color or beautiful.panel_item.border_color or  "#888888",
     shape_border_width = arg.shape_border_width or dpi(0),
     widget = wibox.container.background
@@ -67,7 +65,7 @@ local nw = function(arg)
     function()
       if arg.outer then return end
       old_bg = bg_container.bg
-      bg_container.bg = darker(beautiful.wibar_bg,30) or "#888888"
+      bg_container.bg = beautiful.panel_item.highlight or "#888888"
     end
   )
   bg_container:connect_signal(

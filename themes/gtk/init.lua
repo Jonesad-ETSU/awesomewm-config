@@ -89,7 +89,6 @@ theme.gtk = gtk.get_theme_variables()
 if not theme.gtk then
     local gears_debug = require("gears.debug")
     gears_debug.print_warning("Can't load GTK+3 theme. Using 'xresources' theme as a fallback.")
-    naughty.notify {text = "FAILED"}
     return theme
 end
 naughty.notify { text = "Loading GTK+3 Theme" }
@@ -113,7 +112,8 @@ theme.font_family   = theme.gtk.font_family
 theme.bg_normal     = theme.gtk.bg_color
 theme.fg_normal     = theme.gtk.fg_color
 
-theme.wibar_bg      = theme.gtk.menubar_bg_color
+ theme.wibar_bg      = theme.gtk.menubar_bg_color
+--theme.wibar_bg      = darker(theme.gtk.menubar_bg_color,10)
 theme.wibar_fg      = theme.gtk.menubar_fg_color
 
 theme.bg_focus      = theme.gtk.fg_color
@@ -125,8 +125,8 @@ theme.fg_urgent     = theme.gtk.error_fg_color
 theme.bg_minimize   = mix(theme.wibar_fg, theme.wibar_bg, 0.3)
 theme.fg_minimize   = mix(theme.wibar_fg, theme.wibar_bg, 0.9)
 
-theme.bg_systray    = theme.wibar_bg
---theme.bg_systray    = "#00000000"
+-- theme.bg_systray    = theme.wibar_bg
+-- theme.bg_systray    = theme.wibar_bg.."00"
 
 theme.border_normal = theme.gtk.wm_border_unfocused_color
 theme.border_focus  = theme.gtk.fg_color
@@ -263,14 +263,16 @@ theme.menu_submenu_icon = nil
 theme.menu_submenu = "->"
 
 theme.panel_item = {}
-    theme.panel_item.bg = theme.wibar_bg
-    theme.panel_item.name_bg = darker(theme.wibar_bg,-30)
+    theme.panel_item.bg = darker(theme.gtk.menubar_bg_color,5)
+    theme.panel_item.name_bg = darker(theme.gtk.menubar_bg_color,-30)
+    theme.panel_item.highlight = darker(theme.panel_item.bg,-25)
     theme.panel_item.border_color = darker(theme.wibar_bg,60)
     theme.panel_item.border_width = 0
     -- theme.panel_item.border_width = dpi(1) -- uncomment for borders
     theme.panel_item.shape = rounded_rect_shape
     theme.panel_item.margins = dpi(10)
 
+theme.bg_systray    = theme.panel_item.bg
 theme = theme_assets.recolor_layout(theme, theme.wibar_fg)
 
 theme = theme_assets.recolor_titlebar(

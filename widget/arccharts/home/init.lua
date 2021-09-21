@@ -1,5 +1,6 @@
 local ib = require ('widget.util.img_button')
 local pi = require ('widget.util.panel_item')
+-- local darker = require ('widget.util.color').darker
 local awful = require ('awful')
 local gears = require ('gears')
 -- local naughty = require ('naughty')
@@ -97,7 +98,7 @@ gears.timer {
 local pi_chart = pi {
   widget = chart,
   shape = gears.shape.circle,
-  --bg = "#ff00ff",
+  --bg = darker(beautiful.wibar_bg, 10),
   margins = 4,
 }
 
