@@ -56,9 +56,9 @@ local function get()
     dw:ajust_ratio(2,.4,.6,0)
 
   local cmd = [[curl wttr.in/]]..location..[[?format="%C\n%t\n%w\n"]]
-  awful.spawn.easy_async_with_shell ( 
-    cmd,
-    --'echo "Partly cloudy\n+70°F\n0mph\n"', --Hardcoded value so I can test this at work.
+  awful.spawn.easy_async_with_shell (
+    --cmd,
+    'echo "Partly cloudy\n+70°F\n0mph\n"', --Hardcoded value so I can test this at work.
     function(stdout,stderr)
       -- Handles case when curl can't connect.
       -- if stderr:find('%a+') then

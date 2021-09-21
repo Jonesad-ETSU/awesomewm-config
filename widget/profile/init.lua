@@ -1,11 +1,12 @@
 local wibox = require ('wibox')
 local beautiful = require ('beautiful')
-local awful     = require ('awful')
+-- local awful     = require ('awful')
 local gears     = require ('gears')
 local dpi   = require ('beautiful.xresources').apply_dpi
 local pi   = require ('widget.util.panel_item')
+local darker   = require ('widget.util.color').darker
 local ib   = require ('widget.util.img_button')
-local naughty = require ('naughty')
+-- local naughty = require ('naughty')
 local clickable = require ('widget.util.clickable')
 
 local user_name = os.getenv('USER')
@@ -23,14 +24,14 @@ local profile_container = wibox.widget {
     ib {
       image = profile_img(),
       show_widget = 'widget.power_popup',
-      tooltip = "opens power menu" 
+      tooltip = "opens power menu"
     },
     widget = wibox.container.place
   },
   shape = gears.shape.circle,
   shape_clip = true,
   shape_border_width = dpi(1),
-  shape_border_color = "#ffffff",
+  shape_border_color = darker(beautiful.wibar_bg,-30),
   widget = wibox.container.background
 }
 
@@ -42,11 +43,4 @@ local profile = pi {
   outer = false
 }
 
---[[profile:connect_signal(
-  'activate',
-  function ()
-    naughty.notify { text = user_name }
-  end
-)--]]
-
-return clickable(profile) 
+return clickable(profile)

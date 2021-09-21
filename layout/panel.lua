@@ -1,5 +1,6 @@
 local wibox     = require ('wibox')
 local pi 	= require ('widget.util.panel_item')
+local darker    = require ('widget.util.color').darker
 local awful     = require ('awful')
 local gears     = require ('gears')
 local awestore  = require ('awestore')
@@ -9,22 +10,21 @@ local hidden    = true
 local panel_width = dpi(1000)
 
 local _panel = function(s, side)
-    -- local time_wibox = require ('layout.time')(s)
     local panel = wibox {
         visible = true,
         ontop = true,
         splash = false,
         width = panel_width,
         height = panel_width/4.5,
-        border_width = 3,
-        border_color = "FF00FF",
+        border_width = dpi(2),
+        border_color = darker(beautiful.wibar_bg,30),
 	screen = s,
         shape = function (cr, width, height)
             return gears.shape.rounded_rect(cr, width, height, 20)
         end,
         fg = beautiful.foreground,
-        -- bg = beautiful.wibar_bg
-        bg = beautiful.black_light
+        bg = beautiful.wibar_bg
+        -- bg = beautiful.black_light
     }
 
     if side == 'top' then
@@ -46,9 +46,10 @@ local _panel = function(s, side)
     }
 
     local anim_show_hide = awestore.tweened(panel.y ,{
-        duration = 500,
-        --easing = awestore.linear
-        easing = awestore.easing.back_in_out
+        -- duration = 500,
+        duration = 250,
+        easing = awestore.linear
+        -- easing = awestore.easing.back_in_out
     })
 
     anim_show_hide:subscribe(function(pos) panel.y = pos end)
@@ -62,39 +63,22 @@ local _panel = function(s, side)
       )
     end
 
-    
-    local layout_widget = pi {
-	    widget = wibox.widget {
-		    awful.widget.layoutbox(),
-		    widget = wibox.container.place
-	    },
-	    name = "Layout",
-	    margins = dpi(5),
-	    ratio = {
-		target	= 2,
-		before	= 0.8,
-		at	= 0.2,
-		after	= 0
-	    }
-    }
-    layout_widget:buttons(gears.table.join(
-	awful.button({ }, 1, function () awful.layout.inc( 1) end),
-	awful.button({ }, 3, function () awful.layout.inc(-1) end),
-	awful.button({ }, 4, function () awful.layout.inc( 1) end),
-	awful.button({ }, 5, function () awful.layout.inc(-1) end)
-    ))
-
     local widgets = require ('widget')
     local systray = wibox.widget.systray()
     systray:set_base_size(32)
     systray = wibox.widget {
-	wibox.widget.systray(),
-	widget = wibox.container.place
+      {
+        bg = beautiful.panel_item.bg,
+        widget = wibox.widget.systray
+      },
+      widget = wibox.container.place
     }
-    systray = pi { 
-	    widget = systray,
-    	    margins = 0,
-	}
+
+    systray = pi {
+      widget = systray,
+      outer = true,
+      margins = 0,
+    }
 
     --widget, row, col, row_span, col_span
     --COL 1

@@ -14,14 +14,14 @@ return auto_bar ({
     tooltip = "Left Click/Scroll Up ==> Raise Volume by "..vol_step
       .. "\nRight Click/Scroll Down ==> Lower Volume by "..vol_step,
     label_text = "<b>VOL:</b>",
+    padding = dpi(2),
     border_width = dpi(1),
-    border_color = "#ffff00",
-    color = {
+    --[[color = {
 	type 	= 'linear',
 	from	= {0,0},
 	to	= {100,0},
 	stops	= {{0,"#bbbb00"},{1,"#ffff00"}}
-    },--"#00ff00",
+    },--]]
     cmd = [[pamixer --get-volume ; pamixer --get-mute]],
     alt_color = "#ff0000",
     alt_check = function (lines)

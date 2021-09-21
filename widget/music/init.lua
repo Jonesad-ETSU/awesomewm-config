@@ -1,5 +1,5 @@
 local wibox = require ('wibox')
-local naughty = require ('naughty')
+-- local naughty = require ('naughty')
 local awful = require ('awful')
 local beautiful = require ('beautiful')
 local dpi = require ('beautiful.xresources').apply_dpi
@@ -13,11 +13,11 @@ local playing = false
 local song = "Song"
 local artist = "Artist"
 
-local function highlight_widget(w)
+local function highlight_widget(w,s)
   return pi {
     widget = w,
     margins = 2,
-    shape = gears.shape.rounded_bar,
+    shape = s or gears.shape.rounded_bar,
     shape_border_width = 0
   }
 end
@@ -84,9 +84,9 @@ local forward_pic = click (
 
 local tt = awful.tooltip {
   objects = { forward_pic },
-  shape = gears.shape.rounded_bar,
+  shape = gears.shape.rounded_rect,
   delay_show = 1,
-  text = "TEST"
+  text = "TEST",
 }
 
 --Tooltip updates to show the next song in playlist
@@ -155,9 +155,9 @@ local main = wibox.widget {
   },
   {
     {
-      highlight_widget(back_pic),
-      highlight_widget(pause_pic),
-      highlight_widget(forward_pic),
+      highlight_widget(back_pic,gears.shape.circle),
+      highlight_widget(pause_pic, gears.shape.circle),
+      highlight_widget(forward_pic, gears.shape.circle),
       spacing = 5,
       layout = wibox.layout.flex.horizontal
     },

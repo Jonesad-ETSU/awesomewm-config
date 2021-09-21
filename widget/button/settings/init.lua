@@ -18,8 +18,8 @@ local settings_btn = ib {
       align = 'center',
       widget = wibox.widget.textbox
     },
-    left = dpi(5),
-    right = dpi(5),
+    -- left = dpi(5),
+    -- right = dpi(5),
     widget = wibox.container.margin
   },
   show_widget = "layout.settings",
