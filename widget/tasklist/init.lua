@@ -1,5 +1,6 @@
 local wibox = require ('wibox')
 local awful = require ('awful')
+local beautiful = require ('beautiful')
 --local beautiful = require ('beautiful')
 local pi = require ('widget.util.panel_item')
 local dpi = require ('beautiful.xresources').apply_dpi
@@ -48,6 +49,13 @@ local make_tasklist = function (s)--(s)
         awful.button({ }, 5, function () awful.layout.inc(-1) end)
     ))
 
+  -- local tag_name = awful.screen.focused().selected_tag
+  local current_tag = wibox.widget {
+    markup = "<i>nil</i>",
+    font = beautiful.font,
+    align = "center",
+    widget = wibox.widget.textbox
+  }
   local tasklist = wibox.widget {
       {
           require ('widget.button.tags.prev'),
@@ -59,6 +67,7 @@ local make_tasklist = function (s)--(s)
       },
       {
         {
+          current_tag,
           awful.widget.tasklist {
             screen = s,
             filter = awful.widget.tasklist.filter.currenttags,
@@ -101,6 +110,7 @@ local make_tasklist = function (s)--(s)
             }
           },
           --require ('widget.button.rofi_launcher'),
+          spacing = dpi(10),
           layout = wibox.layout.fixed.horizontal
         },
         widget = wibox.container.place
@@ -115,6 +125,15 @@ local make_tasklist = function (s)--(s)
     -- layout = wibox.layout.flex.horizontal
     }
 
+    tag.connect_signal(
+      'property::selected',
+      function()
+        local tag = awful.screen.focused().selected_tag
+        if tag then
+          current_tag.markup = "<i>"..tag.name.."</i>"
+        end
+      end
+    )
 
   -- s.taglist = pi {
   --   widget = tasklist,
