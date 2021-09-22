@@ -59,7 +59,7 @@ By default, Awesomewm comes with a set of fairly sane defaults. However, many as
 - [x] Make Poweroff Prompt <sup>WIP</sup>
 - [ ] Display current tag name in front of Tasklist.
 - [x] Correct Rofi themeing <sup>WIP</sup>
-- [ ] Make Bars respond to click events rather than poll.
+- [x] Make Bars respond to click events rather than poll.
 - [x] Make MPD respond to click events rather than poll.
 - [x] Simplify & Clean Design
 - [ ] Installation Playbook

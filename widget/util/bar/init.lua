@@ -125,54 +125,21 @@ local bar_widget = function (options)
     local stack = wibox.layout.stack()
     ratio.spacing = options.elem_spacing or dpi(5)
 
-    ratio:add (
-	options.label_widget or wibox.widget {
-            text,
-            fg = options.text_fg or beautiful.wibar_fg,
-            widget = wibox.container.background
-        }
-    )
+    ratio:add (options.label_widget or text)
 
     if options.stack_pct == true then
-        stack:add (
-            bar,
-            wibox.widget {
-                pct,
-                fg = options.text_fg or "#ffffff",
-                widget = wibox.container.background
-            })
+        stack:add (bar,pct)
 	ratio:add(stack)
-    else
-        ratio:add (
-            bar,
-            wibox.widget {
-                pct,
-                fg = options.text_fg or "#ffffff",
-                widget = wibox.container.background
-            })
-    end
+    else ratio:add(bar,pct) end
 
     if options.ratio then
 	    ratio:ajust_ratio( 2, options.ratio[1], options.ratio[2], options.ratio[3] )
     else ratio:ajust_ratio( 2, .175, .65, .175 ) end
 
-    ratio:connect_signal(
-        'activate',
-        function()
-            if options.activate_function then
-                options.activate_function()
-            elseif not options.buttons then 
-		    naughty.notify { text = "You clicked me! :D " }
-	    end
-        end
-    )
-
-    if options.buttons then
-	    local final = clickable( ratio, options.buttons )
-            return final
-    end
-
-    return clickable(ratio)
+    return {
+      bar = ratio,
+      setter = anim
+    }
 end
 
 return bar_widget

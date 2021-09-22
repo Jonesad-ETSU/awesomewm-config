@@ -1,4 +1,5 @@
 local auto_bar = require ('widget.util.bar')
+local click = require ('widget.util.clickable')
 --local naughty = require ('naughty')
 local gears = require ('gears')
 local awful = require ('awful')
@@ -8,7 +9,7 @@ local awestore = require ('awestore')
 local step = "10%"
 local my_cmd = "brightnessctl i | awk '/Current/ {gsub(\"[()%]\",\"\"); print $4}'"
 
-return auto_bar {
+local b = auto_bar {
   name = "bri",
   init_value = 0,
   max_value = 100,
@@ -40,16 +41,50 @@ return auto_bar {
   end,
   buttons = gears.table.join (
     awful.button( { }, 1, function()
-      awful.spawn ("brightnessctl s +"..step)	
+      awful.spawn ("brightnessctl s +"..step)
     end),
     awful.button( { }, 3, function()
       awful.spawn.easy_async_with_shell ("if [ $("..my_cmd..") -ge 20 ]; then brightnessctl s "..step.."-; fi", function() end)	
     end),
     awful.button( { }, 4, function()
-      awful.spawn ("brightnessctl s +"..step)	
+      awful.spawn ("brightnessctl s +"..step)
     end),
     awful.button( { }, 5, function()
       awful.spawn.easy_async_with_shell ("if [ $("..my_cmd..") -ge 20 ]; then brightnessctl s "..step.."-; fi", function() end)	
     end)
   )
 }
+
+local bar = b.bar
+local setter = b.setter
+
+local function chbri(raise)
+  if raise then
+      awful.spawn ("brightnessctl s +"..step)
+  else
+      awful.spawn.easy_async_with_shell ("if [ $("..my_cmd..") -ge 20 ]; then brightnessctl s "..step.."-; fi", function() end)
+  end
+  awful.spawn.easy_async_with_shell (
+    my_cmd,
+    function(out)
+      setter:set(tonumber(out))
+    end
+  )
+end
+
+bar = click(bar, gears.table.join (
+  awful.button( { }, 1, function()
+    chbri(true)
+  end),
+  awful.button( { }, 3, function()
+    chbri(false)
+  end),
+  awful.button( { }, 4, function()
+    chbri(true)
+  end),
+  awful.button( { }, 5, function()
+    chbri(false)
+  end)
+))
+
+return bar

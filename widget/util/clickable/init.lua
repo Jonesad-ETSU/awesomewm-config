@@ -57,7 +57,7 @@ local clickable_container = function ( widget, custom_buttons )
     )
 
     click_widget:buttons(
-    	custom_buttons or 
+    	custom_buttons or
 	awful.button({},1,function()
 		click_widget:emit_signal('activate') 
 	end))

@@ -1,14 +1,15 @@
 -- local wibox = require ('wibox')
 local auto_bar = require ('widget.util.bar')
+local click = require ('widget.util.clickable')
 --local naughty = require ('naughty')
 local gears = require ('gears')
 local awful = require ('awful')
 local dpi = require ('beautiful.xresources').apply_dpi
 --local awestore = require ('awestore')
-local vol_step = 10
+local vol_step = 5
 local this_name = "vol"
 
-return auto_bar ({
+local b = auto_bar {
     name = this_name,
     value = 50,
     tooltip = "Left Click/Scroll Up ==> Raise Volume by "..vol_step
@@ -30,23 +31,43 @@ return auto_bar ({
         else return false
         end
     end ,
-    timer = 3,
+    timer = 37,
     elem_spacing = dpi(5),
-    buttons = gears.table.join(
-	awful.button( { }, 1, function()
-          awful.spawn( "pamixer -i "..vol_step )
-	end),
-	awful.button( { }, 2, function()
-          awful.spawn( "pamixer -t")
-	end),
-	awful.button( { }, 3, function()
-          awful.spawn( "pamixer -d "..vol_step )
-	end),
-	awful.button( { }, 4, function()
-          awful.spawn( "pamixer -i "..vol_step )
-	end),
-	awful.button( { }, 5, function()
-          awful.spawn( "pamixer -d "..vol_step )
-	end)
-    )
-})
+}
+
+local bar = b.bar
+local setter = b.setter
+
+local function chvol(raise)
+  if raise then
+    awful.spawn( "pamixer -i "..vol_step )
+  else
+    awful.spawn( "pamixer -d "..vol_step )
+  end
+  awful.spawn.easy_async_with_shell(
+    'pamixer --get-volume',
+    function(out)
+      setter:set(tonumber(out))
+    end
+  )
+end
+
+bar = click(bar,gears.table.join (
+  awful.button( { }, 1, function()
+    chvol(true)
+  end),
+  awful.button( { }, 2, function()
+    awful.spawn('pavucontrol')
+  end),
+  awful.button( { }, 3, function()
+    chvol(false)
+  end),
+  awful.button( { }, 4, function()
+    chvol(true)
+  end),
+  awful.button( { }, 5, function()
+    chvol(false)
+  end)
+))
+
+return bar
