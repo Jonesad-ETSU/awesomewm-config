@@ -1,33 +1,52 @@
-/* vim:ft=css */
-configuration {
-	modi: "window,drun,run,ssh";
-	theme: "Monokai";
-        font: "DejaVu Sans 10";
-	combi-modi: "windows, drun, ssh";	
-	matching: "fuzzy";
-	show-icons: true;
-	icon-theme: "Obsidian";
-	lines: 8;
-	width: 1000;
-	columns: 6;
-	padding: 10;
-	fullscreen: false;
+/* configuration { */
+/*   modi: "window,drun,run,ssh"; */
+/*   theme: "Monokai"; */
+/*   font: "DejaVu Sans 10"; */
+/*   combi-modi: "windows, drun, ssh";	 */
+/*   matching: "fuzzy"; */
+/*   show-icons: false; */
+/*   icon-theme: "Obsidian"; */
+/*   /*lines: 8;*/ */
+/*   width: 1920; */
+/*   columns: 5; */
+/*   padding: 10; */
+/*   fullscreen: false; */
+/* } */
+
+window {
+  width: 1000;
+  height: 540;
+  column: 5;
+  rows: 10;
+  lines: 10;
+  padding: 10;
+  fullscreen: false;
+}
+
+box {
+  orientation: horizontal;
+  spacing: 10;
+}
+
+listview {
+  lines: 20;
+  columns: 10;
 }
 
 element {
-	orientation:	vertical;
-	border-radius: 	1%;
-	padding:	2% 0% 2% 0%;
+  orientation:	        horizontal;
+  border-radius: 	1%;
+  padding:	        2% 0% 2% 0%;
 }
 
 element-text {
-	expand:			true;
-	horizontal-align:	0.5;
-	vertical-align:		0.5;
-	margin:			0.5% 1% 0% 1%;
+  expand:       	true;
+  horizontal-align:	0.5;
+  vertical-align:	0.5;
+  margin:		0.5% 1% 0% 1%;
 }
 
 element-icon {
-	size: 10ch;
+  size: 5ch;
 }
-@import "/usr/share/rofi/themes/Adapta-Nokto.rasi"
+/* @import "/usr/share/rofi/themes/Adapta-Nokto.rasi" */
