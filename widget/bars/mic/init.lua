@@ -7,7 +7,7 @@ local dpi = require ('beautiful.xresources').apply_dpi
 local vol_step = 10
 local this_name = "mic"
 
-return auto_bar {
+local b = auto_bar {
     name = this_name,
     value = 50,
     tooltip = "Left Click/Scroll Up ==> Raise Volume by "..vol_step
@@ -27,28 +27,48 @@ return auto_bar {
     --end,
     alt_color = "#ff0000",
     alt_check = function (lines)
-        if lines[2] == 'true' then --checks if mute 
-            return true 
+        if lines[2] == 'true' then --checks if mute
+            return true
         else return false
         end
     end ,
     timer = 7,
     elem_spacing = dpi(5),
-    buttons = gears.table.join(
-      awful.button( { }, 1, function()
-        awful.spawn( "pamixer --default-source -i "..vol_step )
-      end),
-      awful.button( { }, 2, function()
-        awful.spawn( "pamixer --default-source -t")
-      end),
-      awful.button( { }, 3, function()
-        awful.spawn( "pamixer --default-source -d "..vol_step )
-      end),
-      awful.button( { }, 4, function()
-        awful.spawn( "pamixer --default-source -i "..vol_step )
-      end),
-      awful.button( { }, 5, function()
-        awful.spawn( "pamixer --default-source -d "..vol_step )
-      end)
-    )
 }
+
+local bar = b.bar
+local setter = b.setter
+
+local function chvol(raise)
+  if raise then
+    awful.spawn( "pamixer --default-source -i "..vol_step )
+  else
+    awful.spawn( "pamixer --default-source -d "..vol_step )
+  end
+  awful.spawn.easy_async(
+    'pamixer --default-source --get-volume',
+    function(out)
+      setter:set(tonumber(out))
+    end
+  )
+end
+
+bar:buttons(gears.table.join(
+  awful.button( { }, 1, function()
+    chvol(true)
+  end),
+  awful.button( { }, 2, function()
+    awful.spawn('pavucontrol')
+  end),
+  awful.button( { }, 3, function()
+    chvol(false)
+  end),
+  awful.button( { }, 4, function()
+    chvol(true)
+  end),
+  awful.button( { }, 5, function()
+    chvol(false)
+  end)
+))
+
+return bar

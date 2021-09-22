@@ -12,10 +12,12 @@ local bars = wibox.widget {
   },
   pi {
     widget = mic,
+    -- widget = vol,
     margins = 0,
   },
   pi {
     widget = bri,
+    -- widget = vol,
     margins = 0,
   },
   spacing = dpi(4),
