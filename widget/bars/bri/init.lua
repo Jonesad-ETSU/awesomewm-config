@@ -1,4 +1,5 @@
 local auto_bar = require ('widget.util.bar')
+local click = require ('widget.util.clickable')
 --local naughty = require ('naughty')
 local gears = require ('gears')
 local awful = require ('awful')
@@ -71,7 +72,7 @@ local function chbri(raise)
   )
 end
 
-bar:buttons(gears.table.join (
+bar = click(bar, gears.table.join (
   awful.button( { }, 1, function()
     chbri(true)
   end),
