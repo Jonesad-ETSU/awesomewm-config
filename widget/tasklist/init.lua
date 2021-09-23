@@ -81,8 +81,11 @@ local make_tasklist = function (s)--(s)
               },
               {
                 {
-                  id     = 'clienticon',
-                  widget = awful.widget.clienticon,
+                  {
+                    id     = 'clienticon',
+                    widget = awful.widget.clienticon,
+                  },
+                  widget = wibox.container.place
                 },
                 margins = dpi(1),
                 widget  = wibox.container.margin
