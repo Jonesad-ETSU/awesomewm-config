@@ -91,7 +91,6 @@ if not theme.gtk then
     gears_debug.print_warning("Can't load GTK+3 theme. Using 'xresources' theme as a fallback.")
     return theme
 end
-naughty.notify { text = "Loading GTK+3 Theme" }
 theme.gtk.button_border_radius = dpi(theme.gtk.button_border_radius or 0)
 theme.gtk.button_border_width = dpi(theme.gtk.button_border_width or 1)
 theme.gtk.bold_font = theme.gtk.font_family .. ' Bold ' .. theme.gtk.font_size
@@ -112,8 +111,7 @@ theme.font_family   = theme.gtk.font_family
 theme.bg_normal     = theme.gtk.bg_color
 theme.fg_normal     = theme.gtk.fg_color
 
- theme.wibar_bg      = theme.gtk.menubar_bg_color
---theme.wibar_bg      = darker(theme.gtk.menubar_bg_color,10)
+theme.wibar_bg      = theme.gtk.menubar_bg_color
 theme.wibar_fg      = theme.gtk.menubar_fg_color
 
 theme.bg_focus      = theme.gtk.fg_color
@@ -260,7 +258,7 @@ theme.menu_fg_normal = theme.gtk.menubar_fg_color
 theme.menu_height = dpi(24)
 theme.menu_width  = dpi(200)
 theme.menu_submenu_icon = nil
-theme.menu_submenu = "->"
+theme.menu_submenu = "<->"
 
 theme.panel_item = {}
     theme.panel_item.bg = darker(theme.gtk.menubar_bg_color,5)
