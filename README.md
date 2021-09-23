@@ -69,7 +69,7 @@ By default, Awesomewm comes with a set of fairly sane defaults. However, many as
 | Name | Comment | Reason |
 | --- | --- | --- |
 | [`awesome-git`](https://github.com/awesomeWM/awesome) | Core Window Management | Core of UI. awesome-<em>git</em> needed for certain features.
-| [`awestore`](https://github.com/K4rakara/awestore) | Asynchronous Animations | animates numeric values |
+| [`awestore`](https://github.com/K4rakara/awestore) | Asynchronous Animations | Animates numeric values |
 | [`rofi`](https://github.com/davatorium/rofi) | Dmenu Replacement with CSS styling | Application Launcher/Fallback Alt-Tab |
 | [`mpc`](https://github.com/MusicPlayerDaemon/mpc)| MPD Control Program | Music Widget Controls uses this |
 | [`pamixer`](https://github.com/cdemoulins/pamixer)| PulseAudio/PipeWire Volume Controller | Volume and Microphone Volume Controls use this |
