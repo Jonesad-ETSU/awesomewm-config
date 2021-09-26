@@ -15,8 +15,8 @@ local notif_btn = ib {
     font = beautiful.font,
     widget = wibox.widget.textbox
   },
-  hide_tooltip = true, 
-  cmd = "discord",
+  hide_tooltip = true,
+  show_widget = "layout.notifications"
 }
 
 return pi {

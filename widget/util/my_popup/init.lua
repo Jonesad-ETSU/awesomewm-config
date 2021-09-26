@@ -66,9 +66,9 @@ local popup = function (w, options)
     'toggle',
     function()
       toggle()
-      if popup_wibox.visible then
+      if popup_wibox.visible and options.timeout then
         gears.timer.start_new (
-          1,
+          options.timeout,
           function()
             toggle()
             return false
