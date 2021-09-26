@@ -6,7 +6,7 @@ local gears = require ('gears')
 local gfs = gears.filesystem
 
 local rofi_btn = ib {
-  image = gears.color.recolor_image(gfs.get_configuration_dir() .. '/widget/button/rofi_launcher/rofi.svg',"#ffffff"),
+  image = gears.color.recolor_image(gfs.get_configuration_dir() .. '/widget/button/rofi_launcher/rofi.svg',beautiful.wibar_fg),
   cmd = "rofi -show drun",
   tooltip = "Run Application Launcher"
 }

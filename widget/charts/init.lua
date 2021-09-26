@@ -1,21 +1,14 @@
 local wibox = require ('wibox')
 local pi = require ('widget.util.panel_item')
--- local updates = require ('widget.arccharts.updates')
-local home = require ('widget.arccharts.home')
-local root = require ('widget.arccharts.root')
--- local timer = require ('widget.arccharts.timer')
+local cpu = require ('widget.arccharts.cpu')
+local ram = require ('widget.arccharts.ram')
 
 return pi {
   widget = wibox.widget {
     layout = wibox.layout.flex.horizontal,
     spacing = 20,
-    -- forced_num_rows = 2,
-    -- forced_num_cols = 3,
-    -- expand = 'none',
-    -- updates,
-    home,
-    root,
-    -- timer
+    cpu,
+    ram,
   },
   margins = 15,
   outer = true,

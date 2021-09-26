@@ -186,9 +186,9 @@ local final_widget = wibox.widget {
   {
     album_art,
     shape = gears.shape.rounded_rect,
-    shape_border_width = dpi(2),
-    --shape_border_width = 0,
-    shape_border_color = "#00cccc",
+    shape_border_width = dpi(1),
+    -- --shape_border_width = 0,
+    shape_border_color = beautiful.wibar_fg,
     shape_clip = true,
     widget = wibox.container.background
   },

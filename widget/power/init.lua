@@ -18,8 +18,10 @@ l.fill_space = true
 local function make_heart_widget (fullness, bat_state)
   local images_dir = gears.filesystem.get_configuration_dir() .. 'widget/power/icons/'
   local colors = {
-    discharging = "#FF0000",
-    charging = "#00FF00"
+    -- discharging = "#FF0000",
+    discharging = beautiful.bg_urgent,
+    -- charging = "#00FF00"
+    charging = beautiful.fg_urgent,
   }
   local color
   if bat_state == 'discharging' then

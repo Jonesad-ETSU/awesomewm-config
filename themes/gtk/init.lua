@@ -4,14 +4,12 @@
 ----------------------------------------------
 
 local theme_assets = require("beautiful.theme_assets")
-local naughty = require("naughty")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 local gtk = beautiful.gtk
 local gears = require("gears")
 local gfs = gears.filesystem
 local themes_path = gfs.get_themes_dir()
-local wibox = require("wibox")
 
 -- Helper functions for modifying hex colors:
 --
@@ -258,7 +256,7 @@ theme.menu_fg_normal = theme.gtk.menubar_fg_color
 theme.menu_height = dpi(24)
 theme.menu_width  = dpi(200)
 theme.menu_submenu_icon = nil
-theme.menu_submenu = "<->"
+theme.menu_submenu = "->"
 
 theme.panel_item = {}
     theme.panel_item.bg = darker(theme.gtk.menubar_bg_color,5)
