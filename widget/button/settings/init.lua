@@ -5,23 +5,24 @@ local gears = require ('gears')
 local beautiful = require ('beautiful')
 local wibox = require ('wibox')
 
--- local gfs = gears.filesystem
+ local gfs = gears.filesystem
 -- local recolor = require ('gears.color').recolor_image
-local dpi = require ('beautiful.xresources').apply_dpi
+local dpi = beautiful.xresources.apply_dpi
 
 local settings_btn = ib {
-  -- image = recolor(gfs.get_configuration_dir() .. '/widget/button/settings/settings.svg','#ffffff'),
-  widget = wibox.widget {
-    {
-      markup = "<b>Settings</b>",
-      font = beautiful.font ,
-      align = 'center',
-      widget = wibox.widget.textbox
-    },
-    -- left = dpi(5),
-    -- right = dpi(5),
-    widget = wibox.container.margin
-  },
+  image = gfs.get_configuration_dir() .. '/icons/settings.svg',
+  recolor = true,
+  -- widget = wibox.widget {
+  --   {
+  --     markup = "Settings",
+  --     font = beautiful.font ,
+  --     align = 'center',
+  --     widget = wibox.widget.textbox
+  --   },
+  --   -- left = dpi(5),
+  --   -- right = dpi(5),
+  --   widget = wibox.container.margin
+  -- },
   show_widget = "layout.settings",
   tooltip = 'Show Settings window',
   buttons = gears.table.join(
@@ -31,8 +32,9 @@ local settings_btn = ib {
 
 return pi {
   widget = settings_btn,
-  shape = gears.shape.rectangle,
+  shape = gears.shape.rounded_rect,
   margins = 3,
+  bg = beautiful.panel_item.button_bg
   -- name = "Settings",
   -- margins = dpi(8),
   -- ratio = {

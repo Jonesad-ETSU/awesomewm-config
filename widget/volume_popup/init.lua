@@ -1,14 +1,14 @@
 --animations
-pcall (require, "luarocks.loader")
-local awestore = require ('awestore')
+-- pcall (require, "luarocks.loader")
+-- local awestore = require ('awestore')
 
 local awful = require ('awful')
 local beautiful = require ('beautiful')
 local dpi = require ('beautiful.xresources').apply_dpi
 local gears = require ('gears')
 local wibox = require ('wibox')
-local bling = require ('bling')
-local hidden = false
+-- local bling = require ('bling')
+-- local hidden = false
 
 local vol_text = wibox.widget {
     text = "Hello, World",
@@ -18,7 +18,7 @@ local vol_text = wibox.widget {
 }
 
 local vol_icon = wibox.widget {
-   image = gears.filesystem.get_configuration_dir() .. "/widget/volume_popup/music.svg",
+   image = gears.filesystem.get_configuration_dir() .. "/icons/music.svg",
    resize = true,
    forced_height = dpi(100),
    forced_width = dpi(100),

@@ -83,8 +83,6 @@ gears.timer {
   autostart = true,
   callback = function()
     awful.spawn.easy_async_with_shell (
-      --gfs.get_configuration_dir()..'/widget/updates/check.sh',
-      --[[ checkupdates 2>/dev/null | wc -l ]]--,
       [[df 2>/dev/null | grep /home | grep -o '[0-9]*%' | tr -d '%' ]],
       function(out)
         chart.value = 100 - tonumber(out)

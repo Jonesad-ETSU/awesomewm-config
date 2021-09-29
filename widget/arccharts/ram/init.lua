@@ -10,48 +10,18 @@ local darker = require ('widget.util.color').darker
 local beautiful = require ('beautiful')
 local wibox = require ('wibox')
 
-local ram_txt = wibox.widget {
-  markup = 'N/A',
-  align = 'center',
-  font = beautiful.font,
-  widget = wibox.widget.textbox
-}
-
-local ram_txt_btn = ib {
-  widget = ram_txt,
-  cmd = [[notify-send "$(checkupdates)"]],
-  tooltip = "Number of updates. Click to see the updates."
-}
-
 local ram_icon = ib {
   widget = wibox.widget {
-    markup = "<b><u>RAM</u></b>",
-    font = beautiful.font .. ' 8',
+    text = "RAM",
+    font = beautiful.medium_font,
     align = 'center',
     widget = wibox.widget.textbox
   },
-  -- cmd = [[alacritty -e "df; read -p 'Press Any Key to EXIT'"]],
-  tooltip = "Amount of ram not Idling"
+  tooltip = "Amount of RAM Utilization (lower is better)"
 }
-
-local ram = wibox.widget {
-  {
-    id = 'txt',
-    markup = "",
-    align = 'center',
-    font = beautiful.font,
-    widget = wibox.widget.textbox
-  },
-  ram_icon,
-  ram_txt_btn,
-  expand = 'center',
-  spacing = 3,
-  layout = wibox.layout.ratio.vertical
-}
-ram:ajust_ratio(2,.0,.9,.1)
 
 local chart = wibox.widget {
-  ram,
+  ram_icon,
   id = 'bar',
   paddings = 10,
   max_value = 100,
@@ -59,7 +29,7 @@ local chart = wibox.widget {
   rounded_edge = true,
   value = 19,
   --colors = "#ffffff",
-  color = beautiful.wibar_fg,
+  colors = { beautiful.success },
   bg = beautiful.wibar_bg,
   -- colors = {{
   --   type    = 'linear',
@@ -92,7 +62,6 @@ gears.timer {
       -- [[echo 100]],
       function(out)
         chart.value = math.floor(tonumber(out))
-        ram_txt.markup = out
       end
     )
   end

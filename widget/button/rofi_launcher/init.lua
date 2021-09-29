@@ -6,7 +6,7 @@ local gears = require ('gears')
 local gfs = gears.filesystem
 
 local rofi_btn = ib {
-  image = gears.color.recolor_image(gfs.get_configuration_dir() .. '/widget/button/rofi_launcher/rofi.svg',beautiful.wibar_fg),
+  image = gears.color.recolor_image(gfs.get_configuration_dir() .. '/icons/rofi.svg',beautiful.wibar_fg),
   cmd = "rofi -show drun",
   tooltip = "Run Application Launcher"
 }
@@ -14,7 +14,7 @@ local rofi_btn = ib {
 return pi {
   widget = rofi_btn,
   shape = gears.shape.rounded_rect,
-  top = dpi(8),
-  bottom = dpi(8),
-  margins = dpi(4),
+  -- top = dpi(6),
+  -- bottom = dpi(6),
+  margins = dpi(6),
 }

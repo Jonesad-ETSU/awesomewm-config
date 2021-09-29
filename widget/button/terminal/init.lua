@@ -1,11 +1,13 @@
 local ib = require ('widget.util.img_button')
 local pi = require ('widget.util.panel_item')
 local gears = require ('gears')
+local recolor = require ('gears.color').recolor_image
 local gfs = gears.filesystem
-local dpi = require ('beautiful.xresources').apply_dpi
+local beautiful = require ('beautiful')
+local dpi = beautiful.xresources.apply_dpi
 
 local terminal_btn = ib {
-  image = gfs.get_configuration_dir() .. 'widget/button/terminal/terminal.svg',
+  image = recolor(gfs.get_configuration_dir() .. 'icons/terminal.svg',beautiful.wibar_fg),
   cmd = "alacritty",
 }
 

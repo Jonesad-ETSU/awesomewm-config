@@ -1,7 +1,10 @@
 local clickable = require ('widget.util.clickable')
-local pi        = require ('widget.util.panel_item')
+local naughty = require ('naughty')
+-- local pi        = require ('widget.util.panel_item')
+local color   = require ('gears.color').recolor_image
 local wibox     = require ('wibox')
 local awful     = require ('awful')
+local beautiful = require ('beautiful')
 local gfs       = require ('gears.filesystem')
 
 --[[
@@ -10,7 +13,7 @@ local gfs       = require ('gears.filesystem')
 --      bg => background color
 --      cmd => command to run when clicking button
 --      stdout_cmd => command to run from output of button
---      show_widget => widget to show on click
+--      show_widget => widget to show on clickn
 --      tooltip
 --  }
 --]]
@@ -19,9 +22,19 @@ local button = function (options)
 
     local image
     if not options.widget then
+      local img
+      if options.recolor then
+        -- naughty.notify { text = "Recoloring to "..beautiful.wibar_fg }
+        img = color(options.image, beautiful.wibar_fg)
+      else 
+        -- naughty.notify { text = "Text" }
+        img = options.image
+      end
+
+
       image = wibox.widget {
         {
-          image = options.image or gfs.get_configuration_dir() .. '/unknown.svg', 
+          image = img or options.image or gfs.get_configuration_dir() .. 'icons/unknown.svg',
           resize = true,
           widget = wibox.widget.imagebox
         },

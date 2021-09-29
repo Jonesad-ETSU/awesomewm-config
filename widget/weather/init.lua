@@ -4,7 +4,8 @@ local wibox 	= require ('wibox')
 local naughty 	= require ('naughty')
 local awful 	= require ('awful')
 local gears 	= require ('gears')
-local gfs 	= require ('gears.filesystem')
+local gfs 	= gears.filesystem
+local color     = gears.color
 local pi	= require ('widget.util.panel_item')
 
 -- local wind_speed = {}
@@ -15,39 +16,33 @@ local function get()
 
   local dw = wibox.widget {
       {
-        --icon,
-          {
-            id = 'icon',
-            image = "",
-            resize = true,
-            widget = wibox.widget.imagebox
-          },
-        id = "left",
+        {
+          id = 'icon',
+          image = "",
+          resize = true,
+          widget = wibox.widget.imagebox
+        },
         widget = wibox.container.place
       },
       {
         nil,
         {
-          --temp,
           {
             id = 'temp',
             markup = 'Temp: <i></i>',
-            font = beautiful.font,
+            font = beautiful.small_font,
             widget = wibox.widget.textbox
           },
-          --wind,
           {
             id = 'wind',
             markup = 'Wind: ',
-            font = beautiful.font,
+            font = beautiful.small_font,
             widget = wibox.widget.textbox
           },
-          id = "data",
           layout = wibox.layout.fixed.vertical
         },
         nil,
         expand = 'none',
-        id = 'right',
         layout = wibox.layout.align.vertical
       },
       spacing = dpi(3),
@@ -57,7 +52,7 @@ local function get()
 
   local cmd = [[curl wttr.in/]]..location..[[?format="%C\n%t\n%w\n"]]
   awful.spawn.easy_async_with_shell (
-    --cmd,
+    -- cmd,
     'echo "Partly cloudy\n+70°F\n0mph\n"', --Hardcoded value so I can test this at work.
     function(stdout,stderr)
       -- Handles case when curl can't connect.
@@ -73,16 +68,14 @@ local function get()
       for s in stdout:gmatch("[^\r\n]+") do
         table.insert(lines,s)
       end
-
       -- for _,s in ipairs(lines) do
       --   naughty.notify { text = "Line: "..s }
       -- end
 
       local icon_file = lines[1]:gsub(" ","_"):lower()
-      dw.left.icon.image = gfs.get_configuration_dir() .. 'widget/weather/icons/'..icon_file..'.svg'
-      -- naughty.notify {text = "Icon's image: "..dw.left.icon.image}
-      dw.right.data.temp.markup = "Temp: "..lines[2]
-      dw.right.data.wind.markup = "Wind: "..lines[3]
+      dw:get_children_by_id('icon')[1].image = color.recolor_image(gfs.get_configuration_dir() .. '/icons/'..icon_file..'.svg',beautiful.wibar_fg)
+      dw:get_children_by_id('temp')[1].markup = "Temp: "..lines[2]
+      dw:get_children_by_id('wind')[1].markup = "Wind: "..lines[3]
       dw = wibox.widget {
         dw,
         widget = wibox.container.place

@@ -7,6 +7,7 @@ local gears = require ('gears')
 local gfs = gears.filesystem
 local color = gears.color.recolor_image
 local pi    = require ('widget.util.panel_item')
+local ib    = require ('widget.util.img_button')
 local click    = require ('widget.util.clickable')
 local playing = false
 
@@ -16,71 +17,63 @@ local artist = "Artist"
 local function highlight_widget(w,s)
   return pi {
     widget = w,
-    margins = 2,
-    shape = s or gears.shape.rounded_bar,
+    margins = dpi(2),
+    -- bg = beautiful.panel_item.button_bg,
+    shape = s or gears.shape.rounded_rect,
     shape_border_width = 0
   }
 end
 
 local album_art = wibox.widget {
-  image = gears.filesystem.get_configuration_dir() .. '/widget/music/album.png',
+  image = gears.filesystem.get_configuration_dir() .. '/icons/album.png',
   resize = true,
   widget = wibox.widget.imagebox
 }
 
 local song_title = wibox.widget {
-  markup = "<span font='"..beautiful.font.." 10'><b>"..song.."</b></span>",
-  font = beautiful.font,
+  markup = song,
+  font = beautiful.medium_font,
   align = 'center',
   widget = wibox.widget.textbox
 }
 
 local artist_title = wibox.widget {
-  text = artist,
-  font = beautiful.font .. "8",
+  markup = artist,
+  font = beautiful.font,
   align = 'center',
   widget = wibox.widget.textbox
 }
 
-local back_pic = click (
-  wibox.widget {
-    image = color(gfs.get_configuration_dir()..'widget/music/prev.svg',beautiful.wibar_fg),
-    resize = true,
-    widget = wibox.widget.imagebox
-  },
-  gears.table.join(
-    awful.button( { }, 1, function() 
+local back_pic = ib {
+  image = gfs.get_configuration_dir()..'icons/prev.svg',
+  recolor = true,
+  buttons = gears.table.join (
+    awful.button( { }, 1, function()
       awful.spawn('mpc prev')
     end)
   )
-)
+}
 
-local pause_pic = click (
-  wibox.widget {
-    image = color(gfs.get_configuration_dir()..'widget/music/toggle.svg',beautiful.wibar_fg),
-    resize = true,
-    widget = wibox.widget.imagebox
-  },
-  gears.table.join (
+local pause_pic = ib {
+  image = gfs.get_configuration_dir()..'icons/toggle.svg',
+  recolor = true,
+  buttons = gears.table.join (
     awful.button( { }, 1, function(--[[self--]])
       awful.spawn('mpc toggle')
       playing = not playing
     end)
   )
-)
+}
 
-local forward_pic = click (
-  wibox.widget {
-    image = color(gfs.get_configuration_dir()..'widget/music/next.svg',beautiful.wibar_fg),
-    resize = true,
-    widget = wibox.widget.imagebox
-  },
-  gears.table.join(
+local forward_pic = ib {
+  image = gfs.get_configuration_dir()..'icons/next.svg',
+  recolor = true,
+  buttons = gears.table.join(
     awful.button( { }, 1, function()
       awful.spawn('mpc next')
     end)
   )
-)
+}
 
 local tt = awful.tooltip {
   objects = { forward_pic },
@@ -186,7 +179,7 @@ local final_widget = wibox.widget {
   {
     album_art,
     shape = gears.shape.rounded_rect,
-    shape_border_width = dpi(1),
+    shape_border_width = dpi(0),
     -- --shape_border_width = 0,
     shape_border_color = beautiful.wibar_fg,
     shape_clip = true,
@@ -217,11 +210,9 @@ local function update_song(first)
     {
       stdout = function(line)
         if line:find("TITLE") then
-          song_title.markup = "<span font= '"..beautiful.font.." 10'><b><i>"..
-            line:gsub("TITLE","").."</i></b></span>"
+          song_title.markup = line:gsub("TITLE","")
         else
-          artist_title.markup = "<span font= '"..beautiful.font.." 8'><i>"..
-            line:gsub("ARTIST","").."</i></span>"
+          artist_title.markup = "<i>"..line:gsub("ARTIST","").."</i>"
         end
       end,
       output_done = function()
@@ -233,7 +224,7 @@ update_song(true)
 
 return pi {
   widget = final_widget,
-  margins = dpi(10),
+  margins = dpi(8),
   outer = true,
   name = nil
 }

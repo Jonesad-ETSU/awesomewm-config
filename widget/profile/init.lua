@@ -15,7 +15,7 @@ local profile_img = function()
   if user_name then
     return "/var/lib/AccountsService/icons/" .. user_name .. '.svg'
   else
-    return gears.filesystem.get_configuration_dir() .. '/widget/profile/default.svg'
+    return gears.filesystem.get_configuration_dir() .. '/icons/default.svg'
   end
 end
 
@@ -38,7 +38,7 @@ local profile_container = wibox.widget {
 local profile = pi { 
   widget = profile_container,
   spacing = dpi(0),
-  name = user_name,
+  name = "<i>@"..user_name.."</i>",
   margins = dpi(8),
   outer = false
 }

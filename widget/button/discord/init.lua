@@ -2,11 +2,12 @@ local ib = require ('widget.util.img_button')
 local pi = require ('widget.util.panel_item')
 local gears = require ('gears')
 local gfs = gears.filesystem
-local color = require ('gears.color')
-local dpi = require ('beautiful.xresources').apply_dpi
+local color = require ('gears.color').recolor_image
+local beautiful = require('beautiful')
+local dpi = beautiful.xresources.apply_dpi
 
 local discord_button = ib ({
-  image = gfs.get_configuration_dir() .. 'widget/button/discord/discord.svg',
+  image = color(gfs.get_configuration_dir() .. 'icons/discord.svg',beautiful.wibar_fg),
   hide_tooltip = true, 
   cmd = "discord",
 })

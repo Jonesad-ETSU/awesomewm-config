@@ -5,7 +5,7 @@ local color = require ('gears.color').recolor_image
 local dpi = require ('beautiful.xresources').apply_dpi
 
 return  ib ({
-        image = color(gfs.get_configuration_dir() .. 'widget/button/gamemode/game.svg',"#ffffff"),
+        image = color(gfs.get_configuration_dir() .. 'icons/game.svg',"#ffffff"),
 	tooltip = "Toggle Gamemode",
         hide_tooltip = true, 
         cmd = "discord",

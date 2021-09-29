@@ -1,31 +1,41 @@
 local wibox = require ('wibox')
+local beautiful = require ('beautiful')
 local pi = require ('widget.util.panel_item')
-local dpi = require ('beautiful.xresources').apply_dpi
-local vol = require ('widget.bars.vol')
-local mic = require ('widget.bars.mic')
-local bri = require ('widget.bars.bri')
+local dpi = beautiful.xresources.apply_dpi
+local slider = require ('widget.util.panel_slider')
+local fs = require ('gears.filesystem')
 
-local bars = wibox.widget {
-  pi {
-    widget = vol,
-    margins = 0
+local l = wibox.layout.flex.vertical()
+l.spacing = dpi(4)
+
+
+for _,w in pairs({
+  {
+    getter = [[pamixer --get-volume]],
+    setter = [[pamixer --set-volume]],
+    label = [[VOL:]],
+    image = fs.get_configuration_dir() .. '/icons/volume.svg'
   },
-  pi {
-    widget = mic,
-    -- widget = vol,
-    margins = 0,
+  {
+    getter = [[pamixer --default-source --get-volume]],
+    setter = [[pamixer --default-source --set-volume]],
+    label = [[MIC:]],
+    image = fs.get_configuration_dir() .. '/icons/mic.svg'
   },
-  pi {
-    widget = bri,
-    -- widget = vol,
-    margins = 0,
-  },
-  spacing = dpi(4),
-  layout = wibox.layout.flex.vertical
-}
+  {
+    getter = [[brightnessctl i | awk '/Current/ {gsub("[()%]",""); print $4}']],
+    setter = [[brightnessctl s]],
+    setter_post = [[%]],
+    minimum = 5,
+    label = [[BRI:]],
+    image = fs.get_configuration_dir() .. '/icons/brightness.svg'
+  }
+}) do
+  l:add(slider(w))
+end
 
 return pi {
-  widget = bars,
+  widget = l,
   margins = dpi(10),
   outer = true,
 }

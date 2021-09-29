@@ -7,7 +7,7 @@ local dpi 	= require ('beautiful.xresources').apply_dpi
 --local pi	= require ('widget.util.panel_item')
 local ib	= require ('widget.util.img_button')
 
-local image_dir = gears.filesystem.get_configuration_dir() .. "/widget/power_popup/"
+local image_dir = gears.filesystem.get_configuration_dir() .. "/icons/"
 
 local shutdown = ib ({
   image = image_dir.."shutdown.svg",

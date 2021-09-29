@@ -1,20 +1,74 @@
 local wibox = require ('wibox')
 local beautiful = require ('beautiful')
+local gears = require('gears')
+local gfs = gears.filesystem
 local dpi = beautiful.xresources.apply_dpi
 local pi  = require ('widget.util.panel_item')
+local color = require('gears.color').recolor_image
 
 -- require('naughty').notify {text = beautiful.font }
-local time = wibox.widget {
-  {
-    --format = "<span font='"..beautiful.font.." 12'>%a, %b %d %I:%M %p</span>",
-    format = "%a, %b %d %I:%M %p",
-    font = beautiful.medium_font,
-    widget = wibox.widget.textclock
+
+local calendar = pi {
+  widget = wibox.widget {
+    {
+      {
+        {
+          image = color(gfs.get_configuration_dir() .. '/icons/calendar.svg',beautiful.wibar_fg),
+          resize = true,
+          widget = wibox.widget.imagebox
+        },
+        margins = dpi(5),
+        widget = wibox.container.margin
+      },
+      {
+        format = "%a, %b %d",
+        font = beautiful.medium_font,
+        align = 'center',
+        widget = wibox.widget.textclock
+      },
+      spacing = dpi(5),
+      layout = wibox.layout.fixed.horizontal
+    },
+    widget = wibox.container.place
   },
-  widget = wibox.container.place
+  left = dpi(8),
+  right = dpi(8),
+  margins = dpi(3)
 }
 
-return pi {
-  widget = time,
-  margins = dpi(2)
+local time = pi {
+  widget = wibox.widget {
+    {
+      {
+          image = color(gfs.get_configuration_dir() .. '/icons/clock.svg',beautiful.wibar_fg),
+          resize = true,
+          widget = wibox.widget.imagebox
+      },
+      margins = dpi(3),
+      widget = wibox.container.margin
+    },
+    {
+      format = "%I:%M %p",
+      font = beautiful.medium_font,
+      align = 'center',
+      widget = wibox.widget.textclock
+    },
+    spacing = dpi(5),
+    layout = wibox.layout.fixed.horizontal
+  },
+  left = dpi(8),
+  right = dpi(8),
+  margins = dpi(3)
+}
+
+
+return wibox.widget
+{
+  {
+    calendar,
+    time,
+    spacing = dpi(4),
+    layout = wibox.layout.fixed.horizontal
+  },
+  widget = wibox.container.place
 }

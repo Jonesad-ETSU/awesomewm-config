@@ -99,6 +99,7 @@ theme.gtk.menubar_border_color = mix(
 )
 
 
+-- require('naughty').notify { text = theme.gtk.font_family or 'no font found'}
 theme.font          = theme.gtk.font_family .. ' ' .. theme.gtk.font_size
 theme.small_font          = theme.gtk.font_family .. ' ' .. dpi(5)
 theme.medium_font          = theme.gtk.font_family .. ' ' .. dpi(8)
@@ -118,6 +119,8 @@ theme.fg_focus      = theme.gtk.bg_color
 theme.bg_urgent     = theme.gtk.error_bg_color
 theme.fg_urgent     = theme.gtk.error_fg_color
 
+theme.success     = theme.gtk.success_color
+
 theme.bg_minimize   = mix(theme.wibar_fg, theme.wibar_bg, 0.3)
 theme.fg_minimize   = mix(theme.wibar_fg, theme.wibar_bg, 0.9)
 
@@ -125,7 +128,9 @@ theme.fg_minimize   = mix(theme.wibar_fg, theme.wibar_bg, 0.9)
 -- theme.bg_systray    = theme.wibar_bg.."00"
 
 theme.border_normal = theme.gtk.wm_border_unfocused_color
-theme.border_focus  = theme.gtk.fg_color
+theme.border_focus  = mix (
+    theme.gtk.fg_color, theme.gtk.bg_color, .1
+)
 theme.border_marked = theme.gtk.success_color
 
 theme.border_width  = dpi(theme.gtk.button_border_width or 1)
@@ -134,10 +139,18 @@ theme.border_radius = theme.gtk.button_border_radius
 --theme.useless_gap   = 100
 
 local rounded_rect_shape = function(cr,w,h)
+    local radius
+    if theme.border_radius == 0 then
+        radius = 0
+    else 
+        radius = theme.border_radius + 10
+    end
     gears.shape.rounded_rect(
-        cr, w, h, theme.border_radius + 10
+        cr, w, h, radius
     )
 end
+
+theme.rounded_rect_shape = rounded_rect_shape
 
 theme.tasklist_fg_normal = theme.wibar_fg
 theme.tasklist_bg_normal = theme.wibar_bg
@@ -260,6 +273,7 @@ theme.menu_submenu = "->"
 
 theme.panel_item = {}
     theme.panel_item.bg = darker(theme.gtk.menubar_bg_color,5)
+    theme.panel_item.button_bg = darker(theme.panel_item.bg, 3)
     theme.panel_item.name_bg = darker(theme.gtk.menubar_bg_color,-30)
     theme.panel_item.highlight = darker(theme.panel_item.bg,-25)
     theme.panel_item.border_color = darker(theme.wibar_bg,60)
@@ -269,6 +283,8 @@ theme.panel_item = {}
     theme.panel_item.margins = dpi(10)
 
 theme.bg_systray    = theme.panel_item.bg
+theme.systray_icon_spacing = dpi(3)
+
 theme = theme_assets.recolor_layout(theme, theme.wibar_fg)
 
 theme = theme_assets.recolor_titlebar(

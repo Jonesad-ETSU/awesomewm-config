@@ -58,12 +58,16 @@ local make_tasklist = function (s)--(s)
   }
   local tasklist = wibox.widget {
       {
+        {
           require ('widget.button.tags.prev'),
-          layout_widget,
-          require ('widget.launchers'),
-          expand = 'none',
-          spacing = 3,
-          layout = wibox.layout.fixed.horizontal
+          margins = dpi(5),
+          widget = wibox.container.margin
+        },
+        layout_widget,
+        -- require ('widget.launchers'),
+        expand = 'none',
+        spacing = 3,
+        layout = wibox.layout.fixed.horizontal
       },
       {
         {
@@ -120,7 +124,11 @@ local make_tasklist = function (s)--(s)
       },
       {
         require ('widget.button.rofi_launcher'),
-        require ('widget.button.tags.next'),
+        {
+          require ('widget.button.tags.next'),
+          margins = dpi(5),
+          widget = wibox.container.margin
+        },
         layout = wibox.layout.fixed.horizontal
       },
       spacing = 0,

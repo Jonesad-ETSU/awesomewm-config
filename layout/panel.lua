@@ -19,9 +19,10 @@ local _panel = function(s, side)
         border_width = dpi(2),
         border_color = darker(beautiful.wibar_bg,30),
 	screen = s,
-        shape = function (cr, width, height)
-            return gears.shape.rounded_rect(cr, width, height, 20)
-        end,
+        shape = beautiful.rounded_rect_shape,
+        -- shape = function (cr, width, height)
+        --     return gears.shape.rounded_rect(cr, width, height, 20)
+        -- end,
         fg = beautiful.foreground,
         bg = beautiful.wibar_bg
         -- bg = beautiful.black_light
@@ -117,11 +118,12 @@ local _panel = function(s, side)
     --COL 13
 
     --COL 14
-    panel_widget:add_widget_at(widgets.btn.notif,1,14,1,1)
-    panel_widget:add_widget_at(widgets.btn.wall,2,14,1,1)
-    panel_widget:add_widget_at(widgets.btn.files,3,14,1,1)
-    panel_widget:add_widget_at(widgets.btn.settings,4,14,1,1)
-    panel_widget:add_widget_at(widgets.btn.power,5,14,1,1)
+    panel_widget:add_widget_at(widgets.right_buttons,1,14,5,1)
+    -- panel_widget:add_widget_at(widgets.btn.notif,1,14,1,1)
+    -- panel_widget:add_widget_at(widgets.btn.wall,2,14,1,1)
+    -- panel_widget:add_widget_at(widgets.btn.files,3,14,1,1)
+    -- panel_widget:add_widget_at(widgets.btn.settings,4,14,1,1)
+    -- panel_widget:add_widget_at(widgets.btn.power,5,14,1,1)
 
 
 

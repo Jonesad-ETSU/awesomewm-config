@@ -4,7 +4,7 @@ local color = require ('gears.color')
 local dpi = require ('beautiful.xresources').apply_dpi
 
 return  ib ({
-        image = gfs.get_configuration_dir() .. 'widget/button/screen/discord.svg',
+        image = gfs.get_configuration_dir() .. 'icons/discord.svg',
         hide_tooltip = true, 
         cmd = "discord",
 	name = "Screen",

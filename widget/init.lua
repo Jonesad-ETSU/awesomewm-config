@@ -6,7 +6,7 @@ return {
     terminal = require ('widget.button.terminal'),
     rofi = require ('widget.button.rofi_launcher'),
     notif = require ('widget.button.notif'),
-    tag_switch = require ('widget.button.tag_switch'),
+    -- tag_switch = require ('widget.button.tag_switch'),
     wall = require ('widget.button.wall'),
     power = require ('widget.button.power'),
     settings = require ('widget.button.settings'),
@@ -17,12 +17,13 @@ return {
   launchers = require ('widget.launchers'),
   profile = require ('widget.profile'),
   tasklist = require ('widget.tasklist'),
-  motd = require ('widget.motd'),
+  -- motd = require ('widget.motd'),
   music = require ('widget.music'),
   bars = require ('widget.bars'),
   charts = require ('widget.charts'),
   actions = require ('widget.actions'),
   weather = require ('widget.weather'),
   power = require ('widget.power'),
+  right_buttons = require('widget.button.right-buttons')
   --updates = require ('widget.updates'),
 }
