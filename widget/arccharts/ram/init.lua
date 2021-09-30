@@ -4,24 +4,31 @@ local pi = require ('widget.util.panel_item')
 local awful = require ('awful')
 local gears = require ('gears')
 -- local naughty = require ('naughty')
--- local gfs = gears.filesystem
+local gfs = gears.filesystem
 -- local color = require ('gears.color').recolor_image
-local darker = require ('widget.util.color').darker
+-- local darker = require ('widget.util.color').darker
 local beautiful = require ('beautiful')
+local dpi = beautiful.xresources.apply_dpi
 local wibox = require ('wibox')
 
 local ram_icon = ib {
-  widget = wibox.widget {
-    text = "RAM",
-    font = beautiful.medium_font,
-    align = 'center',
-    widget = wibox.widget.textbox
-  },
+  -- widget = wibox.widget {
+  --   text = "RAM",
+  --   font = beautiful.medium_font,
+  --   align = 'center',
+  --   widget = wibox.widget.textbox
+  -- },
+  image = gfs.get_configuration_dir() .. '/icons/microchip.svg',
+  recolor = true,
   tooltip = "Amount of RAM Utilization (lower is better)"
 }
 
 local chart = wibox.widget {
-  ram_icon,
+  {
+    ram_icon,
+    margins = dpi(8),
+    widget = wibox.container.margin
+  }, 
   id = 'bar',
   paddings = 10,
   max_value = 100,

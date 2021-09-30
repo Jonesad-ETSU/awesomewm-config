@@ -4,7 +4,7 @@ local pi = require ('widget.util.panel_item')
 local awful = require ('awful')
 local gears = require ('gears')
 -- local naughty = require ('naughty')
--- local gfs = gears.filesystem
+local gfs = gears.filesystem
 -- local color = require ('gears.color').recolor_image
 -- local darker = require ('widget.util.color').darker
 local beautiful = require ('beautiful')
@@ -18,6 +18,8 @@ local cpu_icon = ib {
     align = 'center',
     widget = wibox.widget.textbox
   },
+  -- image = gfs.get_configuration_dir() .. '/icons/microchip.svg',
+  -- recolor = true,
   tooltip = "Amount of CPU Utilization (lower is better)"
 }
 

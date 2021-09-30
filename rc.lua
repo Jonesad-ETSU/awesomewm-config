@@ -127,5 +127,5 @@ require ('config.binds.client')
 require ('config.rules')
 require ('config.titlebar')
 require ('config.focus')
--- require ('config.notifications')
+require ('config.notifications')
 
