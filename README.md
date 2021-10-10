@@ -94,4 +94,8 @@ One of my tenants for good UI is that it <em>cannot</em> be over overly-speciali
 6. Profit
 
 ## Credits
+<a href="https://github.com/jonesad-etsu/awesomewm-config/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=jonesad-etsu/awesomewm-config" />
+</a>
+Made with [contributers-img](https://contrib.rocks/)
 [Jonesad](https://github.com/jonesad-etsu)
