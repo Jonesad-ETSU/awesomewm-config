@@ -5,14 +5,14 @@ local beautiful = require ('beautiful')
 local dpi = require ('beautiful.xresources').apply_dpi
 local gears = require ('gears')
 local gfs = gears.filesystem
-local color = gears.color.recolor_image
+-- local color = gears.color.recolor_image
 local pi    = require ('widget.util.panel_item')
 local ib    = require ('widget.util.img_button')
-local click    = require ('widget.util.clickable')
+-- local click    = require ('widget.util.clickable')
 local playing = false
 
-local song = "Song"
-local artist = "Artist"
+local song = "Offline"
+local artist = ""
 
 local function highlight_widget(w,s)
   return pi {
@@ -47,6 +47,7 @@ local artist_title = wibox.widget {
 local back_pic = ib {
   image = gfs.get_configuration_dir()..'icons/prev.svg',
   recolor = true,
+  hide_tooltip = true,
   buttons = gears.table.join (
     awful.button( { }, 1, function()
       awful.spawn('mpc prev')
@@ -57,6 +58,7 @@ local back_pic = ib {
 local pause_pic = ib {
   image = gfs.get_configuration_dir()..'icons/toggle.svg',
   recolor = true,
+  hide_tooltip = true,
   buttons = gears.table.join (
     awful.button( { }, 1, function(--[[self--]])
       awful.spawn('mpc toggle')

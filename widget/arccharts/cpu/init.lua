@@ -12,21 +12,21 @@ local dpi = beautiful.xresources.apply_dpi
 local wibox = require ('wibox')
 
 local cpu_icon = ib {
-  widget = wibox.widget {
-    text = "CPU",
-    font = beautiful.medium_font,
-    align = 'center',
-    widget = wibox.widget.textbox
-  },
-  -- image = gfs.get_configuration_dir() .. '/icons/microchip.svg',
-  -- recolor = true,
+  -- widget = wibox.widget {
+  --   text = "CPU",
+  --   font = beautiful.medium_font,
+  --   align = 'center',
+  --   widget = wibox.widget.textbox
+  -- },
+  image = gfs.get_configuration_dir() .. '/icons/cpu.svg',
+  recolor = true,
   tooltip = "Amount of CPU Utilization (lower is better)"
 }
 
 local chart = wibox.widget {
   cpu_icon,
   id = 'bar',
-  paddings = dpi(4),
+  paddings = dpi(15),
   max_value = 100,
   start_angle = math.pi/2,
   rounded_edge = true,
@@ -43,7 +43,7 @@ gears.timer {
   autostart = true,
   callback = function()
     awful.spawn.easy_async_with_shell (
-      [[mpstat | awk '// {print 100-$13}' | tail -n1']],
+      [[mpstat | awk '// {print 100-$13}' | tail -n1]],
       function(out)
         chart.value = math.floor(tonumber(out))
         -- cpu_txt.markup = out

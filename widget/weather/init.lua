@@ -27,19 +27,23 @@ local function get()
       {
         nil,
         {
-          {
-            id = 'temp',
-            markup = 'Temp: <i></i>',
-            font = beautiful.small_font,
-            widget = wibox.widget.textbox
-          },
-          {
-            id = 'wind',
-            markup = 'Wind: ',
-            font = beautiful.small_font,
-            widget = wibox.widget.textbox
-          },
-          layout = wibox.layout.fixed.vertical
+          id = 'temp',
+          markup = 'Temp: <i></i>',
+          font = beautiful.small_font,
+          widget = wibox.widget.textbox
+          -- {
+          --   id = 'temp',
+          --   markup = 'Temp: <i></i>',
+          --   font = beautiful.small_font,
+          --   widget = wibox.widget.textbox
+          -- },
+          -- {
+          --   id = 'wind',
+          --   markup = 'Wind: ',
+          --   font = beautiful.small_font,
+          --   widget = wibox.widget.textbox
+          -- },
+          -- layout = wibox.layout.fixed.vertical
         },
         nil,
         expand = 'none',
@@ -74,8 +78,8 @@ local function get()
 
       local icon_file = lines[1]:gsub(" ","_"):lower()
       dw:get_children_by_id('icon')[1].image = color.recolor_image(gfs.get_configuration_dir() .. '/icons/'..icon_file..'.svg',beautiful.wibar_fg)
-      dw:get_children_by_id('temp')[1].markup = "Temp: "..lines[2]
-      dw:get_children_by_id('wind')[1].markup = "Wind: "..lines[3]
+      dw:get_children_by_id('temp')[1].markup = "Temp: "..lines[2] .. " Wind: " ..lines[3]
+      -- dw:get_children_by_id('wind')[1].markup = "Wind: "..lines[3]
       dw = wibox.widget {
         dw,
         widget = wibox.container.place

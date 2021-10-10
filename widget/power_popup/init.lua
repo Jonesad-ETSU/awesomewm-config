@@ -11,30 +11,35 @@ local image_dir = gears.filesystem.get_configuration_dir() .. "/icons/"
 
 local shutdown = ib ({
   image = image_dir.."shutdown.svg",
+  recolor = true,
   tooltip = "Turn off the Computer",
   cmd = "systemctl poweroff"
 })
 
 local reboot = ib ({
   image = image_dir.."reboot.svg",
+  recolor = true,
   tooltip = "Reboots the Computer",
   cmd = "systemctl reboot"
 })
 
 local sleep = ib ({
   image = image_dir.."sleep.svg",
+  recolor = true,
   tooltip = "Save system state to RAM and enter low-power mode",
   cmd = "systemctl suspend"
 })
 
 local hibernate = ib ({
   image = image_dir.."hibernate.svg",
+  recolor = true,
   tooltip = "Save system state to storage and poweroff",
   cmd = "systemctl hibernate"
 })
 
 local log_out = ib ({
   image = image_dir.."log_out.svg",
+  recolor = true,
   tooltip = "End the Current User Session",
   cmd = "loginctl terminate-user $(whoami)"
 })
@@ -44,6 +49,7 @@ local power_widget = wibox.widget {
     {
       {
         markup = "Think Wisely, <i>" .. os.getenv('USER').."</i>!!",
+        align = 'center',
         font = beautiful.font .. " 32",
         widget = wibox.widget.textbox
       },
@@ -62,8 +68,8 @@ local power_widget = wibox.widget {
   margins = dpi(10),
   widget = wibox.container.margin
 }
- 
-local p = popup(
+
+local p = popup (
   power_widget,
   {
     width = dpi(800),

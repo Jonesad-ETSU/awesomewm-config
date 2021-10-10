@@ -10,6 +10,7 @@ local gtk = beautiful.gtk
 local gears = require("gears")
 local gfs = gears.filesystem
 local themes_path = gfs.get_themes_dir()
+local id = gfs.get_configuration_dir() .. '/icons/'
 
 -- Helper functions for modifying hex colors:
 --
@@ -99,7 +100,10 @@ theme.gtk.menubar_border_color = mix(
 )
 
 
--- require('naughty').notify { text = theme.gtk.font_family or 'no font found'}
+local function set_opacity(s,op)
+    return string.sub(s,1,7) .. op
+end
+theme.opacity = 'ee'
 theme.font          = theme.gtk.font_family .. ' ' .. theme.gtk.font_size
 theme.small_font          = theme.gtk.font_family .. ' ' .. dpi(5)
 theme.medium_font          = theme.gtk.font_family .. ' ' .. dpi(8)
@@ -110,7 +114,8 @@ theme.font_family   = theme.gtk.font_family
 theme.bg_normal     = theme.gtk.bg_color
 theme.fg_normal     = theme.gtk.fg_color
 
-theme.wibar_bg      = theme.gtk.menubar_bg_color
+theme.wibar_bg      = set_opacity(theme.gtk.menubar_bg_color,theme.opacity)
+-- theme.wibar_bg      = "ffffffbb"
 theme.wibar_fg      = theme.gtk.menubar_fg_color
 
 theme.bg_focus      = theme.gtk.fg_color
@@ -257,6 +262,33 @@ theme.titlebar_fg_normal = theme.gtk.wm_title_unfocused_color
 theme.titlebar_font_focus = theme.gtk.bold_font
 theme.titlebar_bg_focus = theme.gtk.wm_border_focused_color
 theme.titlebar_fg_focus = theme.gtk.wm_title_focused_color
+theme.titlebar_button_gap = dpi(3)
+
+theme.titlebar_close_button_normal = id .. '/close.svg'
+theme.titlebar_minimize_button_normal = id .. '/minimize.svg'
+theme.titlebar_maximized_button_normal_active = id .. '/window-restore.svg'
+theme.titlebar_maximized_button_normal_inactive = id .. '/maximize.svg'
+theme.titlebar_close_button_normal_hover = id .. '/close.svg'
+theme.titlebar_minimize_button_normal_hover = id .. '/minimize.svg'
+theme.titlebar_maximized_button_normal_active_hover = id .. '/window-restore.svg'
+theme.titlebar_maximized_button_normal_inactive_hover = id .. '/maximize.svg'
+theme.titlebar_close_button_normal_press = id .. '/close.svg'
+theme.titlebar_minimize_button_normal_press = id .. '/minimize.svg'
+theme.titlebar_maximized_button_normal_active_press = id .. '/window-restore.svg'
+theme.titlebar_maximized_button_normal_inactive_press = id .. '/maximize.svg'
+
+theme.titlebar_close_button_focus = id .. '/close.svg'
+theme.titlebar_minimize_button_focus = id .. '/minimize.svg'
+theme.titlebar_maximized_button_focus_active = id .. '/window-restore.svg'
+theme.titlebar_maximized_button_focus_inactive = id .. '/maximize.svg'
+theme.titlebar_close_button_focus_hover = id .. '/close.svg'
+theme.titlebar_minimize_button_focus_hover = id .. '/minimize.svg'
+theme.titlebar_maximized_button_focus_active_hover = id .. '/window-restore.svg'
+theme.titlebar_maximized_button_focus_inactive_hover = id .. '/maximize.svg'
+theme.titlebar_close_button_focus_press = id .. '/close.svg'
+theme.titlebar_minimize_button_focus_press = id .. '/minimize.svg'
+theme.titlebar_maximized_button_focus_active_press = id .. '/window-restore.svg'
+theme.titlebar_maximized_button_focus_inactive_press = id .. '/maximize.svg'
 
 theme.tooltip_fg = theme.gtk.tooltip_fg_color
 theme.tooltip_bg = theme.gtk.tooltip_bg_color
@@ -272,11 +304,11 @@ theme.menu_submenu_icon = nil
 theme.menu_submenu = "->"
 
 theme.panel_item = {}
-    theme.panel_item.bg = darker(theme.gtk.menubar_bg_color,5)
-    theme.panel_item.button_bg = darker(theme.panel_item.bg, 3)
-    theme.panel_item.name_bg = darker(theme.gtk.menubar_bg_color,-30)
-    theme.panel_item.highlight = darker(theme.panel_item.bg,-25)
-    theme.panel_item.border_color = darker(theme.wibar_bg,60)
+    theme.panel_item.bg = set_opacity(reduce_contrast(theme.gtk.menubar_bg_color,-5),'66')--[[theme.opacity]]--
+    theme.panel_item.button_bg = set_opacity(reduce_contrast(theme.panel_item.bg, -3),'66')
+    theme.panel_item.name_bg = reduce_contrast(theme.gtk.menubar_bg_color,30)
+    theme.panel_item.highlight = reduce_contrast(theme.panel_item.bg,25)
+    theme.panel_item.border_color = reduce_contrast(theme.wibar_bg,-60)
     theme.panel_item.border_width = 0
     -- theme.panel_item.border_width = dpi(1) -- uncomment for borders
     theme.panel_item.shape = rounded_rect_shape

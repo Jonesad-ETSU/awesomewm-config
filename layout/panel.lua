@@ -160,7 +160,7 @@ local _panel = function(s, side)
     awesome.connect_signal (
       'panel::visibility::toggle',
       function()
-        panel:emit_signal('toggle')	
+        panel:emit_signal('toggle')
       end
     )
 

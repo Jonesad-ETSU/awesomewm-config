@@ -9,15 +9,16 @@ require('awful').screen.connect_for_each_screen (
     end
 )
 
-function update()
+local function update()
     for s in screen do
         if s.selected_tag then
             local fullscreen = s.selected_tag.fullscreen_mode
             if s.panel then
                 s.panel.visible = not fullscreen
             end
-            if s.time then
-              s.time.visible = not fullscreen
+            if s.time and fullscreen then
+              -- Prevents glitch where time shows up at the same time as the panel
+              s.time.visible = false
             end
         end
     end

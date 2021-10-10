@@ -83,12 +83,16 @@ One of my tenants for good UI is that it <em>cannot</em> be over overly-speciali
 <br/>
 1. Install the [Dependencies](#required_dependencies)
 2. Clone the repository into the $HOME/.config/awesome directory. To do so, please copy the following command:
-```git clone https://github.com/jonesad-etsu/awesomewm-config.git $HOME/.config/awesome```
-<br/>
-OR
-<br/>
+`git clone https://github.com/jonesad-etsu/awesomewm-config.git $HOME/.config/awesome`
 - Use the provided [Ansible Playbook](#todo)
 
 ## How to Contribute
+1. Download the Source.
+2. Read the contents of the widget.util subdirectoris..
+3. Cry
+4. ????
+5. Make PR
+6. Profit
 
 ## Credits
+[Jonesad](https://github.com/jonesad-etsu)

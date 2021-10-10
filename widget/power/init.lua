@@ -7,7 +7,7 @@ local beautiful = require ('beautiful')
 local awful     = require ('awful')
 local gears     = require ('gears')
 local dpi       = require ('beautiful.xresources').apply_dpi
-local bling     = require ('bling')
+-- local bling     = require ('bling')
 local naughty   = require ('naughty')
 
 local bat_pct = -1
@@ -18,27 +18,28 @@ l.fill_space = true
 local function make_heart_widget (fullness, bat_state)
   local images_dir = gears.filesystem.get_configuration_dir() .. '/icons/'
   local colors = {
-    -- discharging = "#FF0000",
     discharging = beautiful.bg_urgent,
-    -- charging = "#00FF00"
     charging = beautiful.success,
   }
   local color
-  if bat_state == 'discharging' then
+  if bat_state == 'discharging' or bat_state == 'Discharging' then
     color = colors.discharging
   else color = colors.charging end
 
   return wibox.widget {
     image = gears.color.recolor_image(images_dir .. "heart-" .. fullness .. ".svg", color),
     resize = true,
-    widget = wibox.widget.imagebox 
+    widget = wibox.widget.imagebox
   }
 end
 
+-- local hearts = {
+--   
+-- } 
+-- 
 local function get_hearts_widget (pct_remaining, status)
 
     local num_hearts = 5
-    local whole_counts = 0
     local batl = wibox.layout.flex.horizontal()
     batl:fill_space (true)
     batl.spacing = dpi(5)
@@ -51,7 +52,7 @@ local function get_hearts_widget (pct_remaining, status)
     
     local wholes = math.floor (pct_remaining / (100/num_hearts))
 
-    for _ = 1, wholes do 
+    for _ = 1, wholes do
       batl:add(hearts.full)
       --whole_counts = whole_counts + 1
     end
@@ -83,66 +84,62 @@ local function get_hearts_widget (pct_remaining, status)
 end
 
 gears.timer {
-    timeout = 11,
-    call_now = true,
-    autostart = true,
-    callback = function()
-        awful.spawn.easy_async_with_shell (
-	    --This is more universal (I think it should work on BSD)
-            [[ 
-                search=$(upower -e | grep BAT);\
-                power=$(upower -i $search);\
-                echo "$power" | awk '/percentage/ {gsub("%",""); print $2}';\
-                echo "$power" | awk '/state/ {gsub("%",""); print $2}'
-            ]],
-	    --[[
-	    dir="/sys/class/power_supply/BAT0)" &&\
-	    cat $dir/capacity;\
-	    cat $dir/status
-	    ]]--,
-            function (stdout, stderr)
-                if stdout:match('error') then
-                    naughty.notify { text = "Can't read Battery" }
-                end
+  timeout = 11,
+  call_now = true,
+  autostart = true,
+  callback = function()
+    awful.spawn.easy_async_with_shell (
+      -- This is more universal (I think it should work on BSD)
+      -- [[
+      --     search=$(upower -e | grep BAT);\
+      --     power=$(upower -i $search);\
+      --     echo "$power" | awk '/percentage/ {gsub("%",""); print $2}';\
+      --     echo "$power" | awk '/state/ {gsub("%",""); print $2}'
+      -- ]],
+      [[
+        dir="/sys/class/power_supply/BAT0" &&\
+        cat $dir/capacity;\
+        cat $dir/status
+      ]],
+      function (stdout, stderr)
+        if stdout:match('error') then
+            naughty.notify { text = "Can't read Battery" }
+        end
 
-		local lines = {}
-		for s in stdout:gmatch("[^\r\n]+") do
-			table.insert(lines, s)
-		end
+        local lines = {}
+        for s in stdout:gmatch("[^\r\n]+") do
+                table.insert(lines, s)
+        end
 
-                local hearts = get_hearts_widget(lines[1],lines[2])
-                bat_pct = stdout
-                local w = pi {
-                    widget = wibox.widget {
-                        hearts,
-                        layout = wibox.container.place
-                    },
-                    top = dpi(2.5),
-                    bottom = dpi(2.5),
-                    margins = dpi(2),
-                    shape = gears.shape.rounded_rect,
-			-- 		    name = "Battery",
-			-- 		    ratio = {
-			-- target = 2,
-			-- before	= 0.8,
-			-- at	= 0.2,
-			-- after	= 0
-			-- 		    },
-		    outer = false
-	    	}
-                    
-                l:reset()
-                l:add(w)
-            end
-        ) 
-    end
+        local hearts = get_hearts_widget(lines[1],lines[2])
+        bat_pct = stdout
+        local w = pi {
+            widget = wibox.widget {
+                hearts,
+                layout = wibox.container.place
+            },
+            top = dpi(2.5),
+            bottom = dpi(2.5),
+            margins = dpi(2),
+            shape = gears.shape.rounded_rect,
+            outer = false
+        }
+            
+        l:reset()
+        l:add(w)
+      end
+    )
+  end
 } --: start()
 
 l:connect_signal(
-    'activate',
-    function()
-        naughty.notify {text = "Percentage Remaining: "..string.gsub(bat_pct,"\n"," ")}
-    end
+  'activate',
+  function()
+    naughty.notify {
+      text = "Percentage Remaining: "..string.gsub(bat_pct,"\n"," "),
+      icon = gears.filesystem.get_configuration_dir() .. '/icons/heartbeat.svg'
+    }
+  end
 )
 
 return clickable(l)

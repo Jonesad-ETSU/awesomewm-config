@@ -43,6 +43,7 @@ local nw = function(arg)
           widget = wibox.widget.textbox
         },
         bg = lighten(beautiful.wibar_bg,30) or "#888888",
+        -- bg = beautiful.panel_item.button_bg or "#888888",
         shape = gears.shape.rounded_bar,
         shape_border_width = dpi(0),
         widget = wibox.container.background

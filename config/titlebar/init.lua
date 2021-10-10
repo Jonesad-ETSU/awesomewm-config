@@ -50,21 +50,23 @@ client.connect_signal("request::titlebars", function(c)
               awful.titlebar.widget.closebutton    (c),
               awful.titlebar.widget.maximizedbutton (c),
               awful.titlebar.widget.minimizebutton (c),
+              spacing = beautiful.titlebar_button_gap,
               layout = wibox.layout.fixed.horizontal()
             },
-            margins = dpi(2),
+            margins = dpi(5),
             widget = wibox.container.margin
           },
 	{ -- Middle
+            -- awful.titlebar.widget.iconwidget(c),
 	    { -- Title
 		align  = "center",
 		widget = awful.titlebar.widget.titlewidget(c)
 	    },
 	    buttons = buttons,
+            spacing = dpi(5),
 	    layout  = wibox.layout.flex.horizontal
 	},
         {
-          awful.titlebar.widget.iconwidget(c),
           awful.titlebar.widget.stickybutton(c),
           layout = wibox.layout.fixed.horizontal
         },
