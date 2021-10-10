@@ -1,11 +1,9 @@
 local wibox     = require ('wibox')
 local gears     = require ('gears')
-local naughty     = require ('naughty')
 local color_manipulation     = require ('widget.util.color')
 local lighten = color_manipulation.lighter
-local darker = color_manipulation.darker
 local beautiful = require ('beautiful')
-local dpi       = require ('beautiful.xresources').apply_dpi
+local dpi       = beautiful.xresources.apply_dpi
 local old_bg
 
 local nw = function(arg)
