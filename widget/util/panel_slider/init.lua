@@ -11,6 +11,7 @@ local dpi = beautiful.xresources.apply_dpi
 --      setter => shell command to set value
 --      tooltip => pass this with a string to have a tooltip
 --      label => Left-side string to use
+--      vertical => Uses vertical layout
 --      minimum => minimum possible value
 --]]
 local nb = function(args)
@@ -23,8 +24,8 @@ local nb = function(args)
     minimum = args.minimum or 0,
     -- handle_border_width = dpi(1),
     handle_border_color = beautiful.success,
-    -- handle_width = dpi(0),
-    handle_width = dpi(8),
+    -- handle_width = dpi(8),
+    handle_width = 0,
     handle_color = beautiful.success,
     handle_shape = gears.shape.rounded_bar,
     widget = wibox.widget.slider
@@ -65,6 +66,7 @@ local nb = function(args)
         args.getter,
         function(out)
           value_text.markup = "<i>"..out.."</i>"
+	  --require('naughty').notify { text = out }
         end
       )
     end
@@ -79,7 +81,7 @@ local nb = function(args)
     }
   end
 
-  -- Start out by changing pamixer's volume so it doesn't mute on startup everytime
+  -- Start out by changing bar's value so it doesn't do to default on startup everytime
   awful.spawn.easy_async_with_shell(
     args.getter,
     function(out)
@@ -87,28 +89,54 @@ local nb = function(args)
     end
   )
 
+  local bar_container
+  if args.vertical then
+	  bar_container = wibox.widget {
+		{
+		  	bar,
+			direction = 'east',
+			widget = wibox.container.rotate
+		},
+		widget = wibox.container.place
+	  }
+          label.halign = 'center'
+  else bar_container = bar end
   local final = wibox.widget {
     nil,
     {
       label,
-      bar,
+      bar_container,
       spacing = dpi(3),
-      layout = wibox.layout.fixed.horizontal
+      layout = function()
+	if args.vertical then
+		label.forced_width = args.label_forced_width or nil
+		label.forced_height = args.label_forced_height or nil
+		return wibox.layout.fixed.vertical()
+	end
+	return wibox.layout.fixed.horizontal()
+      end
     },
     value_text,
     expand = 'inside',
-    layout = wibox.layout.ratio.horizontal
+    layout = function()
+	if args.vertical then
+		return wibox.layout.ratio.vertical()
+	end
+	return wibox.layout.ratio.horizontal()
+    end
   }
   final:ajust_ratio(2,.88,.12,0)
 
-  local old_cursor, old_wibox
+
+  local old_cursor, old_wibox, old_bg
   final:connect_signal(
     'mouse::enter',
     function()
       local w = mouse.current_wibox
       if w then
-        old_cursor,old_wibox = w.cursor, w
+        old_cursor,old_wibox,old_bg = w.cursor, w, bar.bar_color
         w.cursor = 'hand1'
+	bar.bar_color = beautiful.panel_item.highlight
       end
     end
   )
@@ -119,6 +147,7 @@ local nb = function(args)
       if old_wibox then
         old_wibox.cursor = old_cursor
         old_wibox = nil
+	bar.bar_color = old_bg
       end
     end
   )

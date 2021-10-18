@@ -10,6 +10,7 @@ local ib   = require ('widget.util.img_button')
 local clickable = require ('widget.util.clickable')
 
 local user_name = os.getenv('USER')
+local host_name = 'arch'
 
 local profile_img = function()
   if user_name then
@@ -20,19 +21,48 @@ local profile_img = function()
 end
 
 local profile_container = wibox.widget {
-  {
-    ib {
-      image = profile_img(),
-      show_widget = 'widget.power_popup',
-      tooltip = "opens power menu"
+  -- {
+    {
+      {
+        ib {
+          image = profile_img(),
+          show_widget = 'widget.power_popup',
+          tooltip = "opens power menu"
+        },
+        widget = wibox.container.place
+      },
+      shape = gears.shape.circle,
+      shape_clip = true,
+      shape_border_width = dpi(1),
+      shape_border_color = darker(beautiful.wibar_bg,-30),
+      widget = wibox.container.background
     },
+    -- halign = 'left',
     widget = wibox.container.place
-  },
-  shape = gears.shape.circle,
-  shape_clip = true,
-  shape_border_width = dpi(1),
-  shape_border_color = darker(beautiful.wibar_bg,-30),
-  widget = wibox.container.background
+  -- },
+  -- nil,
+  -- {
+  --   -- {
+  --     {
+  --       markup = '<i>'..user_name..'</i>'..'@'..host_name,
+  --       font = beautiful.small_font,
+  --       align = 'center',
+  --       widget = wibox.widget.textbox
+  --     },
+  --   --   {
+  --   --     markup = '@'..host_name,
+  --   --     font = beautiful.font,
+  --   --     align = 'right',
+  --   --     widget = wibox.widget.textbox
+  --   --   },
+  --   --   layout = wibox.layout.fixed.horizontal
+  --   -- },
+  --   valign = 'center',
+  --   halign = 'left',
+  --   widget = wibox.container.place
+  -- },
+  -- expand = 'none',
+  -- layout = wibox.layout.align.vertical
 }
 
 local profile = pi { 

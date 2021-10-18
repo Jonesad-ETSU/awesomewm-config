@@ -1,3 +1,5 @@
+local beautiful = require('beautiful')
+local dpi = beautiful.xresources.apply_dpi
 local wibox = require ('wibox')
 local pi = require ('widget.util.panel_item')
 local cpu = require ('widget.arccharts.cpu')
@@ -10,6 +12,6 @@ return pi {
     cpu,
     ram,
   },
-  margins = 15,
+  margins = dpi(15),
   outer = true,
 }

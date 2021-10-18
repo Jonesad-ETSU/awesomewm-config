@@ -45,7 +45,7 @@ end
 
 -- Bling relies on beautiful's properties, thus must be set after.
 local bling = require ('bling')
--- Panel relies on layout
+-- Panel relies on bling
 local panel = require ('layout')
 
 -- Set taskbar  icon size

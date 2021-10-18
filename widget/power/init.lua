@@ -15,14 +15,14 @@ local l = wibox.layout.flex.horizontal()
 
 l.fill_space = true
 
-local function make_heart_widget (fullness, bat_state)
+local function make_heart_widget (fullness, charging)
   local images_dir = gears.filesystem.get_configuration_dir() .. '/icons/'
   local colors = {
     discharging = beautiful.bg_urgent,
     charging = beautiful.success,
   }
   local color
-  if bat_state == 'discharging' or bat_state == 'Discharging' then
+  if not charging then --bat_state == 'discharging' or bat_state == 'Discharging' then
     color = colors.discharging
   else color = colors.charging end
 
@@ -33,10 +33,19 @@ local function make_heart_widget (fullness, bat_state)
   }
 end
 
--- local hearts = {
---   
--- } 
--- 
+-- Generate all possible heart possibilities
+local hearts = {
+  charging = {
+    full  = make_heart_widget('full', true),
+    half  = make_heart_widget('half', true),
+  },
+  not_charging = {
+    full  = make_heart_widget('full', false),
+    half  = make_heart_widget('half', false),
+  },
+  empty = make_heart_widget('empty', false) -- doesn't matter since its an empty svg
+} 
+
 local function get_hearts_widget (pct_remaining, status)
 
     local num_hearts = 5
@@ -44,22 +53,21 @@ local function get_hearts_widget (pct_remaining, status)
     batl:fill_space (true)
     batl.spacing = dpi(5)
 
-    local hearts = {
-      full  = make_heart_widget('full', status),
-      half  = make_heart_widget('half', status),
-      empty = make_heart_widget('empty', status),
-    }
-    
     local wholes = math.floor (pct_remaining / (100/num_hearts))
 
-    for _ = 1, wholes do
-      batl:add(hearts.full)
-      --whole_counts = whole_counts + 1
+    local charging = status:lower() ~= 'discharging'
+    if charging then
+      for _ = 1, wholes do
+        batl:add(hearts.charging.full)
+      end
+    else
+      for _ = 1, wholes do
+        batl:add(hearts.not_charging.full)
+      end
     end
     pct_remaining = pct_remaining - ( wholes * 100/num_hearts )
 
-    --if whole_counts == 5 then
-    if wholes == 5 then
+    if pct_remaining == 0 then
       return wibox.widget {
         batl,
         top = dpi(5),
@@ -69,11 +77,13 @@ local function get_hearts_widget (pct_remaining, status)
     end
 
     if pct_remaining >= (100/(2*num_hearts)) then
-        batl:add(hearts.half)
+        if charging then
+          batl:add(hearts.charging.half)
+        else batl:add(hearts.not_charging.half) end 
     else batl:add(hearts.empty) end
   
     for i = 1, (num_hearts - 1) - wholes, 1 do
-        batl:add(hearts.empty) end
+      batl:add(hearts.empty) end
 
     return wibox.widget {
       batl,
@@ -103,7 +113,7 @@ gears.timer {
       ]],
       function (stdout, stderr)
         if stdout:match('error') then
-            naughty.notify { text = "Can't read Battery" }
+            naughty.notify { text = "Can't read Battery.\nIs this a desktop?" }
         end
 
         local lines = {}
@@ -114,15 +124,15 @@ gears.timer {
         local hearts = get_hearts_widget(lines[1],lines[2])
         bat_pct = stdout
         local w = pi {
-            widget = wibox.widget {
-                hearts,
-                layout = wibox.container.place
-            },
-            top = dpi(2.5),
-            bottom = dpi(2.5),
-            margins = dpi(2),
-            shape = gears.shape.rounded_rect,
-            outer = false
+          widget = wibox.widget {
+            hearts,
+            widget = wibox.container.place
+          },
+          top = dpi(3),
+          bottom = dpi(3),
+          margins = dpi(2),
+          shape = gears.shape.rounded_rect,
+          outer = false
         }
             
         l:reset()

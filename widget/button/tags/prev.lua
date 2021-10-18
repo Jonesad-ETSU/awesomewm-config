@@ -1,4 +1,5 @@
 local ib = require ('widget.util.img_button')
+local pi = require ('widget.util.panel_item')
 local awful = require ('awful')
 local fs = require ('gears.filesystem')
 
@@ -10,4 +11,8 @@ local prev_tag = ib {
   end)
 }
 
-return prev_tag
+return pi {
+  widget = prev_tag,
+  margins = 0,
+  bg = '#00000000'
+}

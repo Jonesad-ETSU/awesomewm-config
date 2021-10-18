@@ -66,15 +66,15 @@ local popup = function (w, options)
     'toggle',
     function()
       toggle()
-      if popup_wibox.visible then
-        gears.timer.start_new (
-          1,
-          function()
-            toggle()
-            return false
-          end
-        )
-      end
+      -- if popup_wibox.visible then
+      --   gears.timer.start_new (
+      --     1,
+      --     function()
+      --       toggle()
+      --       return false
+      --     end
+      --   )
+      -- end
       --popup_wibox.visible = not popup_wibox.visible
     end
   )

@@ -12,12 +12,6 @@ local gfs = gears.filesystem
 local notif_btn = ib {
   image = gfs.get_configuration_dir() .. 'icons/notifications.svg',
   recolor = true,
-  -- widget = wibox.widget {
-  --   markup = "Notify",
-  --   align = 'center',
-  --   font = beautiful.font,
-  --   widget = wibox.widget.textbox
-  -- },
   hide_tooltip = true,
   cmd = "discord",
 }
@@ -27,12 +21,4 @@ return pi {
   shape = gears.shape.rounded_rect,
   margins = dpi(4),
   bg = beautiful.panel_item.button_bg
-  -- name = "Notif",
-  -- margins = dpi(12),
-  -- ratio = {
-  --   target 	= 2,
-  --   before 	= 0.8,
-  --   at 	        = 0.2,
-  --   after 	= 0
-  -- }
 }

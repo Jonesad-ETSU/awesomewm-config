@@ -12,7 +12,7 @@ local nw = function(arg)
     bg = arg.bg or beautiful.panel_item.bg or "#282828",
     shape = arg.shape or beautiful.panel_item.shape or gears.shape.rounded_rect,
     shape_border_color = arg.shape_border_color or beautiful.panel_item.border_color or  "#888888",
-    shape_border_width = arg.shape_border_width or dpi(0),
+    shape_border_width = arg.shape_border_width or beautiful.panel_item.border_width or 0,
     widget = wibox.container.background
   }
 
@@ -40,7 +40,7 @@ local nw = function(arg)
           align = 'center',
           widget = wibox.widget.textbox
         },
-        bg = lighten(beautiful.wibar_bg,30) or "#888888",
+        bg = beautiful.panel_item.name_bg or "#ff0000",
         -- bg = beautiful.panel_item.button_bg or "#888888",
         shape = gears.shape.rounded_bar,
         shape_border_width = dpi(0),

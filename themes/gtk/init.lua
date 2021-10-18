@@ -103,7 +103,7 @@ theme.gtk.menubar_border_color = mix(
 local function set_opacity(s,op)
     return string.sub(s,1,7) .. op
 end
-theme.opacity = 'ee'
+theme.opacity = 'aa'
 theme.font          = theme.gtk.font_family .. ' ' .. theme.gtk.font_size
 theme.small_font          = theme.gtk.font_family .. ' ' .. dpi(5)
 theme.medium_font          = theme.gtk.font_family .. ' ' .. dpi(8)
@@ -114,12 +114,22 @@ theme.font_family   = theme.gtk.font_family
 theme.bg_normal     = theme.gtk.bg_color
 theme.fg_normal     = theme.gtk.fg_color
 
-theme.wibar_bg      = set_opacity(theme.gtk.menubar_bg_color,theme.opacity)
--- theme.wibar_bg      = "ffffffbb"
+-- theme.wibar_bg      = set_opacity(theme.gtk.menubar_bg_color,theme.opacity)
+theme.wibar_bg      = set_opacity(theme.gtk.bg_color,theme.opacity)
 theme.wibar_fg      = theme.gtk.menubar_fg_color
 
 theme.bg_focus      = theme.gtk.fg_color
 theme.fg_focus      = theme.gtk.bg_color
+
+theme.bg_menubar      = theme.gtk.fg_color
+theme.fg_menubar      = theme.gtk.bg_color
+
+theme.bg_header      = theme.gtk.header_button_bg_color
+theme.fg_header      = theme.gtk.header_button_fg_color
+theme.border_header  = theme.gtk.header_button_border_color
+
+theme.bg_select     = theme.gtk.selected_bg_color
+theme.fg_select     = theme.gtk.selected_fg_color
 
 theme.bg_urgent     = theme.gtk.error_bg_color
 theme.fg_urgent     = theme.gtk.error_fg_color
@@ -130,7 +140,7 @@ theme.bg_minimize   = mix(theme.wibar_fg, theme.wibar_bg, 0.3)
 theme.fg_minimize   = mix(theme.wibar_fg, theme.wibar_bg, 0.9)
 
 -- theme.bg_systray    = theme.wibar_bg
--- theme.bg_systray    = theme.wibar_bg.."00"
+-- theme.bg_systray    = set_opacity(theme.wibar_bg,"00")
 
 theme.border_normal = theme.gtk.wm_border_unfocused_color
 theme.border_focus  = mix (
@@ -140,6 +150,7 @@ theme.border_marked = theme.gtk.success_color
 
 theme.border_width  = dpi(theme.gtk.button_border_width or 1)
 theme.border_radius = theme.gtk.button_border_radius
+theme.border_color  = theme.gtk.button_border_color
 
 --theme.useless_gap   = 100
 
@@ -150,7 +161,7 @@ local rounded_rect_shape = function(cr,w,h)
     else 
         radius = theme.border_radius + 10
     end
-    gears.shape.rounded_rect(
+    return gears.shape.rounded_rect(
         cr, w, h, radius
     )
 end
@@ -303,19 +314,39 @@ theme.menu_width  = dpi(200)
 theme.menu_submenu_icon = nil
 theme.menu_submenu = "->"
 
+theme.panel = {}
+    theme.panel.side = 'top'
+    theme.panel.width = dpi(1000)
+    theme.panel.height = theme.panel.width/4.5
+    theme.panel.border_width = dpi(2)
+    theme.panel.border_color = reduce_contrast(theme.wibar_bg,-30)
+    theme.panel.shape = theme.rounded_rect_shape
+    theme.panel.fg = beautiful.wibar_fg
+    theme.panel.bg = beautiful.wibar_bg
+    theme.panel.side = 'top'
+    theme.panel.items_spacing = dpi(8)
+
 theme.panel_item = {}
-    theme.panel_item.bg = set_opacity(reduce_contrast(theme.gtk.menubar_bg_color,-5),'66')--[[theme.opacity]]--
-    theme.panel_item.button_bg = set_opacity(reduce_contrast(theme.panel_item.bg, -3),'66')
+    -- theme.panel_item.bg = set_opacity(reduce_contrast(theme.gtk.menubar_bg_color,-5),'66')
+    -- theme.panel_item.button_bg = set_opacity(reduce_contrast(theme.panel_item.bg, -3),'44')
+    theme.panel_item.bg = set_opacity(theme.gtk.button_bg_color,'aa')
+    theme.panel_item.button_bg = set_opacity(theme.gtk.header_button_bg_color,'66')
     theme.panel_item.name_bg = reduce_contrast(theme.gtk.menubar_bg_color,30)
-    theme.panel_item.highlight = reduce_contrast(theme.panel_item.bg,25)
-    theme.panel_item.border_color = reduce_contrast(theme.wibar_bg,-60)
-    theme.panel_item.border_width = 0
+    -- theme.panel_item.highlight = reduce_contrast(theme.panel_item.bg,25)
+    theme.panel_item.highlight = set_opacity(theme.bg_select,'aa')
+    theme.panel_item.border_color = set_opacity(theme.gtk.button_border_radius,'ee')
+    theme.panel_item.border_width = theme.gtk.button_border_width or 10
+    -- theme.panel_item.border_width = 10
     -- theme.panel_item.border_width = dpi(1) -- uncomment for borders
     theme.panel_item.shape = rounded_rect_shape
     theme.panel_item.margins = dpi(10)
 
 theme.bg_systray    = theme.panel_item.bg
+-- theme.bg_systray = "#00000000"
 theme.systray_icon_spacing = dpi(3)
+
+theme.notification_icon_resize_strategy = 'scale'
+theme.notification_icon_size = 128
 
 theme = theme_assets.recolor_layout(theme, theme.wibar_fg)
 

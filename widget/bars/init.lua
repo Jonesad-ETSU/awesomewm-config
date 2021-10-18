@@ -6,8 +6,8 @@ local slider = require ('widget.util.panel_slider')
 local fs = require ('gears.filesystem')
 
 local l = wibox.layout.flex.vertical()
-l.spacing = dpi(4)
-
+l.spacing = dpi(3)
+--l.spacing = 0
 
 for _,w in pairs({
   {
@@ -31,7 +31,7 @@ for _,w in pairs({
     image = fs.get_configuration_dir() .. '/icons/brightness.svg'
   }
 }) do
-  l:add(slider(w))
+  l:add (slider(w))
 end
 
 return pi {

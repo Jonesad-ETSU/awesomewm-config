@@ -5,16 +5,29 @@ local beautiful = require ('beautiful')
 local dpi = beautiful.xresources.apply_dpi
 local settings_widgets = require ('widget.settings')
 local popup = require ('widget.util.my_popup')
+local toggle = require ('widget.util.toggle')
 local wifi = settings_widgets.wifi
 
 local settings = function(--[[s--]])
   return wibox.widget {
-    wifi,
+    {
+      wifi,
+      nil,
+      {
+        toggle {
+          on_cmd = "firefox",
+          off_cmd = 'killall firefox'
+        },
+        margins = 50,
+        widget = wibox.container.margin
+      },
+      layout = wibox.layout.flex.horizontal
+    },
     wifi,
     wifi,
     wifi,
     forced_num_rows = 2,
-    forced_num_cols = 2,
+    -- forced_num_cols = 2,
     -- layout = wibox.layout.flex.vertical
     expand ='none',
     layout = wibox.layout.grid

@@ -1,5 +1,5 @@
 local clickable = require ('widget.util.clickable')
-local naughty = require ('naughty')
+-- local naughty = require ('naughty')
 -- local pi        = require ('widget.util.panel_item')
 local color   = require ('gears.color').recolor_image
 local wibox     = require ('wibox')
@@ -41,6 +41,14 @@ local button = function (options)
         widget = wibox.container.place
       }
     else image = options.widget end
+
+    if options.bg then
+      image = wibox.widget {
+        image,
+        bg = options.bg,
+        widget = wibox.container.background
+      }
+    end
 
     if not options.hide_tooltip then
         local tt = awful.tooltip {

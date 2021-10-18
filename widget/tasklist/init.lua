@@ -1,7 +1,6 @@
 local wibox = require ('wibox')
 local awful = require ('awful')
 local beautiful = require ('beautiful')
---local beautiful = require ('beautiful')
 local pi = require ('widget.util.panel_item')
 local dpi = require ('beautiful.xresources').apply_dpi
 local gears = require ('gears')
@@ -28,26 +27,18 @@ local make_tasklist = function (s)--(s)
   )
 
   local layout_widget = pi {
-            widget = wibox.widget {
-              awful.widget.layoutbox(),
-              widget = wibox.container.place
-            },
-            margins = dpi(4),
-            -- name = "Layout",
-            -- margins = dpi(5),
-            -- ratio = {
-            --     target  = 2,
-            --     before  = 0.8,
-            --     at      = 0.2,
-            --     after   = 0
-            -- }
-    }
-    layout_widget:buttons(gears.table.join(
-        awful.button({ }, 1, function () awful.layout.inc( 1) end),
-        awful.button({ }, 3, function () awful.layout.inc(-1) end),
-        awful.button({ }, 4, function () awful.layout.inc( 1) end),
-        awful.button({ }, 5, function () awful.layout.inc(-1) end)
-    ))
+    widget = wibox.widget {
+      awful.widget.layoutbox(),
+      widget = wibox.container.place
+    },
+    margins = dpi(4),
+  }
+  layout_widget:buttons(gears.table.join(
+    awful.button({ }, 1, function () awful.layout.inc( 1) end),
+    awful.button({ }, 3, function () awful.layout.inc(-1) end),
+    awful.button({ }, 4, function () awful.layout.inc( 1) end),
+    awful.button({ }, 5, function () awful.layout.inc(-1) end)
+  ))
 
   -- local tag_name = awful.screen.focused().selected_tag
   local current_tag = wibox.widget {
@@ -99,13 +90,14 @@ local make_tasklist = function (s)--(s)
                   self:get_children_by_id('clienticon')[1].client = c
               end,
               spacing = 0,
-              layout = wibox.layout.align.vertical,
+              layout = wibox.layout.fixed.vertical,
             },
             style = {
               shape = gears.shape.rounded_bar,
               --shape_border_width = dpi(1),
               shape_border_width = 0,
-              bg_focus = "#ffffff",
+              -- bg_focus = "#ffffff",
+              bg_focus = beautiful.wibar_fg,
               --disable_task_name = true,
               align = 'center',
               spacing = 5,
@@ -162,7 +154,7 @@ local make_tasklist = function (s)--(s)
     right = dpi(16),
     margins = dpi(3),
     outer = true,
-    shape = gears.shape.rounded_bar,
+    shape = gears.shape.rounded_rect,
     spacing = 20
   }
 

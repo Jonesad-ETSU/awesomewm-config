@@ -14,19 +14,23 @@ local _panel = function(s, side)
         visible = true,
         ontop = true,
         splash = false,
-        width = panel_width,
-        height = panel_width/4.5,
-        border_width = dpi(2),
-        border_color = darker(beautiful.wibar_bg,30),
+        width = beautiful.panel.width,
+        height = beautiful.panel.height,
+        border_width = beautiful.panel.border_width,
+        border_color = beautiful.panel.border_color,
 	screen = s,
-        shape = beautiful.rounded_rect_shape,
+        shape = beautiful.panel.shape,
         -- shape = function (cr, width, height)
         --     return gears.shape.rounded_rect(cr, width, height, 20)
         -- end,
-        fg = beautiful.foreground,
-        bg = beautiful.wibar_bg
+        fg = beautiful.panel.fg,
+        bg = beautiful.panel.bg
         -- bg = beautiful.black_light
     }
+
+    if not side then
+      side = beautiful.panel.side
+    end
 
     if side == 'top' then
       awful.placement.top(panel)
@@ -38,18 +42,18 @@ local _panel = function(s, side)
 
 
     local panel_widget = wibox.widget {
-        forced_num_rows = 5,
-        forced_num_cols = 14,
-        homogeneous = true,
-        spacing = dpi(8),
-        expand = 'none',
-        layout = wibox.layout.grid
+      forced_num_rows = 5,
+      forced_num_cols = 14,
+      homogeneous = true,
+      spacing = beautiful.panel.items_spacing,
+      expand = 'none',
+      layout = wibox.layout.grid
     }
 
     local anim_show_hide = awestore.tweened(panel.y ,{
-        -- duration = 500,
         duration = 250,
         easing = awestore.linear
+        -- duration = 500,
         -- easing = awestore.easing.back_in_out
     })
 
@@ -57,30 +61,30 @@ local _panel = function(s, side)
 
     --Initialize panel hidden
     if side == 'top' then
-      anim_show_hide:set(-panel.height+panel.height/40)
+      anim_show_hide:set (-panel.height+panel.height/40)
     else
-      anim_show_hide:set(
+      anim_show_hide:set (
         awful.screen.focused().geometry.height - panel.height/40
       )
     end
 
     local widgets = require ('widget')
-    local systray = wibox.widget.systray()
-    systray:set_base_size(32)
-    systray = wibox.widget {
+    local systray = wibox.widget {
       {
-        bg = beautiful.panel_item.bg,
+        id = 'tray',
         widget = wibox.widget.systray
       },
       widget = wibox.container.place
     }
+    systray:get_children_by_id('tray')[1]:set_base_size(32)
 
     systray = pi {
       widget = systray,
       outer = true,
+      bg = nil,
+      shape = beautiful.rounded_rect_shape,
       margins = 0,
     }
-
     --widget, row, col, row_span, col_span
     --COL 1
     panel_widget:add_widget_at(widgets.profile,1,1,4,2)
@@ -107,6 +111,17 @@ local _panel = function(s, side)
 
     --COL 10
     panel_widget:add_widget_at(widgets.charts,1,10,3,4)
+    panel_widget:add_widget_at(wibox.widget {
+      {
+        --shape = beautiful.rounded_rect_shape,
+        thickness = dpi(2),
+        color = beautiful.panel_item.bg,
+        widget = wibox.widget.separator
+      },
+      top = dpi(10),
+      bottom = dpi(10),
+      widget = wibox.container.margin
+    },4,10,1,4)
     -- panel_widget:add_widget_at(widgets.motd,4,10,1,4)
 
     --COL 11
@@ -119,12 +134,12 @@ local _panel = function(s, side)
 
     --COL 14
     panel_widget:add_widget_at(widgets.right_buttons,1,14,5,1)
+    -- panel_widget:add_widget_at(require('widget.button.right-buttons'),1,14,5,1)
     -- panel_widget:add_widget_at(widgets.btn.notif,1,14,1,1)
     -- panel_widget:add_widget_at(widgets.btn.wall,2,14,1,1)
     -- panel_widget:add_widget_at(widgets.btn.files,3,14,1,1)
     -- panel_widget:add_widget_at(widgets.btn.settings,4,14,1,1)
     -- panel_widget:add_widget_at(widgets.btn.power,5,14,1,1)
-
 
 
     local vertical_margins = {}

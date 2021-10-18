@@ -1,11 +1,14 @@
 local panel = require ('layout.panel')
 local time = require ('layout.time')
+local beautiful = require ('beautiful')
 -- local awful = require ('awful')
+local side = beautiful.panel.side
 
 require('awful').screen.connect_for_each_screen (
     function(s)
-        s.time = time(s)
-        s.panel = panel(s,'top')
+        s.time = time(s,side)
+        -- s.panel = panel(s,'top')
+        s.panel = panel(s,side)
     end
 )
 
