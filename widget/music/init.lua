@@ -10,7 +10,8 @@ local slider    = require ('widget.util.panel_slider')
 local toggle    = require ('widget.util.toggle')
 local playing = false
 
-local song = "\t\t\tOffline"
+-- local song = "\t\t\tOffline"
+local song = "Offline"
 -- local artist = ""
 
 local function highlight_widget(args)
@@ -18,20 +19,20 @@ local function highlight_widget(args)
     widget = args.widget,
     margins = 0,
     bg = args.bg or "#00000000",
-    shape = args.shape or gears.shape.rounded_rect,
+    shape = args.shape or beautiful.ronded_rect_shape,
     shape_border_width = 0
   }
 end
 
 local song_title = wibox.widget {
   markup = song,
-  font = beautiful.medium_font,
+  font = beautiful.small_font,
   align = 'center',
   widget = wibox.widget.textbox
 }
 
 local back_pic = ib {
-  image = gfs.get_configuration_dir()..'icons/prev.svg',
+  image = 'prev.svg',
   recolor = true,
   hide_tooltip = true,
   buttons = gears.table.join (
@@ -44,8 +45,8 @@ local back_pic = ib {
 local progressbar = wibox.widget {
   value = 0,
   max_value = 100,
-  bar_shape = gears.shape.rounded_bar,
-  shape = gears.shape.rounded_bar,
+  bar_shape = beautiful.rounded_rect_shape or gears.shape.rounded_bar,
+  shape = beautiful.rounded_rect_shape or gears.shape.rounded_bar,
   forced_height = dpi(10),
   background_color = beautiful.panel_item.button_bg,
   color = beautiful.wibar_fg,
@@ -65,16 +66,16 @@ local watch = gears.timer {
   end
 }
 
-local scroll = wibox.widget {
-  layout = wibox.container.scroll.horizontal,
-  speed = 10,
-  song_title
-}
-scroll:pause() --starts out static for Offline
-scroll:set_fps(5)
-scroll:set_expand(false)
-scroll:set_extra_space(dpi(50))
-
+-- local scroll = wibox.widget {
+--   layout = wibox.container.scroll.horizontal,
+--   speed = 50,
+--   song_title
+-- }
+-- scroll:pause() --starts out static for Offline
+-- scroll:set_fps(5)
+-- scroll:set_expand(true)
+-- scroll:set_extra_space(dpi(50))
+-- 
 local pause_pic = toggle {
   on_img = 'pause.svg',
   off_img = 'play.svg',
@@ -85,11 +86,11 @@ local pause_pic = toggle {
       if playing then
         awful.spawn('mpc pause')
         watch:stop()
-        scroll:pause()
+        -- scroll:pause()
       else
         awful.spawn('mpc play')
         watch:start()
-        scroll:continue()
+        -- scroll:continue()
       end
       playing = not playing 
     end)
@@ -97,8 +98,9 @@ local pause_pic = toggle {
 }
 
 local forward_pic = ib {
-  image = gfs.get_configuration_dir()..'icons/next.svg',
+  image = 'next.svg',
   recolor = true,
+  hide_tooltip = true,
   buttons = gears.table.join(
     awful.button( { }, 1, function()
       awful.spawn('mpc next')
@@ -108,7 +110,7 @@ local forward_pic = ib {
 
 local tt = awful.tooltip {
   objects = { forward_pic },
-  shape = gears.shape.rounded_rect,
+  -- shape = gears.shape.rounded_rect,
   delay_show = 1,
   text = "TEST",
 }
@@ -118,9 +120,10 @@ local mpc_vol = slider {
   setter = "mpc vol",
   -- vertical = true,
   label_forced_width = dpi(8),
+  hide_label = true,
   --label_forced_height = dpi(8),
   tooltip = "Sets MPC volume (seperate from system volume)",
-  image = gfs.get_configuration_dir() .. '/icons/volume.svg'
+  image = 'volume.svg'
 }
 
 local repeat_button = toggle {
@@ -166,33 +169,71 @@ local main = wibox.widget {
     id = 'base_layout',
     layout = wibox.layout.ratio.vertical,
     spacing = dpi(5),
-    scroll,
+    {
+      nil,
+      song_title,
+      -- {
+      --   -- {
+      --   --   ib {
+      --   --    image = 'music.svg',
+      --   --    recolor = true,
+      --   --    hide_tooltip = true,
+      --   --   },
+      --   --   margins = dpi(3),
+      --   --   widget = wibox.container.margin,
+      --   -- },
+      --   {
+      --     {
+      --       song_title,
+      --       left = dpi(10),
+      --       right = dpi(10),
+      --       margins = dpi(3),
+      --       widget = wibox.container.margin
+      --     },
+      --     shape = beautiful.rounded_rect_shape,
+      --     bg = beautiful.panel_item.button_bg,
+      --     widget = wibox.container.background
+      --   },
+      --   spacing = dpi(3),
+      --   layout = wibox.layout.fixed.horizontal
+      -- },
+      nil,
+      expand = 'none',
+      layout = wibox.layout.align.horizontal
+    },
     {
       {
         {
           repeat_button,
-          highlight_widget { 
-            widget = wibox.widget {
-              back_pic,
-              margins = dpi(5),
-              widget = wibox.container.margin
-            }, 
-            shape = gears.shape.circle,
+          {
+            highlight_widget { 
+              widget = wibox.widget {
+                back_pic,
+                margins = dpi(5),
+                widget = wibox.container.margin
+              }, 
+            },
+            top = dpi(2),
+            bottom = dpi(2),
+            widget = wibox.container.margin
           },
           highlight_widget {
             widget = pause_pic,
-            shape = gears.shape.circle
           },
-          highlight_widget { 
-            widget = wibox.widget {
-              forward_pic,
-              margins = dpi(5),
-              widget = wibox.container.margin
-            }, 
-            shape = gears.shape.circle 
+          {
+            highlight_widget { 
+              widget = wibox.widget {
+                forward_pic,
+                margins = dpi(5),
+                widget = wibox.container.margin
+              }, 
+            },
+            top = dpi(2),
+            bottom = dpi(2),
+            widget = wibox.container.margin
           },
           shuffle_button,
-          spacing = 0,
+          spacing = dpi(1),
           layout = wibox.layout.fixed.horizontal
         },
         widget = wibox.container.place
@@ -211,7 +252,7 @@ local main = wibox.widget {
   bottom = dpi(10),
   left = dpi(10),
   right = dpi(10),
-  -- right = dpi(10),
+  -- top = dpi(10),
   widget = wibox.container.margin
 }
 
@@ -258,7 +299,7 @@ update_song(true)
 
 return pi {
   widget = final_widget,
-  margins = dpi(6),
+  margins = dpi(8),
   outer = true,
   name = nil
 }

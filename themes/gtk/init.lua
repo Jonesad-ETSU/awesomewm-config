@@ -90,6 +90,13 @@ if not theme.gtk then
     gears_debug.print_warning("Can't load GTK+3 theme. Using 'xresources' theme as a fallback.")
     return theme
 end
+
+theme.is_dark = is_dark
+theme.mix = mix
+theme.darker = darker
+theme.reduce_contrast = reduce_contrast
+theme.choose_contrast_color = choose_contrast_color
+
 theme.gtk.button_border_radius = dpi(theme.gtk.button_border_radius or 0)
 theme.gtk.button_border_width = dpi(theme.gtk.button_border_width or 1)
 theme.gtk.bold_font = theme.gtk.font_family .. ' Bold ' .. theme.gtk.font_size
@@ -103,9 +110,12 @@ theme.gtk.menubar_border_color = mix(
 local function set_opacity(s,op)
     return string.sub(s,1,7) .. op
 end
-theme.opacity = 'aa'
+theme.transparent = '#00000000'
+theme.opacity = 'fa'
 theme.font          = theme.gtk.font_family .. ' ' .. theme.gtk.font_size
-theme.small_font          = theme.gtk.font_family .. ' ' .. dpi(5)
+theme.tiny_font          = theme.gtk.font_family .. ' ' .. dpi(4)
+-- theme.small_font          = theme.gtk.font_family .. ' ' .. dpi(5)
+theme.small_font          = theme.gtk.font_family .. ' 8'
 theme.medium_font          = theme.gtk.font_family .. ' ' .. dpi(8)
 theme.large_font          = theme.gtk.font_family .. ' ' .. dpi(10)
 theme.extra_large_font          = theme.gtk.font_family .. ' ' .. dpi(24)
@@ -314,24 +324,30 @@ theme.menu_width  = dpi(200)
 theme.menu_submenu_icon = nil
 theme.menu_submenu = "->"
 
+theme.client_shape = function(c,w,h)
+    return gears.shape.rounded_rect(c,w,h,theme.button_border_radius)
+end
+
 theme.panel = {}
     theme.panel.side = 'top'
     theme.panel.width = dpi(1000)
     theme.panel.height = theme.panel.width/4.5
     theme.panel.border_width = dpi(2)
-    theme.panel.border_color = reduce_contrast(theme.wibar_bg,-30)
+    theme.panel.border_color = reduce_contrast(theme.wibar_bg,-10)
     theme.panel.shape = theme.rounded_rect_shape
-    theme.panel.fg = beautiful.wibar_fg
-    theme.panel.bg = beautiful.wibar_bg
-    theme.panel.side = 'top'
+    theme.panel.fg = theme.wibar_fg
+    theme.panel.bg = theme.wibar_bg
     theme.panel.items_spacing = dpi(8)
 
 theme.panel_item = {}
     -- theme.panel_item.bg = set_opacity(reduce_contrast(theme.gtk.menubar_bg_color,-5),'66')
     -- theme.panel_item.button_bg = set_opacity(reduce_contrast(theme.panel_item.bg, -3),'44')
-    theme.panel_item.bg = set_opacity(theme.gtk.button_bg_color,'aa')
-    theme.panel_item.button_bg = set_opacity(theme.gtk.header_button_bg_color,'66')
-    theme.panel_item.name_bg = reduce_contrast(theme.gtk.menubar_bg_color,30)
+    -- theme.panel_item.bg = reduce_contrast(theme.gtk.button_bg_color,0)
+    theme.panel_item.bg = reduce_contrast(theme.wibar_bg,5)
+    -- theme.panel_item.bg = set_opacity(theme.gtk.button_bg_color,'aa')
+    -- theme.panel_item.button_bg = set_opacity(theme.gtk.header_button_bg_color,'66')
+    theme.panel_item.button_bg = theme.panel.bg 
+    theme.panel_item.name_bg = reduce_contrast(theme.panel.bg,0)
     -- theme.panel_item.highlight = reduce_contrast(theme.panel_item.bg,25)
     theme.panel_item.highlight = set_opacity(theme.bg_select,'aa')
     theme.panel_item.border_color = set_opacity(theme.gtk.button_border_radius,'ee')
@@ -345,8 +361,10 @@ theme.bg_systray    = theme.panel_item.bg
 -- theme.bg_systray = "#00000000"
 theme.systray_icon_spacing = dpi(3)
 
-theme.notification_icon_resize_strategy = 'scale'
-theme.notification_icon_size = 128
+-- theme.notification_icon_resize_strategy = 'scale'
+-- theme.notification_icon_resize_strategy = 'center'
+-- theme.notification_icon_size = 512
+theme.notification_icon_size = dpi(64)
 
 theme = theme_assets.recolor_layout(theme, theme.wibar_fg)
 

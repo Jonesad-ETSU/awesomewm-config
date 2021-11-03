@@ -2,6 +2,7 @@ local beautiful	= require ('beautiful')
 local gears 	= require ('gears')
 local wibox 	= require ('wibox')
 local awful 	= require ('awful')
+local leave_action = true
 
 local popup = function (w, options)
   if options == nil then
@@ -13,7 +14,7 @@ local popup = function (w, options)
     visible	= false,
     ontop	= true,
     splash 	= true,
-    type	= 'normal',
+    type	= options.type or 'normal',
     width 	= options.width or 1000,
     height 	= options.height or 500,
     shape	= options.shape or gears.shape.rounded_rect,
@@ -54,12 +55,12 @@ local popup = function (w, options)
 
   local function toggle()
     popup_wibox.visible = not popup_wibox.visible
-    -- if popup_wibox.visible then
-    --   mouse.coords {
-    --     x = options.mouse.x or (popup_wibox.x + popup_wibox.width/2),
-    --     y = options.mouse.y or (popup_wibox.y + popup_wibox.height/2),
-    --   }
-    -- end
+    if popup_wibox.visible then
+      mouse.coords {
+        x = (options.mouse and options.mouse.x) or (popup_wibox.x + popup_wibox.width/2),
+        y = (options.mouse and options.mouse.y) or (popup_wibox.y + popup_wibox.height/2),
+      }
+    end
   end
 
   popup_wibox:connect_signal (
@@ -79,10 +80,18 @@ local popup = function (w, options)
     end
   )
 
+  awesome.connect_signal (
+    'toggle::mouse::leave',
+    function()
+      leave_action = not leave_action 
+    end
+  )
   popup_wibox:connect_signal (
     'mouse::leave',
     function()
-      toggle()
+      if leave_action then
+        toggle()
+      end
     end
   )
 

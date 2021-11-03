@@ -22,7 +22,7 @@ local calendar = pi {
       },
       {
         format = "%a, %b %d",
-        font = beautiful.medium_font,
+        font = beautiful.small_font,
         align = 'center',
         widget = wibox.widget.textclock
       },
@@ -31,44 +31,47 @@ local calendar = pi {
     },
     widget = wibox.container.place
   },
-  left = dpi(8),
-  right = dpi(8),
-  margins = dpi(3)
+  -- left = dpi(8),
+  -- right = dpi(8),
+  margins = dpi(4)
 }
 
 local time = pi {
   widget = wibox.widget {
     {
       {
-          image = color(gfs.get_configuration_dir() .. '/icons/clock.svg',beautiful.wibar_fg),
-          resize = true,
-          widget = wibox.widget.imagebox
+        {
+            image = color(gfs.get_configuration_dir() .. '/icons/clock.svg',beautiful.wibar_fg),
+            resize = true,
+            widget = wibox.widget.imagebox
+        },
+        margins = dpi(3),
+        widget = wibox.container.margin
       },
-      margins = dpi(3),
-      widget = wibox.container.margin
+      {
+        format = "%I:%M %p",
+        font = beautiful.small_font,
+        align = 'center',
+        widget = wibox.widget.textclock
+      },
+      spacing = dpi(5),
+      layout = wibox.layout.fixed.horizontal
     },
-    {
-      format = "%I:%M %p",
-      font = beautiful.medium_font,
-      align = 'center',
-      widget = wibox.widget.textclock
-    },
-    spacing = dpi(5),
-    layout = wibox.layout.fixed.horizontal
+    widget = wibox.container.place
   },
-  left = dpi(8),
-  right = dpi(8),
-  margins = dpi(3)
+  -- left = dpi(8),
+  -- right = dpi(8),
+  margins = dpi(6)
 }
 
 
 return wibox.widget
 {
-  {
+  -- {
     calendar,
     time,
     spacing = dpi(4),
-    layout = wibox.layout.fixed.horizontal
-  },
-  widget = wibox.container.place
+    layout = wibox.layout.flex.horizontal
+  -- },
+  -- widget = wibox.container.place
 }

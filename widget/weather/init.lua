@@ -15,6 +15,7 @@ local today
 local function get()
 
   local dw = wibox.widget {
+    {
       {
         {
           id = 'icon',
@@ -25,36 +26,33 @@ local function get()
         widget = wibox.container.place
       },
       {
-        nil,
-        {
-          id = 'temp',
-          markup = 'Temp: <i></i>',
-          font = beautiful.small_font,
-          widget = wibox.widget.textbox
-          -- {
-          --   id = 'temp',
-          --   markup = 'Temp: <i></i>',
-          --   font = beautiful.small_font,
-          --   widget = wibox.widget.textbox
-          -- },
-          -- {
-          --   id = 'wind',
-          --   markup = 'Wind: ',
-          --   font = beautiful.small_font,
-          --   widget = wibox.widget.textbox
-          -- },
-          -- layout = wibox.layout.fixed.vertical
+        {    -- nil,
+          {
+            id = 'temp',
+            markup = 'Unable to connect to wttr.in',
+            align = 'center',
+            font = beautiful.small_font,
+            widget = wibox.widget.textbox
+          },
+          {
+            id = 'wind',
+            markup = '',
+            font = beautiful.small_font,
+            widget = wibox.widget.textbox
+          },
+          layout = wibox.layout.fixed.vertical
         },
-        nil,
-        expand = 'none',
-        layout = wibox.layout.align.vertical
+        widget = wibox.container.place
       },
       spacing = dpi(3),
-      layout = wibox.layout.ratio.horizontal
-    }
-    dw:ajust_ratio(2,.4,.6,0)
+      -- layout = wibox.layout.ratio.horizontal
+      layout = wibox.layout.flex.vertical
+    },
+    widget = wibox.container.place
+  }
+    -- dw:ajust_ratio(2,.4,.6,0)
 
-  local cmd = [[curl wttr.in/]]..location..[[?format="%C\n%t\n%w\n"]]
+  local cmd = [[curl wttr.in/]]..location..[[?format="%C\n%t\n%w"]]
   awful.spawn.easy_async_with_shell (
     cmd,
     -- 'echo "Partly cloudy\n+70°F\n0mph\n"', --Hardcoded value so I can test this at work.
@@ -78,8 +76,9 @@ local function get()
 
       local icon_file = lines[1]:gsub(" ","_"):lower()
       dw:get_children_by_id('icon')[1].image = color.recolor_image(gfs.get_configuration_dir() .. '/icons/'..icon_file..'.svg',beautiful.wibar_fg)
-      dw:get_children_by_id('temp')[1].markup = "Temp: "..lines[2] .. "\nWind: " ..lines[3]
-      -- dw:get_children_by_id('wind')[1].markup = "Wind: "..lines[3]
+      -- dw:get_children_by_id('temp')[1].markup = "Temp: "..lines[2] .. "\nWind: " ..lines[3]
+      dw:get_children_by_id('temp')[1].markup = lines[2]
+      dw:get_children_by_id('wind')[1].markup = lines[3]
       dw = wibox.widget {
         dw,
         widget = wibox.container.place
@@ -101,5 +100,5 @@ gears.timer {
 return pi {
   widget = today,
   outer = false,
-  margins = dpi(5),
+  margins = dpi(3),
 }

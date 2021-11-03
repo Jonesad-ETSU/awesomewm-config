@@ -4,9 +4,11 @@ local gears = require ('gears')
 local naughty = require ('naughty')
 local popup = require ('widget.util.my_popup')
 local darker = require ('widget.util.color').darker
+local toggle = require ('widget.util.toggle')
 local ib = require ('widget.util.img_button')
 local beautiful = require ('beautiful')
 local dpi = beautiful.xresources.apply_dpi
+local do_not_disturb = false
 
 
 local notif = wibox.widget {
@@ -85,14 +87,32 @@ local notif = wibox.widget {
     widget = naughty.list.notifications
   },
   {
-    {
-      markup = "<i>Do Not Disturb</i>",
-      font = beautiful.font,
-      align = 'center',
-      widget = wibox.widget.textbox
+    nil,
+    toggle {
+      img = 'discord.svg',
+      inactive_bg = '#ff0000',
+      active_bg = '#00ff00',
+      margins = dpi(8),
+      buttons = gears.table.join (
+        awful.button({},1,function()
+          awful.spawn('echo toggling > ~/dnd')
+        end)
+      )
     },
-    widget = wibox.container.place
+    nil,
+    exand = 'none',
+    layout = wibox.layout.align.horizontal
   },
+  -- {
+    -- {
+      --
+    --   markup = "<i>Do Not Disturb</i>",
+    --   font = beautiful.font,
+    --   align = 'center',
+    --   widget = wibox.widget.textbox
+    -- },
+    -- widget = wibox.container.place
+  -- },
   spacing = dpi(8),
   layout = wibox.layout.ratio.vertical
 }
@@ -123,6 +143,21 @@ local p = popup (
   }
 )
 
+naughty.connect_signal(
+  'request::do_not_disturb',
+  function()
+    do_not_disturb = not do_not_disturb
+    naughty.destroy_all_notifications(nil, 1)
+  end
+)
 
+naughty.connect_signal(
+  'request::display',
+  function()
+    if not do_not_disturb then
+      p:emit_signal('toggle')
+    end
+  end
+)
 
 return p

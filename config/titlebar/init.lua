@@ -68,7 +68,8 @@ client.connect_signal("request::titlebars", function(c)
 	},
         {
           awful.titlebar.widget.stickybutton(c),
-          layout = wibox.layout.fixed.horizontal
+          margins = dpi(3),
+          widget = wibox.container.margin
         },
 	layout = wibox.layout.align.horizontal
       }

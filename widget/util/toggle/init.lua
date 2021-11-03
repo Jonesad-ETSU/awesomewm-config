@@ -41,6 +41,14 @@ local tbox = function (args)
     widget = wibox.container.background
   }
 
+  if args.tooltip then
+    awful.tooltip {
+      objects = { toggle },
+      delay_show = 1,
+      text = args.tooltip
+    }
+  end
+
   toggle:buttons(gears.table.join (
     awful.button ( {}, 1, function()
       toggle.active = not toggle.active

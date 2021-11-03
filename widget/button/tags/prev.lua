@@ -1,10 +1,10 @@
 local ib = require ('widget.util.img_button')
 local pi = require ('widget.util.panel_item')
 local awful = require ('awful')
-local fs = require ('gears.filesystem')
+local dpi = require('beautiful.xresources').apply_dpi
 
 local prev_tag = ib {
-  image = fs.get_configuration_dir() .. '/icons/tag-prev.svg',
+  image = 'tag-prev.svg',
   recolor = true,
   buttons =  awful.button( {}, 1, function()
     awful.tag.viewprev()
@@ -13,6 +13,7 @@ local prev_tag = ib {
 
 return pi {
   widget = prev_tag,
-  margins = 0,
+  -- margins = 0,
+  margins = dpi(6),
   bg = '#00000000'
 }

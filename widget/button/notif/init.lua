@@ -10,15 +10,17 @@ local gfs = gears.filesystem
 -- local dpi = require ('beautiful.xresources').apply_dpi
 
 local notif_btn = ib {
-  image = gfs.get_configuration_dir() .. 'icons/notifications.svg',
+  image = 'notifications.svg',
   recolor = true,
   hide_tooltip = true,
-  cmd = "discord",
+  show_widget = 'layout.notifications',
+  -- cmd = "discord",
 }
 
 return pi {
   widget = notif_btn,
-  shape = gears.shape.rounded_rect,
-  margins = dpi(4),
-  bg = beautiful.panel_item.button_bg
+  shape = beautiful.rounded_rect_shape,
+  margins = dpi(6),
+  -- bg = beautiful.transparent
+  bg = beautiful.panel_item.bg,
 }

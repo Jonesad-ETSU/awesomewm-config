@@ -38,6 +38,7 @@ end
 if not beautiful.init(require('themes.gtk')) then
   naughty.notify { text = "Failed to load theme."}
 end
+-- naughty.notify { text = "Printing font: "..beautiful.font .. " and small: "..beautiful.small_font}
 -- beautiful.font = "Roboto 8"
 -- if not beautiful.wibar_bg then
 --   naughty.notify { text = "RIP 2"}
@@ -47,6 +48,7 @@ end
 local bling = require ('bling')
 -- Panel relies on bling
 local panel = require ('layout')
+-- require('widget.test')
 
 -- Set taskbar  icon size
 awesome.set_preferred_icon_size(32)

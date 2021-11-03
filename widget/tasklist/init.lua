@@ -31,7 +31,7 @@ local make_tasklist = function (s)--(s)
       awful.widget.layoutbox(),
       widget = wibox.container.place
     },
-    margins = dpi(4),
+    margins = dpi(6),
   }
   layout_widget:buttons(gears.table.join(
     awful.button({ }, 1, function () awful.layout.inc( 1) end),
@@ -49,11 +49,11 @@ local make_tasklist = function (s)--(s)
   }
   local tasklist = wibox.widget {
       {
-        {
+        -- {
           require ('widget.button.tags.prev'),
-          margins = dpi(5),
-          widget = wibox.container.margin
-        },
+        --   margins = dpi(5),
+        --   widget = wibox.container.margin
+        -- },
         layout_widget,
         -- require ('widget.launchers'),
         expand = 'none',
@@ -67,7 +67,7 @@ local make_tasklist = function (s)--(s)
             screen = s,
             filter = awful.widget.tasklist.filter.currenttags,
             buttons = tasklist_buttons,
-            widget_template = {
+            widget_template = { 
               {
                 wibox.widget.base.make_widget(),
                 forced_height = dpi(2),
@@ -93,7 +93,7 @@ local make_tasklist = function (s)--(s)
               layout = wibox.layout.fixed.vertical,
             },
             style = {
-              shape = gears.shape.rounded_bar,
+              shape = beautiful.rounded_rect_shape or gears.shape.rounded_bar,
               --shape_border_width = dpi(1),
               shape_border_width = 0,
               -- bg_focus = "#ffffff",
@@ -116,11 +116,11 @@ local make_tasklist = function (s)--(s)
       },
       {
         require ('widget.button.rofi_launcher'),
-        {
+        -- {
           require ('widget.button.tags.next'),
-          margins = dpi(5),
-          widget = wibox.container.margin
-        },
+        --   margins = dpi(5),
+        --   widget = wibox.container.margin
+        -- },
         layout = wibox.layout.fixed.horizontal
       },
       spacing = 0,
@@ -154,8 +154,8 @@ local make_tasklist = function (s)--(s)
     right = dpi(16),
     margins = dpi(3),
     outer = true,
-    shape = gears.shape.rounded_rect,
-    spacing = 20
+    shape = beautiful.rounded_rect_shape or gears.shape.rounded_rect,
+    -- spacing = 20
   }
 
   --tasklist:ajust_ratio(2,.25,.7,.05)

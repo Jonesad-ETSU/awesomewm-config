@@ -13,4 +13,5 @@ nitrogen --restore &
 pgrep -x mpd || mpd ~/.config/mpd/mpd.conf &
 mpc stop & 
 #pactl set-sink-volume @DEFAULT_SINK@ 50% &
-launch udiskie &
+udiskie &
+

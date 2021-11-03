@@ -22,7 +22,8 @@ local updates_txt_btn = ib {
 }
 
 local updates_icon = ib {
-  image = color(gfs.get_configuration_dir() .. "/icons/pkg.svg","#ffffff"),
+  image = "pkg.svg",
+  recolor = true,
   cmd = "alacritty -e sudo pacman -Syu",
   tooltip = "Click to update system"
 }

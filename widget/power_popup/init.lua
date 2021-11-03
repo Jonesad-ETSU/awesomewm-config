@@ -7,42 +7,40 @@ local dpi 	= require ('beautiful.xresources').apply_dpi
 --local pi	= require ('widget.util.panel_item')
 local ib	= require ('widget.util.img_button')
 
-local image_dir = gears.filesystem.get_configuration_dir() .. "/icons/"
-
-local shutdown = ib ({
-  image = image_dir.."shutdown.svg",
+local shutdown = ib {
+  image = "shutdown.svg",
   recolor = true,
   tooltip = "Turn off the Computer",
   cmd = "systemctl poweroff"
-})
+}
 
-local reboot = ib ({
-  image = image_dir.."reboot.svg",
+local reboot = ib {
+  image = "reboot.svg",
   recolor = true,
   tooltip = "Reboots the Computer",
   cmd = "systemctl reboot"
-})
+}
 
-local sleep = ib ({
-  image = image_dir.."sleep.svg",
+local sleep = ib {
+  image = "sleep.svg",
   recolor = true,
   tooltip = "Save system state to RAM and enter low-power mode",
   cmd = "systemctl suspend"
-})
+}
 
-local hibernate = ib ({
-  image = image_dir.."hibernate.svg",
+local hibernate = ib {
+  image = "hibernate.svg",
   recolor = true,
   tooltip = "Save system state to storage and poweroff",
   cmd = "systemctl hibernate"
-})
+}
 
-local log_out = ib ({
-  image = image_dir.."log_out.svg",
+local log_out = ib {
+  image = "log_out.svg",
   recolor = true,
   tooltip = "End the Current User Session",
   cmd = "loginctl terminate-user $(whoami)"
-})
+}
 
 local power_widget = wibox.widget {
   {

@@ -5,12 +5,11 @@ local gears = require ('gears')
 local beautiful = require ('beautiful')
 local wibox = require ('wibox')
 
- local gfs = gears.filesystem
--- local recolor = require ('gears.color').recolor_image
+local gfs = gears.filesystem
 local dpi = beautiful.xresources.apply_dpi
 
 local settings_btn = ib {
-  image = gfs.get_configuration_dir() .. '/icons/settings.svg',
+  image = 'settings.svg',
   recolor = true,
   -- widget = wibox.widget {
   --   {
@@ -32,9 +31,11 @@ local settings_btn = ib {
 
 return pi {
   widget = settings_btn,
-  shape = gears.shape.rounded_rect,
-  margins = 3,
-  bg = beautiful.panel_item.button_bg
+  shape = beautiful.rounded_rect_shape,
+  -- margins = dpi(5),
+  margins = dpi(6),
+  -- bg = beautiful.transparent
+  bg = beautiful.panel_item.bg
   -- name = "Settings",
   -- margins = dpi(8),
   -- ratio = {

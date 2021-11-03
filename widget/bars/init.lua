@@ -5,8 +5,8 @@ local dpi = beautiful.xresources.apply_dpi
 local slider = require ('widget.util.panel_slider')
 local fs = require ('gears.filesystem')
 
-local l = wibox.layout.flex.vertical()
-l.spacing = dpi(3)
+local l = wibox.layout.flex.horizontal()
+l.spacing = dpi(8)
 --l.spacing = 0
 
 for _,w in pairs({
@@ -14,13 +14,15 @@ for _,w in pairs({
     getter = [[pamixer --get-volume]],
     setter = [[pamixer --set-volume]],
     label = [[VOL:]],
-    image = fs.get_configuration_dir() .. '/icons/volume.svg'
+    vertical = true,
+    image = 'volume.svg'
   },
   {
     getter = [[pamixer --default-source --get-volume]],
     setter = [[pamixer --default-source --set-volume]],
     label = [[MIC:]],
-    image = fs.get_configuration_dir() .. '/icons/mic.svg'
+    vertical = true,
+    image = 'mic.svg'
   },
   {
     getter = [[brightnessctl i | awk '/Current/ {gsub("[()%]",""); print $4}']],
@@ -28,7 +30,8 @@ for _,w in pairs({
     setter_post = [[%]],
     minimum = 5,
     label = [[BRI:]],
-    image = fs.get_configuration_dir() .. '/icons/brightness.svg'
+    vertical = true,
+    image = 'brightness.svg'
   }
 }) do
   l:add (slider(w))

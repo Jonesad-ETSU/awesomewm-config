@@ -16,25 +16,25 @@ local dpi = beautiful.xresources.apply_dpi
 --]]
 local nb = function(args)
   local bar = wibox.widget {
-    bar_color = darker(beautiful.wibar_bg,15),
+    bar_color = beautiful.wibar_bg,
     -- bar_active_color = darker(beautiful.wibar_fg,-5),
     bar_active_color = beautiful.success,
-    bar_active_shape = gears.shape.rounded_bar,
-    bar_shape = gears.shape.rounded_bar,
+    bar_active_shape = beautiful.rounded_rect_shape or gears.shape.rounded_bar,
+    bar_shape = beautiful.rounded_rect_shape or gears.shape.rounded_bar,
     minimum = args.minimum or 0,
     -- handle_border_width = dpi(1),
     handle_border_color = beautiful.success,
-    -- handle_width = dpi(8),
-    handle_width = 0,
+    handle_width = dpi(8),
+    -- handle_width = 0,
     handle_color = beautiful.success,
-    handle_shape = gears.shape.rounded_bar,
+    handle_shape = beautiful.rounded_rect_shape or gears.shape.rounded_bar,
     widget = wibox.widget.slider
   }
 
   local value_text = wibox.widget {
     markup = "",
     align = 'center',
-    font = beautiful.small_font,
+    font = beautiful.tiny_font,
     widget = wibox.widget.textbox
   }
 
@@ -42,7 +42,7 @@ local nb = function(args)
   if args.image then
     label = wibox.widget {
       {
-        image = recolor(args.image,beautiful.wibar_fg),
+        image = recolor(gears.filesystem.get_configuration_dir()..'/icons/'..args.image,beautiful.wibar_fg),
         resize = true,
         widget = wibox.widget.imagebox,
       },
@@ -91,32 +91,34 @@ local nb = function(args)
 
   local bar_container
   if args.vertical then
-	  bar_container = wibox.widget {
-		{
-		  	bar,
-			direction = 'east',
-			widget = wibox.container.rotate
-		},
-		widget = wibox.container.place
-	  }
-          label.halign = 'center'
+    bar_container = wibox.widget {
+      {
+        bar,
+        direction = 'east',
+        widget = wibox.container.rotate
+      },
+      widget = wibox.container.place
+    }
+    label.halign = 'center'
   else bar_container = bar end
   local final = wibox.widget {
     nil,
     {
-      label,
+      -- args.vertical and value_text or label,
+      not args.hide_label and not args.vertical and label,
       bar_container,
       spacing = dpi(3),
       layout = function()
 	if args.vertical then
-		label.forced_width = args.label_forced_width or nil
-		label.forced_height = args.label_forced_height or nil
-		return wibox.layout.fixed.vertical()
+          label.forced_width = args.label_forced_width or nil
+          label.forced_height = args.label_forced_height or nil
+          return wibox.layout.fixed.vertical()
 	end
 	return wibox.layout.fixed.horizontal()
       end
     },
-    value_text,
+    -- args.vertical and label or value_text,
+    not args.hide_label and args.vertical and label,
     expand = 'inside',
     layout = function()
 	if args.vertical then

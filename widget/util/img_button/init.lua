@@ -20,14 +20,25 @@ local gfs       = require ('gears.filesystem')
 
 local button = function (options)
 
+  local function parse_image_path(path)
+    if path[1] ~= '/' then
+      return gfs.get_configuration_dir() .. 'icons/' .. path
+      -- require('naughty').notify { text = l}
+      -- return l
+    else 
+      -- require('naughty').notify { text = path}
+      return path
+    end
+  end
+
     local image
     if not options.widget then
       local img
+      local img_path
       if options.recolor then
-        -- naughty.notify { text = "Recoloring to "..beautiful.wibar_fg }
-        img = color(options.image, beautiful.wibar_fg)
+        img = color(parse_image_path(options.image), beautiful.wibar_fg)
+        -- img = color(options.image, beautiful.wibar_fg)
       else 
-        -- naughty.notify { text = "Text" }
         img = options.image
       end
 

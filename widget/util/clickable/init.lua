@@ -44,23 +44,39 @@ local clickable_container = function ( widget, custom_buttons )
     click_widget:connect_signal(
         'button::press',
         function()
+          if widget.visible then
             widget:emit_signal("activate")
+            click_widget:connect_signal(
+              'button::release',
+              function()
+                widget:emit_signal("deactivate") 
+              end)
+          end
         end
     )
     
      -- Mouse releases the widget
-     click_widget:connect_signal(
-        'button::release',
-        function()
-            widget:emit_signal("deactivate") 
-        end
-    )
+    --  click_widget:connect_signal(
+    --     'button::release',
+    --     function()
+    --         widget:emit_signal("deactivate") 
+    --     end
+    -- )
 
+    -- click_widget:connect_signal('property::visibility',
+    -- function() 
+    --   require('naughty').notify { text = "Changing visibility"}
+    --   click_widget:buttons(
+    --     click_widget.visibility and (custom_buttons or
+    --       awful.button({},1,function()
+    --         click_widget:emit_signal('activate') 
+    --       end)))  
+    -- end)
     click_widget:buttons(
-    	custom_buttons or
-	awful.button({},1,function()
-		click_widget:emit_signal('activate') 
-	end))
+      custom_buttons or
+      awful.button({},1,function()
+        click_widget:emit_signal('activate') 
+      end))
 
     return click_widget
 end

@@ -26,6 +26,7 @@ local profile_container = wibox.widget {
       {
         ib {
           image = profile_img(),
+          use_root_dir = true,
           show_widget = 'widget.power_popup',
           tooltip = "opens power menu"
         },

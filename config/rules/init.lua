@@ -4,35 +4,30 @@ local gears 	= require ('gears')
 
 client.connect_signal ('manage', function(c)
 	
-	c:emit_signal(
-		'request::activate',
-		'mouse::enter',
-		{ raise = true }
-	)
+  c:emit_signal(
+    'request::activate',
+    'mouse::enter',
+    { raise = true }
+  )
 
-	if not awesome.startup then
-		awful.client.setslave(c)
-	end
+  if not awesome.startup then
+    awful.client.setslave(c)
+  end
 
-	if awesome.startup
-	and not c.size_hints.user_position
-	and not c.size_hints.program_position then
-		awful.placement.no_offscreen(c)
-	end
+  if awesome.startup
+  and not c.size_hints.user_position
+  and not c.size_hints.program_position then
+    awful.placement.no_offscreen(c)
+  end
 
-	update_shape(c)
+  update_shape(c)
 end)
 
 client.connect_signal('property::fullscreen',function(c) update_shape(c) end)
 
 function update_shape(c)
-	if c.fullscreen then
-		c.shape = gears.shape.rectangle
-	else
-		c.shape = function (cr, width, height)
-			return gears.shape.rounded_rect( cr, width, height, 15 )
-		end
-	end
+    if c.fullscreen then c.shape = gears.shape.rectangle
+    else c.shape = beautiful.client_shape end
 end
 
 -- {{{ Rules

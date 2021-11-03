@@ -2,14 +2,13 @@ local ib = require ('widget.util.img_button')
 local pi = require ('widget.util.panel_item')
 local awful = require ('awful')
 local gears = require ('gears')
-local gfs = gears.filesystem
 local beautiful = require ('beautiful')
 local dpi = beautiful.xresources.apply_dpi
 local wibox = require ('wibox')
 
 local arcchart = function(args)
   local icon = ib {
-    image = gfs.get_configuration_dir() .. '/icons/'..(args.image or 'cpu.svg'),
+    image = args.image,
     recolor = true,
     tooltip = "Amount of CPU Utilization (lower is better)"
   }
@@ -17,7 +16,7 @@ local arcchart = function(args)
   local chart = wibox.widget {
     {
       icon,
-      margins = dpi(5),
+      margins = dpi(8),
       widget = wibox.container.margin
     },
     -- id = 'bar',

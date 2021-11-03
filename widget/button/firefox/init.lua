@@ -1,19 +1,18 @@
 local ib = require ('widget.util.img_button')
 local pi = require ('widget.util.panel_item')
-local gears = require ('gears')
-local gfs = gears.filesystem
 local beautiful = require('beautiful')
 local dpi = beautiful.xresources.apply_dpi
 local color = require ('gears.color').recolor_image
 
 local firefox_button = ib {
-  image = color(gfs.get_configuration_dir() .. 'icons/firefox.svg',beautiful.wibar_fg),
+  image = 'firefox.svg',
+  recolor = true,
   cmd = "firefox",
 }
 
 local firefox = pi {
   widget = firefox_button,
-  shape = gears.shape.circle,
+  -- shape = gears.shape.circle,
   shape_border_width = 0,
   margins = dpi(3),
   -- ratio = {
