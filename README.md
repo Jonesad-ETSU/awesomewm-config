@@ -25,9 +25,13 @@ In order to tackle these challenges, I took the following steps:
 ## Gallery
 **Note: The following images are subject to, and <em>will</em>, change as the project develops. As a primary example, several colors in the panel are not currently defined by gtk and <em>will</em> be in the future.**
 <br/>
+<p align='center'>The following images use the <strong><a href='https://github.com/jmattheis/gruvbox-dark-gtk'>Gruvbox-Dark</a></strong> GTK3+ theme:</p>
+<img align='center' alt='Gruvbox dark terminal and gtk theme with hidden main panel' src="images/gruv_dark_hidden.png"/>
+<img align='center' alt='Gruvbox dark terminal and gtk theme with shown main panel' src="images/gruv_dark_shown.png"/>
+*The Next Image is Outdated*
 <p align='center'>The following image uses the <strong><a href='https://github.com/EliverLara/Nordic'>Nordic</a></strong> GTK3+ theme:</p>
 <img align='center' alt='Nordic panel with pfetch and file browser shown' src="images/nord_new.png"/>
-*The Following Images are Outdated*
+*The Following Images are even more Outdated*
 <p align='center'>The following images uses the <strong><a href='https://github.com/EliverLara/Juno')>Juno</a></strong> GTK3+ theme:</p>
 <img align='center' alt='Bright colors sharks and water with a matching drop-down theme' src="images/showcase_juno_sharks.png"/>
 <img align='center' alt='Bright colors sharks and water with the panel hidden to the top of the screen' src="images/showcase_juno_sharks_hidden_panel.png"/>
@@ -48,15 +52,14 @@ By default, Awesomewm comes with a set of fairly sane defaults. However, many as
 * View disk usage for both home and root partitions.
 
 ## TODO
-- [ ] Make it possible to change taskbar shortcuts through GUI
-- [ ] Pull Album Art using metadata from some database for MPD display
+- [ ] Make it possible to change/add taskbar shortcuts through GUI
 - [x] Get more colors from the GTK theming<sup>WIP</sup>
-- [ ] Add Missing Weather States from wttr.in to icon set.
-- [ ] Finalize Icon Set
-- [ ] Make Settings panel
-- [ ] Make notifications window
+- [x] Add Missing Weather States from wttr.in to icon set.<sup>WIP</sup>
+- [x] Finalize Icon Set
+- [x] Make Settings panel<sup>WIP</sup>
 - [x] Make Poweroff Prompt <sup>WIP</sup>
 - [x] Display current tag name in front of Tasklist.
+- [ ] App Launcher
 - [x] Correct Rofi theming <sup>WIP</sup>
 - [x] Make Bars respond to click events rather than poll.
 - [x] Make MPD respond to click events rather than poll.
