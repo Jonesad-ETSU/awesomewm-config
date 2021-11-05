@@ -2,15 +2,9 @@ local toggle = require ('widget.util.toggle')
 local pi = require ('widget.util.panel_item')
 local beautiful  = require ('beautiful')
 local dpi  = beautiful.xresources.apply_dpi
--- local gears  = require ('gears')
 local wibox = require ('wibox')
--- local gfs = gears.filesystem
--- local gfs = require ('gears.filesystem')
--- local color = require ('gears.color')
--- local dpi = require ('beautiful.xresources').apply_dpi
 
 local gamer = toggle {
-  -- img = 'airplane.svg',
   img = 'game.svg',
   on_cmd = [[rfkill block $(rfkill | awk '// {if($2!="TYPE") print $2}') && notify-send 'Airplane Mode On']],
   off_cmd = [[rfkill unblock $(rfkill | awk '// {if($2!="TYPE") print $2}') && notify-send 'Airplane Mode Off']],

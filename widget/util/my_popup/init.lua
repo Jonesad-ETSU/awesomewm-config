@@ -67,23 +67,14 @@ local popup = function (w, options)
     'toggle',
     function()
       toggle()
-      -- if popup_wibox.visible then
-      --   gears.timer.start_new (
-      --     1,
-      --     function()
-      --       toggle()
-      --       return false
-      --     end
-      --   )
-      -- end
-      --popup_wibox.visible = not popup_wibox.visible
     end
   )
 
   awesome.connect_signal (
     'toggle::mouse::leave',
-    function()
-      leave_action = not leave_action 
+    function(enable)
+      leave_action = enable or false 
+      -- leave_action = not leave_action 
     end
   )
   popup_wibox:connect_signal (

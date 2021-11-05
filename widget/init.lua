@@ -22,7 +22,7 @@ return {
   -- motd = require ('widget.motd'),
   music = require ('widget.music'),
   bars = require ('widget.bars'),
-  charts = require ('widget.charts'),
+  charts = require ('widget.arccharts'),
   -- actions = require ('widget.actions'),
   weather = require ('widget.weather'),
   power = require ('widget.power'),
