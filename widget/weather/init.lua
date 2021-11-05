@@ -1,7 +1,7 @@
 local beautiful = require ('beautiful')
 local dpi       = require ('beautiful.xresources').apply_dpi
 local wibox 	= require ('wibox')
-local naughty 	= require ('naughty')
+-- local naughty 	= require ('naughty')
 local awful 	= require ('awful')
 local gears 	= require ('gears')
 local gfs 	= gears.filesystem
@@ -71,7 +71,7 @@ local function get()
         table.insert(lines,s)
       end
       -- for _,s in ipairs(lines) do
-      --   naughty.notify { text = "Line: "..s }
+      --   -- naughty.notify { text = "Line: "..s }
       -- end
 
       local icon_file = lines[1]:gsub(" ","_"):lower()

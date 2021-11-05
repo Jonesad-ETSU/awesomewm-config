@@ -91,6 +91,8 @@ local popup = function (w, options)
     function()
       if leave_action then
         toggle()
+      -- else
+      --   leave_action = true
       end
     end
   )

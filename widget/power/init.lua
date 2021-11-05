@@ -150,18 +150,17 @@ local power = function()
     'activate',
     function()
       local notif = naughty.notification {
-        -- title = 't',
-        message = "Battery has "..bat_pct:gsub("\n",' '), 
+        title = 'Battery',
+        message = bat_pct:gsub("\n",' '), 
         icon = gears.color.recolor_image(gears.filesystem.get_configuration_dir() .. '/icons/heartbeat.svg',beautiful.wibar_fg),
       }
 
-      wibox.widget {
-        notification = notif,
-        visible = true,
-        -- resize_strategy = 'center',
-        widget = naughty.widget.icon
-      }
-    end
+      -- wibox.widget {
+      --   notification = notif,
+      --   resize_strategy = 'center',
+      --   widget = naughty.widget.icon
+      -- }
+      end
   )
 
   return clickable(l)

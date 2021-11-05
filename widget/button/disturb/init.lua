@@ -11,9 +11,11 @@ local wibox = require ('wibox')
 
 local disturb = toggle {
   img = 'bell.svg',
-  on_cmd = [[ awesome-client 'require("naughty").emit_signal("request::do_not_disturb")' && notify-send 'Do Not Disturb' 'On' ]],
+  -- on_cmd = [[ awesome-client 'require("naughty").emit_signal("request::do_not_disturb")' && notify-send 'Do Not Disturb' 'On' ]],
+  on_cmd = [[ awesome-client 'local n = require("naughty") local g = require ("gears") n.notification { title = "Do Not Disturb", message = "Turning On...", icon=g.filesystem.get_configuration_dir().."/icons/bell.svg"} g.timer.start_new(3, function() n.suspended = true n.destroy_all_notifications() return false end)' ]],
   -- on_cmd = [[ awesome-client 'require("naughty").notify { text = "testing"}' && notify-send 'Do Not Disturb' 'On' ]],
-  off_cmd = [[ awesome-client 'require("naughty").emit_signal("request::do_not_disturb")' && notify-send 'Do Not Disturb' 'Off' ]],
+  off_cmd = [[ awesome-client 'require("naughty").suspended = false' && notify-send 'Do Not Disturb' 'Off' ]],
+  -- off_cmd = [[ awesome-client 'require("naughty").emit_signal("request::do_not_disturb")' && notify-send 'Do Not Disturb' 'Off' ]],
   active_bg = beautiful.transparent,
   inactive_bg = beautiful.transparent,
   active_fg = beautiful.bg_select,

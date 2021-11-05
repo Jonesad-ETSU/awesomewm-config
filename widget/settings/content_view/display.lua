@@ -21,12 +21,24 @@ display_l:add (
     tooltip = 'Opens nitrogen, the wallpaper setter.'
   },
   gen_toggle {
-    text = 'Screen?',
+    textbox = st {
+      empty_text = " N/A ",
+      initial_cmd = "xrandr -q | awk '/^[[:alpha:]]+/ {if(NR!=1) { if($2==\"connected\")print $1 }}'",
+      pop_cmd = "xrandr | awk '/^[[:alpha:]]/ {if(NR!=1)print $1}'",
+      -- setter_post = '',
+      -- setter_cmd = [[xrandr -s]]
+    },
+    disable_toggle = true,
+    text = "Screen",
+    tooltip = "Chooses which Screen the below settings will affect."
+  },
+  gen_toggle {
+    text = 'Make Primary?',
     cmd = 'notify-send test',
     margins = dpi(10),
     inactive_bg = beautiful.transparent,
     active_bg = beautiful.transparent,
-    tooltip = 'Choose which screen\'s settings to edit.'
+    tooltip = 'Choose if the screen is primary.'
   },
   gen_toggle {
     textbox = st {

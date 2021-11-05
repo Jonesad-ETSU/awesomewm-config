@@ -5,7 +5,7 @@ local awful = require("awful")
 require("awful.autofocus")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
--- local dpi = beautiful.xresources.apply_dpi
+local dpi = beautiful.xresources.apply_dpi
 local naughty = require("naughty")
 
 if awesome.startup_errors then
@@ -105,12 +105,14 @@ screen.connect_signal(
 
 awful.screen.connect_for_each_screen(function(s)
 
-  s.padding = {
-    left=5,
-    right=5,
-    top=20,
-    bottom=5
+  local work = {
+    left = dpi(5),
+    right = dpi(5),
+    top = dpi(20),
+    bottom = dpi(5)
   }
+  s.padding = work
+  s.workarea = work
 
   -- Each screen has its own tag table.
   awful.tag({ "1", "2", "3", "4" }, s, awful.layout.layouts[1])

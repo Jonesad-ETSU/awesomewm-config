@@ -328,6 +328,8 @@ theme.client_shape = function(c,w,h)
     return gears.shape.rounded_rect(c,w,h,theme.button_border_radius)
 end
 
+theme.tooltip_shape = rounded_rect_shape
+
 theme.panel = {}
     theme.panel.side = 'top'
     theme.panel.width = dpi(1000)
@@ -361,10 +363,10 @@ theme.bg_systray    = theme.panel_item.bg
 -- theme.bg_systray = "#00000000"
 theme.systray_icon_spacing = dpi(3)
 
--- theme.notification_icon_resize_strategy = 'scale'
+theme.notification_icon_resize_strategy = 'scale'
 -- theme.notification_icon_resize_strategy = 'center'
 -- theme.notification_icon_size = 512
-theme.notification_icon_size = dpi(64)
+-- theme.notification_icon_size = dpi(64)
 
 theme = theme_assets.recolor_layout(theme, theme.wibar_fg)
 

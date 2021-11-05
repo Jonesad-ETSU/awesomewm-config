@@ -1,5 +1,7 @@
 local wibox = require ('wibox')
 local awful = require ('awful')
+local gears = require ('gears')
+local naughty = require ('naughty')
 local beautiful = require ('beautiful')
 local dpi = beautiful.xresources.apply_dpi
 local gears = require ('gears')
@@ -31,6 +33,18 @@ local song_title = wibox.widget {
   widget = wibox.widget.textbox
 }
 
+local function notify_song(title)
+  awful.spawn.easy_async_with_shell (
+    [[mpc current]],
+    function(out)
+      local notif = naughty.notification {
+        title = title or "Now Playing",
+        message = out,
+        icon = gears.color.recolor_image(gears.filesystem.get_configuration_dir() .. '/icons/music.svg',beautiful.wibar_fg)
+      }
+    end) 
+end
+
 local back_pic = ib {
   image = 'prev.svg',
   recolor = true,
@@ -38,6 +52,7 @@ local back_pic = ib {
   buttons = gears.table.join (
     awful.button( { }, 1, function()
       awful.spawn('mpc prev')
+      notify_song()
     end)
   )
 }
@@ -66,31 +81,22 @@ local watch = gears.timer {
   end
 }
 
--- local scroll = wibox.widget {
---   layout = wibox.container.scroll.horizontal,
---   speed = 50,
---   song_title
--- }
--- scroll:pause() --starts out static for Offline
--- scroll:set_fps(5)
--- scroll:set_expand(true)
--- scroll:set_extra_space(dpi(50))
--- 
 local pause_pic = toggle {
   on_img = 'pause.svg',
   off_img = 'play.svg',
   hide_tooltip = true,
   margins = dpi(8),
   buttons = gears.table.join (
-    awful.button( { }, 1, function(--[[self--]])
+    awful.button( { }, 1, function()
       if playing then
         awful.spawn('mpc pause')
+        notify_song("Now Paused")
         watch:stop()
-        -- scroll:pause()
       else
         awful.spawn('mpc play')
+        notify_song()
+        -- naughty.notify { text = "TEXT" }
         watch:start()
-        -- scroll:continue()
       end
       playing = not playing 
     end)
@@ -104,13 +110,13 @@ local forward_pic = ib {
   buttons = gears.table.join(
     awful.button( { }, 1, function()
       awful.spawn('mpc next')
+      notify_song()
     end)
   )
 }
 
 local tt = awful.tooltip {
   objects = { forward_pic },
-  -- shape = gears.shape.rounded_rect,
   delay_show = 1,
   text = "TEST",
 }
@@ -118,10 +124,8 @@ local tt = awful.tooltip {
 local mpc_vol = slider {
   getter = "mpc vol | cut -d ':' -f 2 | tr -d '%'",
   setter = "mpc vol",
-  -- vertical = true,
   label_forced_width = dpi(8),
   hide_label = true,
-  --label_forced_height = dpi(8),
   tooltip = "Sets MPC volume (seperate from system volume)",
   image = 'volume.svg'
 }
