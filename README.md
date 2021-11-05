@@ -53,14 +53,15 @@ By default, Awesomewm comes with a set of fairly sane defaults. However, many as
 
 ## TODO
 - [ ] Make it possible to change/add taskbar shortcuts through GUI
-- [x] Get more colors from the GTK theming<sup>WIP</sup>
+- [x] Get more colors from the GTK theming
 - [x] Add Missing Weather States from wttr.in to icon set.<sup>WIP</sup>
+- [x] Add functionality for airplane mode, do not disturb mode, and blue light filtering mode
 - [x] Finalize Icon Set
 - [x] Make Settings panel<sup>WIP</sup>
 - [x] Make Poweroff Prompt <sup>WIP</sup>
 - [x] Display current tag name in front of Tasklist.
 - [ ] App Launcher
-- [x] Correct Rofi theming <sup>WIP</sup>
+- [x] ~~Correct Rofi theming~ Rofi replaced by awesome's menu system
 - [x] Make Bars respond to click events rather than poll.
 - [x] Make MPD respond to click events rather than poll.
 - [x] Simplify & Clean Design
@@ -77,6 +78,7 @@ By default, Awesomewm comes with a set of fairly sane defaults. However, many as
 | [`pamixer`](https://github.com/cdemoulins/pamixer)| PulseAudio/PipeWire Volume Controller | Volume and Microphone Volume Controls use this |
 | [`brightnessctl`](https://github.com/Hummer12007/brightnessctl)| Screen Brightness Controller | Brightness Control uses this |
 | [`upower`](https://github.com/freedesktop/upower)| Power Daemon | Configures Power for System & Battery widget uses this|
+| [`redshift`](https://github.com/jonls/redshift)| Blue Light Filter | Used by blue light filter button on panel |
 <br/>
 ***NOTE: PLEASE INSTALL WHAT YOU CAN FROM YOUR PACKAGE MANAGER FIRST***
 
