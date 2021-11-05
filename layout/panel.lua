@@ -116,18 +116,6 @@ local _panel = function(s, side)
     --COL 10
     panel_widget:add_widget_at(widgets.charts,1,10,3,4)
     panel_widget:add_widget_at(widgets.btn.files,4,10,1,1)
-    -- panel_widget:add_widget_at(wibox.widget {
-    --   {
-    --     --shape = beautiful.rounded_rect_shape,
-    --     thickness = dpi(2),
-    --     color = beautiful.panel_item.bg,
-    --     widget = wibox.widget.separator
-    --   },
-    --   top = dpi(10),
-    --   bottom = dpi(10),
-    --   widget = wibox.container.margin
-    -- },4,10,1,4)
-    -- panel_widget:add_widget_at(widgets.motd,4,10,1,4)
 
     --COL 11
     panel_widget:add_widget_at(widgets.btn.settings,4,11,1,1)

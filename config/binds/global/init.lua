@@ -106,9 +106,9 @@ globalkeys = gears.table.join(
 		{description = "show the Run Launcher", group = "launcher"}),
 	awful.key({ modkey }, "space", function() awful.spawn.easy_async("rofi -show drun -show-icons", function() end) end,
 		{description = "show the Run Launcher", group = "launcher"}),
-	awful.key({ modkey }, "Tab", function() awful.spawn.easy_async("rofi -show window -show-icons", function() end) end,
+                awful.key({ modkey }, "Tab", function() awful.menu.clients()--[[awful.spawn.easy_async("rofi -show window -show-icons"]] end,
 		{description = "switch between all windows", group = "launcher"}),
-	awful.key({ "Mod1" }, "Tab", function() awful.spawn.easy_async("rofi -show windowcd -show-icons", function() end) end,
+	awful.key({ "Mod1" }, "Tab", function() awful.menu.client_list()--[[awful.spawn.easy_async("rofi -show windowcd -show-icons", function() end)]] end,
 		{description = "switch between Windows on Current Desktop", group = "launcher"}),
 -- Change Wallpaper
 	awful.key({ modkey, }, "Home",
