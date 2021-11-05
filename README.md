@@ -23,7 +23,7 @@ In order to tackle these challenges, I took the following steps:
 <br/>
 
 ## Gallery
-**Note: The following images are subject to, and <em>will</em>, change as the project develops. As a primary example, several colors in the panel are not currently defined by gtk and <em>will</em> be in the future.**
+**Note: The following images are subject to change.**
 <br/>
 <p align='center'>The following images use the <strong><a href='https://github.com/jmattheis/gruvbox-dark-gtk'>Gruvbox-Dark</a></strong> GTK3+ theme:</p>
 <img align='center' alt='Gruvbox dark terminal and gtk theme with hidden main panel' src="images/gruv_dark_hidden.png"/>
