@@ -12,5 +12,4 @@ screen_height_mm=$(echo "$screen_sides" | tail -n1)
 screen_diag=$(echo "scale=10;sqrt(($screen_width_mm/25.4)^2+($screen_height_mm/25.4)^2)" | bc)
 
 dpi=$(echo "scale=0;(sqrt($width_sq+$height_sq)/$screen_diag)" | bc)
-echo "Xft.dpi: $dpi" > ~/.Xresources
-
+echo "Xft.dpi: $dpi" >> ~/.Xresources

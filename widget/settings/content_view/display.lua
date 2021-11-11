@@ -4,6 +4,7 @@ local beautiful = require ('beautiful')
 local dpi = beautiful.xresources.apply_dpi
 local toggle = require ('widget.util.toggle')
 local ib = require ('widget.util.img_button')
+local menu = require ('widget.util.menu_select')
 local gen_toggle = require ('widget.settings.content_view.gen_toggle')
 local st = require ('widget.util.select_textbox')
 
@@ -15,54 +16,79 @@ display_l:add (
     text = 'Change Wallpaper',
     cmd = 'nitrogen',
     img = 'wall.svg',
-    margins = dpi(10),
+    margins = dpi(5),
     inactive_bg = beautiful.transparent,
     active_bg = beautiful.transparent,
     tooltip = 'Opens nitrogen, the wallpaper setter.'
   },
   gen_toggle {
-    textbox = st {
-      empty_text = " N/A ",
-      initial_cmd = "xrandr -q | awk '/^[[:alpha:]]+/ {if(NR!=1) { if($2==\"connected\")print $1 }}'",
-      pop_cmd = "xrandr | awk '/^[[:alpha:]]/ {if(NR!=1)print $1}'",
-      -- setter_post = '',
-      -- setter_cmd = [[xrandr -s]]
-    },
-    disable_toggle = true,
-    text = "Screen",
-    tooltip = "Chooses which Screen the below settings will affect."
-  },
-  gen_toggle {
-    text = 'Make Primary?',
-    cmd = 'notify-send test',
-    margins = dpi(10),
+    text = 'Screen Layout',
+    cmd = 'arandr',
+    img = 'wall.svg',
+    margins = dpi(5),
     inactive_bg = beautiful.transparent,
     active_bg = beautiful.transparent,
-    tooltip = 'Choose if the screen is primary.'
+    tooltip = 'Opens arandr'
   },
-  gen_toggle {
-    textbox = st {
-      empty_text = " N/A ",
-      initial_cmd = "xrandr -q | awk '/[[:alnum:]]+\\.[[:alnum:]]+\\*/ {print $1}'",
-      pop_cmd = "xrandr -q | awk '/^[[:space:]]+[[:digit:]]+/ {print $1}' | head -n 11",
-      setter_post = [[ ; ]]..fs.get_configuration_dir()..[[/scripts/calculate-dpi.sh && xrdb merge ~/.Xresources && awesome-client 'awesome.restart()']],
-      setter_cmd = [[xrandr -s]]
+  menu {
+    alt_colors = true,
+    start_alt_color = true,
+    layout = wibox.layout.flex.horizontal,
+    box_margins = {
+      top = dpi(0),
+      bottom = dpi(0),
+      left = dpi(0),
+      right = dpi(0),
     },
-    disable_toggle = true,
-    text = "Screen Resolution",
-    tooltip = "Changes the Screen Resolution.\nCurrent Resolution is shown in the box"
-  },
-  gen_toggle {
-    textbox = st {
-      empty_text = " N/A ",
-      initial_cmd = "xrandr -q | grep -Eo '[[:alnum:]]+\\.[[:alnum:]]+\\*' | tr -d '*+'",
-      pop_cmd = fs.get_configuration_dir() .. [[/scripts/get_curr_rates.sh]],
-      setter_cmd = [[xrandr -r]]
-    },
-    disable_toggle = true,
-    text = "Refresh Rates",
-    tooltip = "Changes the Refresh Rate.\nCurrent Refresh Rate is shown in the box"
+    -- fill_table = require ('widget.settings.side_bar'),
+    fill_cmd = [[xrandr --listmonitors | awk '{if(NF>=4) print $4}']],
+    signal = [['settings::content_view::displays::show']],
+    max_widget_size = dpi(20),
+    box_layout = wibox.layout.align.horizontal,
+    -- signal = [[settings::content_view::show]],
+    shape = beautiful.rounded_rect_shape
   }
+  -- gen_toggle {
+  --   textbox = st {
+  --     empty_text = " N/A ",
+  --     initial_cmd = "xrandr --listmonitors | awk '{if(NF>=4) print $4}' | head -n1",
+  --     pop_cmd = "xrandr --listmonitors | awk '{if(NF>=4) print $4}'",
+  --   },
+  --   disable_toggle = true,
+  --   text = "Screen",
+  --   tooltip = "Chooses which Screen the below settings will affect."
+  -- },
+  -- -- gen_toggle {
+  -- --   text = 'Make Primary?',
+  -- --   cmd = 'notify-send test',
+  -- --   margins = dpi(5),
+  -- --   inactive_bg = beautiful.transparent,
+  -- --   active_bg = beautiful.transparent,
+  -- --   tooltip = 'Choose if the screen is primary.'
+  -- -- },
+  -- gen_toggle {
+  --   textbox = st {
+  --     empty_text = " N/A ",
+  --     initial_cmd = "xrandr -q | awk '/[[:alnum:]]+\\.[[:alnum:]]+\\*/ {print $1}'",
+  --     pop_cmd = "xrandr -q | awk '/^[[:space:]]+[[:digit:]]+/ {print $1}' | head -n 11",
+  --     setter_post = [[ ; ]]..fs.get_configuration_dir()..[[/scripts/calculate-dpi.sh && xrdb merge ~/.Xresources && awesome-client 'awesome.restart()']],
+  --     setter_cmd = [[xrandr -s]]
+  --   },
+  --   disable_toggle = true,
+  --   text = "Screen Resolution",
+  --   tooltip = "Changes the Screen Resolution.\nCurrent Resolution is shown in the box"
+  -- },
+  -- gen_toggle {
+  --   textbox = st {
+  --     empty_text = " N/A ",
+  --     initial_cmd = "xrandr -q | grep -Eo '[[:alnum:]]+\\.[[:alnum:]]+\\*' | tr -d '*+'",
+  --     pop_cmd = fs.get_configuration_dir() .. [[/scripts/get_curr_rates.sh]],
+  --     setter_cmd = [[xrandr -r]]
+  --   },
+  --   disable_toggle = true,
+  --   text = "Refresh Rates",
+  --   tooltip = "Changes the Refresh Rate.\nCurrent Refresh Rate is shown in the box"
+  -- }
 )
 local kids = display_l:get_all_children()
 local alt = false

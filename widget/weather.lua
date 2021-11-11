@@ -30,6 +30,7 @@ local function get()
           {
             id = 'temp',
             markup = 'Unable to connect to wttr.in',
+            -- wrap = 'word_char',
             align = 'center',
             font = beautiful.small_font,
             widget = wibox.widget.textbox

@@ -11,6 +11,7 @@ l.spacing = dpi(8)
 
 for _,w in pairs({
   {
+    name = 'vol',
     getter = [[pamixer --get-volume]],
     setter = [[pamixer --set-volume]],
     label = [[VOL:]],
@@ -18,6 +19,7 @@ for _,w in pairs({
     image = 'volume.svg'
   },
   {
+    name = 'mic',
     getter = [[pamixer --default-source --get-volume]],
     setter = [[pamixer --default-source --set-volume]],
     label = [[MIC:]],
@@ -25,6 +27,7 @@ for _,w in pairs({
     image = 'mic.svg'
   },
   {
+    name = 'bri',
     getter = [[brightnessctl i | awk '/Current/ {gsub("[()%]",""); print $4}']],
     setter = [[brightnessctl s]],
     setter_post = [[%]],

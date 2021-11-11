@@ -1,7 +1,7 @@
 local awful = require ('awful')
 local gears = require ('gears')
 local wibox = require ('wibox')
-local naughty = require ('naughty')
+-- local naughty = require ('naughty')
 local beautiful = require ('beautiful')
 local dpi = beautiful.xresources.apply_dpi
 local pi = require ('widget.util.panel_item')
@@ -38,7 +38,7 @@ local selectable_textbox = function (args)
   }
 
   -- Makes an updated menu and assigns that to base_menu, and shows it
-  local function pop_menu ()
+  local function pop_menu (show)
     awful.spawn.easy_async_with_shell (
        (args.pre_pop or '') .. (args.pop_cmd or '') .. (args.post_pop or ''),
       function(out)
@@ -55,9 +55,11 @@ local selectable_textbox = function (args)
               }
               i = i + 1
           end
-          base_menu = awful.menu(base_entries)
-          base_menu:toggle()
-          old_menu = base_menu
+          if show then 
+            base_menu = awful.menu(base_entries)
+            base_menu:toggle()
+            old_menu = base_menu
+          end
         end
     )
   end
@@ -70,7 +72,7 @@ local selectable_textbox = function (args)
           old_menu = nil
           awesome.emit_signal('toggle::mouse::leave', true)
         else
-          pop_menu()
+          pop_menu(true)
           awesome.emit_signal('toggle::mouse::leave', false)
         end
       end),

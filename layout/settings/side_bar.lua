@@ -1,78 +1,28 @@
+local menu = require ('widget.util.menu_select')
 local wibox = require ('wibox')
 local awful = require ('awful')
-local gears = require ('gears')
-local hover = require ('widget.util.hover')
 local beautiful = require ('beautiful')
-local click = require ('widget.util.clickable')
 local dpi = beautiful.xresources.apply_dpi
-local alt_line = false
-
-local function gen_side_panel(w)
-  local pane = wibox.widget {
-    {
-      {
-        w.label,
-        nil,
-        w.icon,
-        expand = 'none',
-        layout = wibox.layout.align.horizontal
-      },
-
-      left = dpi(15),
-      right = dpi(15),
-      margins = dpi(6),
-      widget = wibox.container.margin
-    },
-    bg = (alt_line and beautiful.panel.bg) or beautiful.panel_item.bg,
-    old_bg = (alt_line and beautiful.panel.bg) or beautiful.panel_item.bg,
-    widget = wibox.container.background
-  }
-  alt_line = not alt_line
-  return pane
-end
-
-local l = wibox.layout.flex.vertical()
-l.max_widget_size = dpi(40)
-
-local side_bar = require('widget.settings.side_bar')
-for _,category in ipairs(side_bar) do
-  local pane = gen_side_panel(category)
-  pane = hover(pane) 
-  pane:connect_signal(
-    'mouse::enter',
-    function(self)
-      if not self.selected then
-        self.bg = beautiful.mix(self.old_bg, beautiful.bg_select, 0.7)
-      end
-    end
-  )
-
-  pane:connect_signal(
-    'mouse::leave',
-    function(self)
-      if not self.selected then
-        self.bg = self.old_bg
-      end
-    end
-  )
-
-  pane:buttons ( gears.table.join (
-    awful.button( {}, 1, function() 
-      awesome.emit_signal('settings::content_view::show',category.view) 
-      -- function()
-        for _,child in ipairs(l:get_all_children()) do
-          if child == pane then
-            child.bg = beautiful.bg_select
-            child.selected = true
-          else
-            child.bg = child.old_bg
-            child.selected = false
-          end
-        end 
-      -- end
-    end)
-  ))
-  l:add(pane)
-end
-
-return l
+return menu {
+  alt_colors = true,
+  start_alt_colors = true,
+  layout = wibox.layout.flex.vertical,
+  box_layout = wibox.layout.align.horizontal,
+  box_margins = {
+    top = dpi(3),
+    bottom = dpi(3),
+    right = dpi(10),
+    left = dpi(10)
+  },
+  max_widget_space = dpi(20),
+  signal = 'settings::content_view::show',
+  -- fill_cmd = [[]],
+  fill_table = require ('widget.settings.side_bar'),
+  -- fill_cmd = [[xrandr --listmonitors | awk '{if(NF>=4)print $4}']],
+  shape = beautiful.rounded_rect_shape,
+  -- add_function = wibox.layout.flex.vertical.add(),
+  -- pre_output_unselected = '',
+  -- pre_output_selected = '',
+  -- post_output_unselected = '',
+  -- post_output_selected = '',
+}

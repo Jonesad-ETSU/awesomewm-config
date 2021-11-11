@@ -15,6 +15,8 @@ local dpi = beautiful.xresources.apply_dpi
 --      minimum => minimum possible value
 --]]
 local nb = function(args)
+
+  args = args or {}
   local bar = wibox.widget {
     bar_color = beautiful.wibar_bg,
     -- bar_active_color = darker(beautiful.wibar_fg,-5),
@@ -31,12 +33,12 @@ local nb = function(args)
     widget = wibox.widget.slider
   }
 
-  local value_text = wibox.widget {
-    markup = "",
-    align = 'center',
-    font = beautiful.tiny_font,
-    widget = wibox.widget.textbox
-  }
+  -- local value_text = wibox.widget {
+  --   markup = "",
+  --   align = 'center',
+  --   font = beautiful.tiny_font,
+  --   widget = wibox.widget.textbox
+  -- }
 
   local label
   if args.image then
@@ -58,17 +60,26 @@ local nb = function(args)
     }
   end
 
+  local function chval()
+    awful.spawn(args.setter.. ' ' ..bar.value..(args.setter_post or ''))
+    -- I don't use value_text. If you want to, uncomment one of the two ways below.
+    -- value_text.markup = "<i>"..bar.value.."</i>"
+    -- The below is more fool proof but can be really CPU intensive if you spasm mouse over the slider
+    -- awful.spawn.easy_async_with_shell(
+    --   args.getter,
+    --   function(out)
+    --     value_text.markup = "<i>"..out.."</i>"
+    --   end
+    -- )
+    if args.name then
+      awesome.emit_signal('bars::update',bar.value, args.name)
+    end
+  end
+
   bar:connect_signal(
     'property::value',
     function()
-      awful.spawn(args.setter.. ' ' ..bar.value..(args.setter_post or ''))
-      awful.spawn.easy_async_with_shell(
-        args.getter,
-        function(out)
-          value_text.markup = "<i>"..out.."</i>"
-	  --require('naughty').notify { text = out }
-        end
-      )
+      chval()
     end
   )
 
@@ -120,11 +131,12 @@ local nb = function(args)
     -- args.vertical and label or value_text,
     not args.hide_label and args.vertical and label,
     expand = 'inside',
+    spacing = dpi(3),
     layout = function()
-	if args.vertical then
-		return wibox.layout.ratio.vertical()
-	end
-	return wibox.layout.ratio.horizontal()
+      if args.vertical then
+        return wibox.layout.ratio.vertical()
+      end
+      return wibox.layout.ratio.horizontal()
     end
   }
   final:ajust_ratio(2,.88,.12,0)
@@ -143,7 +155,7 @@ local nb = function(args)
     end
   )
 
-  final:connect_signal(
+  final:connect_signal (
     'mouse::leave',
     function()
       if old_wibox then
@@ -151,8 +163,13 @@ local nb = function(args)
         old_wibox = nil
 	bar.bar_color = old_bg
       end
-    end
-  )
+    end)
+
+  awesome.connect_signal(
+    'bars::update', function(val,n)
+      if n and n ~= args.name then return end
+      bar.value = val
+  end)
 
   -- final = wibox.widget {
   --   final,

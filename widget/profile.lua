@@ -38,32 +38,7 @@ local profile_container = wibox.widget {
       shape_border_color = darker(beautiful.wibar_bg,-30),
       widget = wibox.container.background
     },
-    -- halign = 'left',
     widget = wibox.container.place
-  -- },
-  -- nil,
-  -- {
-  --   -- {
-  --     {
-  --       markup = '<i>'..user_name..'</i>'..'@'..host_name,
-  --       font = beautiful.small_font,
-  --       align = 'center',
-  --       widget = wibox.widget.textbox
-  --     },
-  --   --   {
-  --   --     markup = '@'..host_name,
-  --   --     font = beautiful.font,
-  --   --     align = 'right',
-  --   --     widget = wibox.widget.textbox
-  --   --   },
-  --   --   layout = wibox.layout.fixed.horizontal
-  --   -- },
-  --   valign = 'center',
-  --   halign = 'left',
-  --   widget = wibox.container.place
-  -- },
-  -- expand = 'none',
-  -- layout = wibox.layout.align.vertical
 }
 
 local profile = pi { 
@@ -73,5 +48,9 @@ local profile = pi {
   margins = dpi(8),
   outer = false
 }
+
+function profile:set_image(img)
+  -- profile
+end
 
 return clickable(profile)

@@ -19,10 +19,32 @@ local settings = function(--[[s--]])
     top_bar,
     {
       id = 'content',
-      side_bar,
-      content_view,
+      {
+        {
+          side_bar,
+          shape = beautiful.rounded_rect_shape,
+          shape_border_width = beautiful.panel.border_width,
+          shape_border_color = beautiful.panel.border_color,
+          widget = wibox.container.background
+        },
+        margins = dpi(10),
+        widget = wibox.container.margin
+      },
+      {
+        -- {
+          content_view,
+        --   shape = beautiful.rounded_rect_shape,
+        --   shape_border_width = beautiful.panel.border_width,
+        --   shape_border_color = beautiful.panel.border_color,
+        --   widget = wibox.container.background
+        -- },
+        margins = dpi(10),
+        widget = wibox.container.margin
+      },
+      -- content_view,
       layout = wibox.layout.ratio.horizontal
     },
+    spacing = dpi(5),
     layout = wibox.layout.ratio.vertical
   }
 

@@ -2,51 +2,77 @@ local wibox = require ('wibox')
 local beautiful = require ('beautiful')
 local dpi = beautiful.xresources.apply_dpi
 local toggle = require ('widget.util.toggle')
+local gen_toggle = require ('widget.settings.content_view.gen_toggle')
+local st = require ('widget.util.select_textbox')
+local slider = require ('widget.util.panel_slider')
 local ib = require ('widget.util.img_button')
 
-local function gen_toggle(args)
-  local pane = wibox.widget {
-    args.widget or {
-      markup = args.text or "TEXT",
-      font = beautiful.font,
-      align = 'center',
-      widget = wibox.widget.textbox 
-    },
-    nil,
-    toggle {
-      on_cmd = args.on_cmd,
-      off_cmd = args.off_cmd,
-      cmd = args.cmd,
-      img = args.img,
-      on_img = args.on_img,
-      off_img = args.off_img,
-      inactive_bg = args.inactive_bg,
-      active_bg = args.active_bg,
-      margins = args.margins or 0,
-      buttons = args.buttons,
-      tooltip = args.tooltip
-    },
-    expand = 'none',
-    layout = wibox.layout.align.horizontal
-  }
-  return pane
-end
 local audio = wibox.widget {
   gen_toggle {
-    text = 'Volume',
-    cmd = 'notify-send test',
+    textbox = st {
+      empty_text = " N/A ",
+      initial_cmd = [[pamixer --list-sinks | grep -v "Monitor of" | grep -v "Sinks" | cut -d '"' -f 4 | head -n1]],
+      pop_cmd = [[pamixer --list-sinks | grep -v "Monitor of" | grep -v "Sinks" | cut -d '"' -f 4]],
+      setter_post = [[]],
+      setter_cmd = [[pamixer -]],
+    },
+    disable_toggle = true,
+    text = 'Output Device',
+    -- cmd = 'notify-send test',
     margins = dpi(10),
     inactive_bg = beautiful.transparent,
     active_bg = beautiful.transparent,
     tooltip = 'Send a notification'
   },
+  -- gen_toggle {
+  --   text = 'Mute?',
+  --   cmd = 'notify-send test',
+  --   margins = dpi(10),
+  --   inactive_bg = beautiful.transparent,
+  --   active_bg = beautiful.transparent,
+  --   tooltip = 'Send a notification'
+  -- },
+  {
+    slider {
+      name = 'vol',
+      getter = [[pamixer --get-volume]],
+      setter = [[pamixer --set-volume]],
+      -- label = [[VOL:]],
+      label = [[]],
+      vertical = false,
+      -- image = 'volume.svg'
+    },
+    margins = dpi(8),
+    widget = wibox.container.margin
+  },
   gen_toggle {
-    text = 'test2',
-    cmd = 'notify-send test',
+    textbox = st {
+      empty_text = " N/A ",
+      initial_cmd = [[pamixer --list-sources | grep -v "Monitor of" | grep -v "Sources" | cut -d '"' -f 4 | head -n1]],
+      pop_cmd = [[pamixer --list-sources | grep -v "Monitor of" | grep -v "Sources" | cut -d '"' -f 4]],
+      setter_post = [[]],
+      setter_cmd = [[]],
+    },
+    text = 'Input Device',
+    disable_toggle = true,
+    -- cmd = 'notify-send test',
     margins = dpi(10),
     inactive_bg = beautiful.transparent,
     active_bg = beautiful.transparent,
-    tooltip = 'Send a notification'
+    -- tooltip = 'Send a notification'
+  },
+  {
+    slider {
+      name = 'mic',
+      getter = [[pamixer --default-source --get-volume]],
+      setter = [[pamixer --default-source --set-volume]],
+      -- label = [[VOL:]],
+      label = [[]],
+      vertical = false,
+      -- image = 'volume.svg'
+    },
+    margins = dpi(8),
+    widget = wibox.container.margin
   },
   layout = wibox.layout.flex.vertical
 }

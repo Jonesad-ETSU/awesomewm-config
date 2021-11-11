@@ -328,7 +328,7 @@ theme.client_shape = function(c,w,h)
     return gears.shape.rounded_rect(c,w,h,theme.button_border_radius)
 end
 
-theme.tooltip_shape = rounded_rect_shape
+-- theme.tooltip_shape = rounded_rect_shape
 
 theme.panel = {}
     theme.panel.side = 'top'
