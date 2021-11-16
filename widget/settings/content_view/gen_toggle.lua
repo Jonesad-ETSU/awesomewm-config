@@ -15,7 +15,7 @@ local generated_toggle = function (args)
     },
     nil,
     {
-      not args.disable_toggle and toggle {
+      (not args.disable_toggle and toggle {
         on_cmd = args.on_cmd,
         off_cmd = args.off_cmd,
         cmd = args.cmd,
@@ -27,7 +27,7 @@ local generated_toggle = function (args)
         margins = args.margins or 0,
         buttons = args.buttons,
         tooltip = args.tooltip
-      },
+      }),
       args.textbox or nil,
       spacing = dpi(5),
       layout = wibox.layout.fixed.horizontal

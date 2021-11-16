@@ -34,7 +34,8 @@ local selectable_textbox = function (args)
       base_text,
       widget = wibox.container.place
     },
-    margins = dpi(3)
+    -- margins = dpi(3)
+    margins = dpi(0)
   }
 
   -- Makes an updated menu and assigns that to base_menu, and shows it

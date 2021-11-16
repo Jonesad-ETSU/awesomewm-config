@@ -9,6 +9,7 @@ local gen_toggle = require ('widget.settings.content_view.gen_toggle')
 local st = require ('widget.util.select_textbox')
 
 local display_l = wibox.layout.flex.vertical()
+-- local view_stack = wibox.layout.stack()
 display_l.max_widget_size = dpi(50)
 -- local display = wibox.widget {
 display_l:add (
@@ -42,12 +43,45 @@ display_l:add (
     },
     -- fill_table = require ('widget.settings.side_bar'),
     fill_cmd = [[xrandr --listmonitors | awk '{if(NF>=4) print $4}']],
-    signal = [['settings::content_view::displays::show']],
+    signal = [[settings::content_view::displays::show]],
     max_widget_size = dpi(20),
-    box_layout = wibox.layout.align.horizontal,
+    box_layout = wibox.layout.flex.horizontal,
     -- signal = [[settings::content_view::show]],
     shape = beautiful.rounded_rect_shape
-  }
+  },
+  require ('widget.settings.content_view.gen_display'),
+  gen_toggle {
+    textbox = st {
+      empty_text = " N/A ",
+      initial_cmd = "xrandr | awk '/eDP-1/ {print $4}' | cut -d '+' -f 1",
+      pop_cmd = "xrandr | sed -n '/eDP-1/,/connected/{//!p;}' | awk '{print $1}' | head -n 12",
+      setter_post = [[ ; ]]..fs.get_configuration_dir()..[[/scripts/calculate-dpi.sh && xrdb merge ~/.Xresources && awesome-client 'awesome.restart()']],
+      setter_cmd = [[xrandr --output eDP-1 --mode]]
+    },
+    disable_toggle = true,
+    -- cmd = 'notify-send test',
+    text = "Screen Resolution",
+    tooltip = "Changes the Screen Resolution.\nCurrent Resolution is shown in the box"
+  }  -- view_stack
+  -- menu {
+  --   -- alt_colors = true,
+  --   alt_colors = false,
+  --   start_alt_color = true,
+  --   layout = wibox.layout.flex.vertical,
+  --   box_margins = {
+  --     top = dpi(0),
+  --     bottom = dpi(0),
+  --     left = dpi(0),
+  --     right = dpi(0),
+  --   },
+  --   -- fill_table = require ('widget.settings.side_bar'),
+  --   fill_cmd = [[echo -e '1\n2']],
+  --   signal = [[settings::test]],
+  --   max_widget_size = dpi(20),
+  --   box_layout = wibox.layout.flex.horizontal,
+  --   -- signal = [[settings::content_view::show]],
+  --   shape = beautiful.rounded_rect_shape
+  -- }
   -- gen_toggle {
   --   textbox = st {
   --     empty_text = " N/A ",
@@ -90,6 +124,23 @@ display_l:add (
   --   tooltip = "Changes the Refresh Rate.\nCurrent Refresh Rate is shown in the box"
   -- }
 )
+
+-- local display_generator = require ('widget.settings.content_view.gen_display')
+-- awful.spawn.easy_async_with_shell (
+--   [[xrandr --listmonitors | awk '{if(NF>=4) print $4}']],
+--   function(out) 
+--     for l in out:gmatch('[^\r\n]+') do
+--       view_stack:add(display_generator { output = l })
+--     end
+--   end
+-- )
+-- for _,view in ipairs(view_stack) do
+--   awesome.connect_signal('settings::content_view::displays::show',function(v)
+--     view.visible =  
+--   end)
+-- end
+
+
 local kids = display_l:get_all_children()
 local alt = false
 for _,child in ipairs(kids) do

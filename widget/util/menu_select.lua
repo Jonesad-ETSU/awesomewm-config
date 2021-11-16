@@ -25,8 +25,8 @@ local menu = function (args)
 
   local alt = args.start_alt_color or false
   local function box(opts)
-    if not opts then local opts = {} end
-    if not opts.box_margins then opts.box_margins = {} end
+    opts = opts or {}
+    opts.box_margins = opts.box_margins or {}
     alt = not alt
 
     local w = wibox.widget {
@@ -59,38 +59,16 @@ local menu = function (args)
       old_bg = (args.alt_colors and alt and beautiful.panel.bg) or beautiful.panel_item.bg,
       widget = wibox.container.background
     }
-    -- if opts.str then
-          -- local p = awful.popup {
-          --   widget = {},
-          --   ontop = true,
-          --   visible = true,
-          --   type = 'normal',
-          --   placement = awful.placement.centered,
-          --   forced_width = dpi(300),
-          --   forced_height = dpi(300),
-          --   shape = gears.shape.rounded_rect,
-          --   bg = beautiful.bg_normal
-          -- } 
-          -- p : setup {
-          --   w,
-          --   layout = wibox.layout.flex.horizontal
-          -- }
-        -- end 
-    -- n { text = label.font .. ' is the font of the text'}
     return w
   end
 
-  local l
-  if args.layout then l = args.layout()
-  else l = wibox.layout.flex.vertical() end
+  local l = (args.layout and args.layout()) or wibox.layout.flex.horizontal()
   l:reset()
-  -- local l = args.layout or wibox.layout.flex.vertical()
   l.max_widget_space = args.max_widget_space or dpi(40)
-  -- l.max_widget_space = 20
 
-  local function pane_handler(pane,v,show )
-    local p = hover(pane)
-    p:connect_signal(
+  local function pane_handler(p, v)
+    p = hover(p)
+    p:connect_signal (
       'mouse::enter',
       function(self)
         if not self.selected then
@@ -123,85 +101,45 @@ local menu = function (args)
       end)
     )) 
 
-    return p
-    -- l:emit_signal( 'add_pane', p )
-
-    -- if show then
-    --       local po = awful.popup {
-    --         widget = {},
-    --         ontop = true,
-    --         visible = true,
-    --         type = 'normal',
-    --         placement = awful.placement.centered,
-    --         forced_width = dpi(300),
-    --         forced_height = dpi(300),
-    --         shape = gears.shape.rounded_rect,
-    --         bg = beautiful.bg_normal
-    --       } 
-    --       po : setup {
-    --         p,
-    --         layout = wibox.layout.flex.horizontal
-    --       }
-    --     end
-    -- if args.add_function then
-    --   args.add_function(l,p)
-    -- else l:add(p) end
-    -- if show then
-    --       local po = awful.popup {
-    --         widget = {},
-    --         ontop = true,
-    --         visible = true,
-    --         type = 'normal',
-    --         placement = awful.placement.centered,
-    --         forced_width = dpi(300),
-    --         forced_height = dpi(300),
-    --         shape = gears.shape.rounded_rect,
-    --         bg = beautiful.bg_normal
-    --       } 
-    --       po : setup {
-    --         p,
-    --         layout = wibox.layout.flex.horizontal
-    --       }
-    --     end
-    -- n { text = "successfuly completed pane_handler"}
+    if args.add_function then
+      args.add_function(l,p)
+    else l:add(p) end
   end
 
   if args.fill_cmd then
     awful.spawn.easy_async_with_shell (
       args.fill_cmd,
       function(out)
-        -- if args.fill_table then
-        --   n { text = 'Filling Table'}
-        --   for _,widget in ipairs(args.fill_table) do
-        --     pane_handler (
-        --       box { table = widget }, widget.view
-        --     )
-        --   end
-        -- else 
           for line in out:gmatch("[^\r\n]+") do
-            -- n { text = "LINE FROM FILL_CMD:  "..line}
-            l:add(pane_handler (
-              box {str=line}, line, true
-            ))
+            pane_handler (
+              box { str = line },
+              line
+            )
           end
-        -- end
       end
     )  
   elseif args.fill_table then
     for _,widget in ipairs(args.fill_table) do
-      l:add(pane_handler (
-        box { table = widget }, widget.view
-      ))
+      pane_handler ( 
+        box { table = widget },
+        widget.view
+      )
     end
   end
-  
-  l = wibox.widget {
+
+  -- awesome.connect_signal(
+  --   'settings::test',
+  --   function(t)
+  --     n { text = "TEST "..t }
+  --   end
+  -- )
+ 
+  return wibox.widget {
     l,
     shape = args.shape or beautiful.rounded_rect_shape,
     widget = wibox.container.background
   }
 
-  return l
 end
 
 return menu
