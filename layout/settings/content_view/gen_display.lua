@@ -9,7 +9,7 @@ local gen_toggle = require ('layout.settings.content_view.gen_toggle')
 -- output = the display name
 --
 local gen_display = function (args)
-  require ('naughty').notify { text = "IN LAYOUT_SETTINGS_CV_GEN_DISP" }
+  require ('naughty').notify { text = args.output or ""}
   local widget_to_display = {
       gen_toggle {
         textbox = st {
@@ -27,7 +27,7 @@ local gen_display = function (args)
         textbox = st {
           empty_text = " N/A ",
           initial_cmd = "xrandr | sed -n '/"..args.output.."/,/connected/{//!p;}' | grep -Eo '[[:alnum:]]+\\.[[:alnum:]]+\\*' | tr -d '*+'",
-          pop_cmd = fs.get_configuration_dir() .. [[/scripts/get_curr_rates.sh ]] .. args.output ,
+          pop_cmd = fs.get_configuration_dir() .. [[/scripts/get-curr-rates.sh ]] .. args.output ,
           setter_cmd = [[xrandr --output ]]..args.output..[[ -r]]
         },
         disable_toggle = true,

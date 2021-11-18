@@ -49,8 +49,5 @@ local profile = pi {
   outer = false
 }
 
-function profile:set_image(img)
-  -- profile
-end
 
 return clickable(profile)

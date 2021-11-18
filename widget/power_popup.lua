@@ -75,6 +75,7 @@ local p = popup (
     shape = gears.shape.rounded_rect,
     border_width = 0,
     border_color = beautiful.wibar_bg,
+    fullscreen = true
   })
 p:emit_signal('toggle')
 

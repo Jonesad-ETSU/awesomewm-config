@@ -3,7 +3,7 @@ local n = require ('naughty').notify
 local wibox = require ('wibox')
 local gears = require ('gears')
 local beautiful = require ('beautiful')
-local hover = require ('widget.util.hover')
+local hover = require ('util.hover')
 local dpi = beautiful.xresources.apply_dpi
 
 -- ARGS
