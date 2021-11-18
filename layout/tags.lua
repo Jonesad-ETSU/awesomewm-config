@@ -2,8 +2,8 @@ local wibox = require ('wibox')
 local awful = require ('awful')
 local gears = require ('gears')
 local beautiful = require ('beautiful')
-local darker = require ('widget.util.color').darker
-local pi = require ('widget.util.panel_item')
+local darker = require ('util.color').darker
+local pi = require ('util.panel_item')
 local dpi = beautiful.xresources.apply_dpi
 
 local tags = function (s,side)

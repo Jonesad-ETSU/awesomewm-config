@@ -1,9 +1,9 @@
 local wibox = require ('wibox')
 local beautiful = require ('beautiful')
 local dpi = beautiful.xresources.apply_dpi
-local toggle = require ('widget.util.toggle')
-local ib = require ('widget.util.img_button')
--- local textbox = require ('widget.util.select_textbox')
+local toggle = require ('util.toggle')
+local ib = require ('util.img_button')
+-- local textbox = require ('util.select_textbox')
 local gen_toggle = require ('widget.settings.content_view.gen_toggle')
 
 local general = wibox.widget {

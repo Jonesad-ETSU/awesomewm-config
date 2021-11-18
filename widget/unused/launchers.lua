@@ -3,7 +3,7 @@ local firefox	= require ('widget.button.firefox')
 local discord	= require ('widget.button.discord')
 local terminal	= require ('widget.button.terminal')
 -- local gears	= require ('gears')
--- local pi	= require ('widget.util.panel_item')
+-- local pi	= require ('util.panel_item')
 local wibox	= require ('wibox')
 
 local launchers = wibox.widget {

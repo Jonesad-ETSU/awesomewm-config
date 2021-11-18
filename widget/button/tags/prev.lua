@@ -1,5 +1,5 @@
-local ib = require ('widget.util.img_button')
-local pi = require ('widget.util.panel_item')
+local ib = require ('util.img_button')
+local pi = require ('util.panel_item')
 local awful = require ('awful')
 local dpi = require('beautiful.xresources').apply_dpi
 

@@ -2,7 +2,7 @@ local gamemode	= require ('widget.button.gamemode')
 local powersave	= require ('widget.button.powersave')
 local screen 	= require ('widget.button.screen')
 local night	= require ('widget.button.night')
-local pi	= require ('widget.util.panel_item')
+local pi	= require ('util.panel_item')
 local wibox	= require ('wibox')
 local naughty	= require ('naughty')
 

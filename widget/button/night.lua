@@ -1,5 +1,5 @@
-local toggle = require ('widget.util.toggle')
-local pi = require ('widget.util.panel_item')
+local toggle = require ('util.toggle')
+local pi = require ('util.panel_item')
 local beautiful  = require ('beautiful')
 local dpi  = beautiful.xresources.apply_dpi
 local wibox = require ('wibox')

@@ -1,7 +1,7 @@
 local wibox = require ('wibox')
 local gears = require ('gears')
 local fs = gears.filesystem
-local st = require ('widget.util.select_textbox')
+local st = require ('util.select_textbox')
 local gen_toggle = require ('layout.settings.content_view.gen_toggle')
 -- args
 -- view = view name to be connected to

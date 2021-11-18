@@ -3,11 +3,11 @@ local beautiful = require ('beautiful')
 -- local awful     = require ('awful')
 local gears     = require ('gears')
 local dpi   = require ('beautiful.xresources').apply_dpi
-local pi   = require ('widget.util.panel_item')
-local darker   = require ('widget.util.color').darker
-local ib   = require ('widget.util.img_button')
+local pi   = require ('util.panel_item')
+local darker   = require ('util.color').darker
+local ib   = require ('util.img_button')
 -- local naughty = require ('naughty')
-local clickable = require ('widget.util.clickable')
+local clickable = require ('util.clickable')
 
 local user_name = os.getenv('USER')
 local host_name = 'arch'
@@ -48,6 +48,5 @@ local profile = pi {
   margins = dpi(8),
   outer = false
 }
-
 
 return clickable(profile)

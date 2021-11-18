@@ -2,7 +2,7 @@ local wibox = require ('wibox')
 local beautiful = require ('beautiful')
 local dpi = beautiful.xresources.apply_dpi
 local awful = require ('awful')
-local view_it = require ('widget.util.widget_view')
+local view_it = require ('util.widget_view')
 local display_layout = require ('layout.settings.content_view.gen_display')
 local stack = wibox.layout.stack()
 

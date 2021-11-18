@@ -4,8 +4,8 @@ local wibox = require ('wibox')
 local beautiful = require ('beautiful')
 local dpi = beautiful.xresources.apply_dpi
 local settings_widgets = require ('widget.settings')
-local popup = require ('widget.util.my_popup')
-local toggle = require ('widget.util.toggle')
+local popup = require ('util.my_popup')
+local toggle = require ('util.toggle')
 local naughty = require ('naughty')
 local wifi = settings_widgets.wifi
 

@@ -1,7 +1,7 @@
-local btn	= require ('widget.util.img_button')
-local pi 	= require ('widget.util.panel_item')
+local btn	= require ('util.img_button')
+local pi 	= require ('util.panel_item')
 local awful	= require ('awful')
-local popup	= require ('widget.util.my_popup')
+local popup	= require ('util.my_popup')
 local beautiful	= require ('beautiful')
 local dpi	= require ('beautiful.xresources').apply_dpi
 local wibox	= require ('wibox')

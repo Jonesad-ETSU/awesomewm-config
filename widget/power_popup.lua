@@ -1,11 +1,11 @@
 local beautiful = require ('beautiful')
-local popup	= require ('widget.util.my_popup')
+local popup	= require ('util.my_popup')
 -- local awful 	= require ('awful')
 local wibox 	= require ('wibox')
 local gears 	= require ('gears')
 local dpi 	= require ('beautiful.xresources').apply_dpi
---local pi	= require ('widget.util.panel_item')
-local ib	= require ('widget.util.img_button')
+--local pi	= require ('util.panel_item')
+local ib	= require ('util.img_button')
 
 local shutdown = ib {
   image = "shutdown.svg",

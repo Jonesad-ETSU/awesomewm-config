@@ -2,11 +2,11 @@ local wibox = require ('wibox')
 local fs = require ('gears').filesystem
 local beautiful = require ('beautiful')
 local dpi = beautiful.xresources.apply_dpi
-local toggle = require ('widget.util.toggle')
-local ib = require ('widget.util.img_button')
-local menu = require ('widget.util.menu_select')
+local toggle = require ('util.toggle')
+local ib = require ('util.img_button')
+local menu = require ('util.menu_select')
 local gen_toggle = require ('widget.settings.content_view.gen_toggle')
-local st = require ('widget.util.select_textbox')
+local st = require ('util.select_textbox')
 
 local display_l = wibox.layout.grid.vertical()
 display_l.homogenous = true

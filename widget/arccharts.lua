@@ -2,8 +2,8 @@ local wibox = require ('wibox')
 local beautiful = require('beautiful')
 local dpi = beautiful.xresources.apply_dpi
 
-local pi = require ('widget.util.panel_item')
-local arcchart = require ('widget.util.arcchart')
+local pi = require ('util.panel_item')
+local arcchart = require ('util.arcchart')
 
 return pi {
   widget = wibox.widget {

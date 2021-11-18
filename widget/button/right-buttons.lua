@@ -1,7 +1,7 @@
 local wibox = require('wibox')
 local gears = require('gears')
 local beautiful = require('beautiful')
-local pi = require('widget.util.panel_item')
+local pi = require('util.panel_item')
 local dpi = beautiful.xresources.apply_dpi
 
 local dir = 'widget.button'

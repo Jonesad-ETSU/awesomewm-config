@@ -1,5 +1,5 @@
-local ib = require ('widget.util.img_button')
-local pi = require ('widget.util.panel_item')
+local ib = require ('util.img_button')
+local pi = require ('util.panel_item')
 local beautiful = require ('beautiful')
 local dpi = beautiful.xresources.apply_dpi
 local gears = require ('gears')
@@ -15,8 +15,6 @@ local rofi_btn = ib {
 return pi {
   widget = rofi_btn,
   shape = beautiful.rounded_rect_shape or gears.shape.rounded_rect,
-  bg = "#00000000",
-  -- top = dpi(6),
-  -- bottom = dpi(6),
+  bg = beautiful.transparent,
   margins = dpi(6),
 }

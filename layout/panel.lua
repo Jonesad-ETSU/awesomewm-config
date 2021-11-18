@@ -1,6 +1,6 @@
 local wibox     = require ('wibox')
-local pi 	= require ('widget.util.panel_item')
-local darker    = require ('widget.util.color').darker
+local pi 	= require ('util.panel_item')
+local darker    = require ('util.color').darker
 local awful     = require ('awful')
 local gears     = require ('gears')
 local awestore  = require ('awestore')

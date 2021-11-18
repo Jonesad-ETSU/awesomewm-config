@@ -3,7 +3,7 @@ local beautiful = require ('beautiful')
 local gears = require('gears')
 local gfs = gears.filesystem
 local dpi = beautiful.xresources.apply_dpi
-local pi  = require ('widget.util.panel_item')
+local pi  = require ('util.panel_item')
 local color = require('gears.color').recolor_image
 
 -- require('naughty').notify {text = beautiful.font }

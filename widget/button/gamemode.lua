@@ -1,4 +1,4 @@
-local ib = require ('widget.util.img_button')
+local ib = require ('util.img_button')
 local beautiful = require ('beautiful')
 local color = require ('gears.color').recolor_image
 local dpi = require ('beautiful.xresources').apply_dpi

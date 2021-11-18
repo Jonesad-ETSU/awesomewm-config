@@ -6,7 +6,7 @@ local awful 	= require ('awful')
 local gears 	= require ('gears')
 local gfs 	= gears.filesystem
 local color     = gears.color
-local pi	= require ('widget.util.panel_item')
+local pi	= require ('util.panel_item')
 
 -- local wind_speed = {}
 local location = "37303"

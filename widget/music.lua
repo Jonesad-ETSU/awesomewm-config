@@ -6,10 +6,10 @@ local beautiful = require ('beautiful')
 local dpi = beautiful.xresources.apply_dpi
 local gears = require ('gears')
 local gfs = gears.filesystem
-local pi    = require ('widget.util.panel_item')
-local ib    = require ('widget.util.img_button')
-local slider    = require ('widget.util.panel_slider')
-local toggle    = require ('widget.util.toggle')
+local pi    = require ('util.panel_item')
+local ib    = require ('util.img_button')
+local slider    = require ('util.panel_slider')
+local toggle    = require ('util.toggle')
 local playing = false
 
 -- local song = "\t\t\tOffline"

@@ -1,8 +1,8 @@
 pcall (require, "luarocks.loader")
 
 local wibox     = require ('wibox')
-local pi        = require ('widget.util.panel_item')
-local clickable = require ('widget.util.clickable')
+local pi        = require ('util.panel_item')
+local clickable = require ('util.clickable')
 local beautiful = require ('beautiful')
 local awful     = require ('awful')
 local gears     = require ('gears')

@@ -1,4 +1,4 @@
-local ib = require ('widget.util.img_button')
+local ib = require ('util.img_button')
 local dpi = require ('beautiful.xresources').apply_dpi
 
 return ib {

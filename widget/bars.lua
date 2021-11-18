@@ -1,8 +1,8 @@
 local wibox = require ('wibox')
 local beautiful = require ('beautiful')
-local pi = require ('widget.util.panel_item')
+local pi = require ('util.panel_item')
 local dpi = beautiful.xresources.apply_dpi
-local slider = require ('widget.util.panel_slider')
+local slider = require ('util.panel_slider')
 local fs = require ('gears.filesystem')
 
 local l = wibox.layout.flex.horizontal()
