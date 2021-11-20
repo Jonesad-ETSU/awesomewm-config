@@ -14,7 +14,7 @@ local audio = wibox.widget {
       initial_cmd = [[pamixer --list-sinks | grep -v "Monitor of" | grep -v "Sinks" | cut -d '"' -f 4 | head -n1]],
       pop_cmd = [[pamixer --list-sinks | grep -v "Monitor of" | grep -v "Sinks" | cut -d '"' -f 4]],
       setter_post = [[]],
-      setter_cmd = [[pamixer -]],
+      setter_cmd = [[pamixer ]],
     },
     disable_toggle = true,
     text = 'Output Device',

@@ -9,7 +9,7 @@ local gen_toggle = require ('layout.settings.content_view.gen_toggle')
 -- output = the display name
 --
 local gen_display = function (args)
-  require ('naughty').notify { text = args.output or ""}
+  -- require ('naughty').notify { text = args.output or ""}
   local widget_to_display = {
       gen_toggle {
         textbox = st {

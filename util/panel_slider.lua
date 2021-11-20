@@ -41,7 +41,9 @@ local nb = function(args)
   -- }
 
   local label
-  if args.image then
+  if args.widget then
+    label = args.widget
+  elseif args.image then
     label = wibox.widget {
       {
         image = recolor(gears.filesystem.get_configuration_dir()..'/icons/'..args.image,beautiful.wibar_fg),

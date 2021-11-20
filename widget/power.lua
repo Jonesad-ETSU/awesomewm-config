@@ -116,9 +116,6 @@ local power = function()
           cat $dir/status
         ]],
         function (stdout, stderr)
-          if stdout:match('error') then
-              naughty.notify { text = "Can't read Battery.\nIs this a desktop?" }
-          end
 
           local lines = {}
           for s in stdout:gmatch("[^\r\n]+") do
