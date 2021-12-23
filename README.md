@@ -74,6 +74,7 @@ By default, Awesomewm comes with a set of fairly sane defaults. However, many as
 | [`awesome-git`](https://github.com/awesomeWM/awesome) | Core Window Management | Core of UI. awesome-<em>git</em> needed for certain features.
 | [`awestore`](https://github.com/K4rakara/awestore) | Asynchronous Animations | Animates numeric values |
 | [`rofi`](https://github.com/davatorium/rofi) | Dmenu Replacement with CSS styling | Application Launcher/Fallback Alt-Tab |
+| [`sysstat`] (https://github.com/sysstat/sysstat) | System Monitoring tool | Used for measuring CPU util.
 | [`mpc`](https://github.com/MusicPlayerDaemon/mpc)| MPD Control Program | Music Widget Controls uses this |
 | [`pamixer`](https://github.com/cdemoulins/pamixer)| PulseAudio/PipeWire Volume Controller | Volume and Microphone Volume Controls use this |
 | [`brightnessctl`](https://github.com/Hummer12007/brightnessctl)| Screen Brightness Controller | Brightness Control uses this |

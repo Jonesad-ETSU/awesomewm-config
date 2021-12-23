@@ -45,7 +45,7 @@ end
 -- end
 
 -- Bling relies on beautiful's properties, thus must be set after.
-local bling = require ('bling')
+--local bling = require ('bling')
 -- Panel relies on bling
 local panel = require ('layout')
 -- require('widget.test')
